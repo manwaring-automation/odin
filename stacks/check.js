@@ -3,9 +3,10 @@ const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 
 module.exports.hello = (event, context) => {
   listStacks()
-    .then(getOldNonProdStacks)
+    .then(getStacksToDelete)
     .then(publishForDeletion)
-    .then( () => console.log('Finished checking stacks for deletion'));
+    .then( () => console.log('Finished checking stacks for deletion'))
+    .catch( err => console.log('Error checking stacks for deletion', err));
 };
 
 let listStacks = () => {
@@ -20,13 +21,21 @@ let listStacks = () => {
   return cloudFormation.listStacks(params).promise();
 };
 
-let getOldNonProdStacks = (response) => {
+let getStacksToDelete = (response) => {
   return Promise.resolve(response.Stacks.filter(stack => {
     console.log(stack);
     return true;
   }));
 };
 
-let publishForDeletion = (stacks) => {
-  
+let publishStacksForDeletion = (stacks) => {
+  return Promise.all( stacks.map( stack => publishStackForDeletion(stack) ));
+};
+
+let publishStackForDeletion = (stack) => {
+  const params = {
+    Message: stack.name,
+    TopicArn: `arn:aws:sns:us-east-1:${process.env.ACCOUNT_ID}:delete-stack`
+  };
+  return sns.publish(params).promise();
 };
