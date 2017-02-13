@@ -31,3 +31,4 @@ functions:
       - sns: delete-stack
 
 resources:
+  Description: Automated service for destroying temporary stacks (retains production and automation stacks)
