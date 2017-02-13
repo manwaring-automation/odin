@@ -24,6 +24,7 @@ let listStacks = () => {
 };
 
 let getStacksToDelete = (response) => {
+  console.log('Received list stacks response', response);
   return Promise.resolve(response.Stacks.filter(stack => {
     console.log(stack);
     //TODO logic - if non prod and last create/update date > 6 hour ago then delete
