@@ -1,0 +1,24 @@
+service: odin
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  stage: local
+  iamRoleStatements:
+    - Effect: Allow
+      Resource: '*'
+      Action:
+        - sns:*
+        - cloudformation:*
+
+functions:
+  checkStacks:
+    handler: stacks/check.handler
+    events:
+      # 4 AM UTC / 11 PM ET
+      - schedule: cron(0 4 * * *)
+
+  deleteStacks:
+    handler: stacks/delete.handler
+    events:
+      - sns: delete-stack
