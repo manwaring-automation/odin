@@ -10,9 +10,7 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Resource: '*'
-      Action:
-        - sns:*
-        - cloudformation:*
+      Action: '*'
 
 functions:
   CheckStacks:
