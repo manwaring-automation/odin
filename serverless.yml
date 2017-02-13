@@ -29,3 +29,5 @@ functions:
     handler: stacks/delete.handler
     events:
       - sns: delete-stack
+
+resources:
