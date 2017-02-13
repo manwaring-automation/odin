@@ -26,10 +26,9 @@ let getStacksToDelete = (response, config) => {
 
 let shouldDeleteStack = (stack, config) => {
   console.log('Seeing if stack should be deleted', stack);
-  let canBeDeleted = stackIsNonProdOrAutomation(stack)
+  return stackIsNonProdOrAutomation(stack)
       && stackIsStale(stack, config)
       && stackIsInDeletableStatus(stack);
-  return canBeDeleted;
 };
 
 // Stack doesn't have a stage tag or tag isn't production/automation
@@ -45,7 +44,6 @@ let stackIsStale = (stack, config) => {
   const stackLastUpdated = stack.LastUpdatedTime ? stack.LastUpdatedTime : stack.CreationTime;
   const lastUpdated = Math.floor((new Date() - stackLastUpdated) / 36e5);
   console.log(`Stack was last updated ${lastUpdated} hours ago`);
-  console.log(`Stack is stale with lastUpdated=${lastUpdated} and staleAfter=${parseInt(config.staleAfter)} : ${lastUpdated > parseInt(config.staleAfter)}`)
   return lastUpdated > parseInt(config.staleAfter);
 };
 
