@@ -4,6 +4,8 @@ provider:
   name: aws
   runtime: nodejs4.3
   stage: local
+  environment:
+    ACCOUNT_ID: ${opt:accountId, env:ACCOUNT_ID}
   iamRoleStatements:
     - Effect: Allow
       Resource: '*'
