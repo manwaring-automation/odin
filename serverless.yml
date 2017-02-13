@@ -1,9 +1,9 @@
-service: odin
+service: Odin
 
 provider:
   name: aws
   runtime: nodejs4.3
-  stage: local
+  stage: automation
   environment:
     ACCOUNT_ID: ${opt:accountId, env:ACCOUNT_ID}
   iamRoleStatements:
