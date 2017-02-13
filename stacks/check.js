@@ -3,7 +3,7 @@ const AWS = require('aws-sdk');
 const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 const sns = new AWS.SNS({ apiVersion: '2010-03-31' });
 
-module.exports.hello = (event, context) => {
+module.exports.handler = (event, context) => {
   listStacks()
     .then(getStacksToDelete)
     .then(publishStacksForDeletion)

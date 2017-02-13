@@ -1,7 +1,7 @@
 'use strict';
 const AWS = require('aws-sdk');
 
-module.exports.hello = (event, context, callback) => {
+module.exports.handler = (event, context, callback) => {
   getStackName(event)
     .then(deleteStack)
     .then( stack => console.log('Successfully deleted stack', stack))
