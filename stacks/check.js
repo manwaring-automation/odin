@@ -43,7 +43,7 @@ let stackIsStale = (stack, config) => {
   const stackLastUpdated = stack.LastUpdatedTime ? stack.LastUpdatedTime : stack.CreationTime;
   const lastUpdated = Math.floor((new Date() - stackLastUpdated) / 36e5);
   console.log(`Stack was last updated ${lastUpdated} hours ago`);
-  return lastUpdated > config.staleAfter;
+  return lastUpdated > parseInt(config.staleAfter);
 };
 
 // Stack status is stable and not in error state
