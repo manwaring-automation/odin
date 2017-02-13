@@ -25,9 +25,11 @@ let getStacksToDelete = (response, config) => {
 
 let shouldDeleteStack = (stack, config) => {
   console.log('Seeing if stack should be deleted', stack);
-  return stackIsNonProdOrAutomation(stack)
+  let canBeDeleted = stackIsNonProdOrAutomation(stack)
       && stackIsStale(stack, config)
       && stackIsInDeletableStatus(stack);
+  console.log(`Stack should${canBeDeleted ? '' : 'n\'t'} be deleted`);
+  return canBeDeleted;
 };
 
 // Stack doesn't have a stage tag or tag isn't production/automation
@@ -49,6 +51,7 @@ let stackIsStale = (stack, config) => {
 // Stack status is stable and not in error state
 let stackIsInDeletableStatus = (stack) => {
   const statusesToDelete = ['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE'];
+  console.log('Stack status is', stack.StackStatus);
   return statusesToDelete.indexOf(stack.StackStatus) > -1;
 };
 
