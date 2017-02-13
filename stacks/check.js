@@ -1,4 +1,5 @@
 'use strict';
+const AWS = require('aws-sdk');
 const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 
 module.exports.hello = (event, context) => {
@@ -35,7 +36,7 @@ let publishStacksForDeletion = (stacks) => {
 
 let publishStackForDeletion = (stack) => {
   const params = {
-    Message: stack.name,
+    Message: stack.StackName,
     TopicArn: `arn:aws:sns:us-east-1:${process.env.ACCOUNT_ID}:delete-stack`
   };
   return sns.publish(params).promise();

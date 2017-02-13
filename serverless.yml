@@ -4,6 +4,7 @@ provider:
   name: aws
   runtime: nodejs4.3
   stage: automation
+  deploymentBucket: automation-serverlessartifact-${opt:accountId, env:ACCOUNT_ID}
   environment:
     ACCOUNT_ID: ${opt:accountId, env:ACCOUNT_ID}
   iamRoleStatements:
@@ -14,13 +15,13 @@ provider:
         - cloudformation:*
 
 functions:
-  checkStacks:
+  CheckStacks:
     handler: stacks/check.handler
     events:
       # 4 AM UTC / 11 PM ET
       - schedule: cron(0 4 ? * * *)
 
-  deleteStacks:
+  DeleteStacks:
     handler: stacks/delete.handler
     events:
       - sns: delete-stack
