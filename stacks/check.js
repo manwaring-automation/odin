@@ -1,11 +1,12 @@
 'use strict';
 const AWS = require('aws-sdk');
 const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
+const sns = new AWS.SNS({ apiVersion: '2010-03-31' });
 
 module.exports.hello = (event, context) => {
   listStacks()
     .then(getStacksToDelete)
-    .then(publishForDeletion)
+    .then(publishStacksForDeletion)
     .then( () => console.log('Finished checking stacks for deletion'))
     .catch( err => console.log('Error checking stacks for deletion', err));
 };

@@ -5,7 +5,7 @@ module.exports.hello = (event, context, callback) => {
   getStackName(event)
     .then(deleteStack)
     .then( stack => console.log('Successfully deleted stack', stack))
-    .catch( err => console.error('Error deleting stack', stack));
+    .catch( err => console.error('Error deleting stack', err));
 };
 
 let getStackName = (event) => {
