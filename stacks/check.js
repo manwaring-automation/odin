@@ -5,9 +5,10 @@ const sns = new AWS.SNS({ apiVersion: '2010-03-31' });
 
 module.exports.handler = (event, context, callback) => {
   const config = JSON.stringify(event, null, 2);
-  console.log('Received event to check stack status for automatic deletion with configuration', JSON.parse(config));
+  const configJSON = JSON.parse(config);
+  console.log('Received event to check stack status for automatic deletion with configuration', config, configJSON, `config.staleAfter=${config.staleAfter} configJSON.staleAfter=${configJSON.staleAfter}`);
   listAllStacks()
-    .then( stacks => getStacksToDelete(stacks, config))
+    .then( stacks => getStacksToDelete(stacks, configJSON))
     .then(publishStacksForDeletion)
     .then( () => callback(null, 'Finished checking stacks for deletion'))
     .catch( err => callback(err));
