@@ -28,6 +28,9 @@ let shouldDeleteStack = (stack, config) => {
   let canBeDeleted = stackIsNonProdOrAutomation(stack)
       && stackIsStale(stack, config)
       && stackIsInDeletableStatus(stack);
+  console.log('Stack is non prod or automation', stackIsNonProdOrAutomation(stack));
+  console.log('Stack is stale', stackIsStale(stack, config));
+  console.log('Stack is in deletable status', stackIsInDeletableStatus(stack));
   console.log(`Stack should${canBeDeleted ? '' : 'n\'t'} be deleted`);
   return canBeDeleted;
 };
