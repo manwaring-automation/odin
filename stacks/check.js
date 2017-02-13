@@ -3,12 +3,13 @@ const AWS = require('aws-sdk');
 const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 const sns = new AWS.SNS({ apiVersion: '2010-03-31' });
 
-module.exports.handler = (event, context) => {
+module.exports.handler = (event, context, callback) => {
+  console.log('Received event to check stack status for automatic deletion', JSON.stringify(event, null, 2));
   listAllStacks()
     .then(getStacksToDelete)
     .then(publishStacksForDeletion)
-    .then( () => console.log('Finished checking stacks for deletion'))
-    .catch( err => console.log('Error checking stacks for deletion', err));
+    .then( () => callback(null, 'Finished checking stacks for deletion'))
+    .catch( err => callback(err));
 };
 
 let listAllStacks = () => {
@@ -36,7 +37,7 @@ let stackIsNonProdOrAutomation = (stack) => {
   return !stage || stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
 };
 
-// Stack hasn't been updated in 6 hours
+// Stack hasn't been updated in 24 hours
 let stackIsStale = (stack) => {
   const stackLastUpdated = stack.LastUpdatedTime ? stack.LastUpdatedTime : stack.CreationTime;
   const lastUpdated = Math.floor((new Date() - stackLastUpdated) / 36e5);
@@ -44,6 +45,7 @@ let stackIsStale = (stack) => {
   return lastUpdated > 6;
 };
 
+// Stack status is stable and not in error state
 let stackIsInDeletableStatus = (stack) => {
   const statusesToDelete = ['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE'];
   return statusesToDelete.indexOf(stack.StackStatus) > -1;
