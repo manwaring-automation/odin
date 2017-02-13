@@ -28,10 +28,6 @@ let shouldDeleteStack = (stack, config) => {
   let canBeDeleted = stackIsNonProdOrAutomation(stack)
       && stackIsStale(stack, config)
       && stackIsInDeletableStatus(stack);
-  console.log('Stack is non prod or automation', stackIsNonProdOrAutomation(stack));
-  console.log('Stack is stale', stackIsStale(stack, config));
-  console.log('Stack is in deletable status', stackIsInDeletableStatus(stack));
-  console.log(`Stack should${canBeDeleted ? '' : 'n\'t'} be deleted`);
   return canBeDeleted;
 };
 
@@ -48,6 +44,7 @@ let stackIsStale = (stack, config) => {
   const stackLastUpdated = stack.LastUpdatedTime ? stack.LastUpdatedTime : stack.CreationTime;
   const lastUpdated = Math.floor((new Date() - stackLastUpdated) / 36e5);
   console.log(`Stack was last updated ${lastUpdated} hours ago`);
+  console.log(`Stack is stale with lastUpdated=${lastUpdated} and staleAfter=${parseInt(config.staleAfter)} : ${lastUpdated > parseInt(config.staleAfter)}`)
   return lastUpdated > parseInt(config.staleAfter);
 };
 
