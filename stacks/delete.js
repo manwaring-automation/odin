@@ -1,11 +1,12 @@
 'use strict';
 const AWS = require('aws-sdk');
+const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 
 module.exports.handler = (event, context, callback) => {
   getStackName(event)
     .then(deleteStack)
-    .then( stack => console.log('Successfully deleted stack', stack))
-    .catch( err => console.error('Error deleting stack', err));
+    .then( stack => callback(null, `Successfully deleted stack  ${stack}`) )
+    .catch( err => callback(err) );
 };
 
 let getStackName = (event) => {
@@ -13,6 +14,7 @@ let getStackName = (event) => {
 };
 
 let deleteStack = (stackName) => {
-    console.log('Deleting stack with name', stackName);
-    return Promise.resolve(stackName);
+  const params = { StackName: stackName };
+  console.log('Deleting stack with params', params);
+  return cloudFormation.deleteStack(params).promise();
 };
