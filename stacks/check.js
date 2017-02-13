@@ -12,22 +12,16 @@ module.exports.handler = (event, context) => {
 };
 
 let listStacks = () => {
-  const params = {
-    StackStatusFilter: [
-      'CREATE_COMPLETE',
-      'ROLLBACK_COMPLETE',
-      'UPDATE_COMPLETE',
-      'UPDATE_ROLLBACK_COMPLETE'
-    ]
-  };
-  return cloudFormation.listStacks(params).promise();
+  const params = {};
+  return cloudFormation.describeStacks(params).promise();
 };
 
 let getStacksToDelete = (response) => {
   console.log('Received list stacks response', response);
   return Promise.resolve(response.Stacks.filter(stack => {
     console.log(stack);
-    //TODO logic - if non prod and last create/update date > 6 hour ago then delete
+    // TODO logic - if non prod and last create/update date > 6 hour ago then delete
+    // TODO logic - status is one of 'CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE'
     return true;
   }));
 };
