@@ -4,11 +4,9 @@ const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 const sns = new AWS.SNS({ apiVersion: '2010-03-31' });
 
 module.exports.handler = (event, context, callback) => {
-  const config = JSON.parse(JSON.stringify(event, null, 2));
-  console.log('Received event to check stack status for automatic deletion with configuration', config);
-  console.log('Received original event', event);
+  console.log('Received event to check stack status for automatic deletion with configuration', event);
   listAllStacks()
-    .then( stacks => getStacksToDelete(stacks, config))
+    .then( stacks => getStacksToDelete(stacks, event))
     .then(publishStacksForDeletion)
     .then( () => callback(null, 'Finished checking stacks for deletion'))
     .catch( err => callback(err));
