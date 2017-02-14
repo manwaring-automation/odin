@@ -17,13 +17,15 @@ functions:
     handler: stacks/check.handler
     events:
       # 8 AM UTC / 3 AM ET, delete if older than 2 hours
-      - schedule: cron(0 8 ? * * *)
-        input:
-          staleAfter: 2
-      # Every 6 hours, delete if older than 12 hours
-      - schedule: cron(0 */6 ? * * *)
-        input:
-          staleAfter: 12
+      - schedule:
+          rate: cron(0 8 ? * * *)
+          input:
+            staleAfter: 2
+      # Every 1 hour, delete if older than 12 hours
+      - schedule:
+          rate: cron(0 */1 ? * * *)
+          input:
+            staleAfter: 12
 
   DeleteStacks:
     handler: stacks/delete.handler

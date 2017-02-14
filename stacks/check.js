@@ -6,6 +6,7 @@ const sns = new AWS.SNS({ apiVersion: '2010-03-31' });
 module.exports.handler = (event, context, callback) => {
   const config = JSON.parse(JSON.stringify(event, null, 2));
   console.log('Received event to check stack status for automatic deletion with configuration', config);
+  console.log('Received original event', event);
   listAllStacks()
     .then( stacks => getStacksToDelete(stacks, config))
     .then(publishStacksForDeletion)
