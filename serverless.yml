@@ -26,11 +26,6 @@ functions:
           rate: cron(0 */1 ? * * *)
           input:
             staleAfter: 12
-      # Every 1 hour, delete if older than 12 hours
-      - schedule:
-          rate: cron(* * ? * * *)
-          input:
-            staleAfter: 12
 
   DeleteStacks:
     handler: stacks/delete.handler
