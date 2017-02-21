@@ -1,4 +1,4 @@
-service: Odin
+service: odin
 
 provider:
   name: aws
