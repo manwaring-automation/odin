@@ -59,7 +59,7 @@ let publishStacksForDeletion = (stacks) => {
 let publishStackForDeletion = (stack) => {
   const params = {
     Message: stack.StackName,
-    TopicArn: `arn:aws:sns:us-east-1:${process.env.ACCOUNT_ID}:delete-stack`
+    TopicArn: process.env.DELETE_STACK_TOPIC
   };
   console.log('Publishing deletion request for stack with params', params);
   return sns.publish(params).promise();

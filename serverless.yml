@@ -7,10 +7,17 @@ provider:
   deploymentBucket: automation-serverlessartifact-${opt:accountId, env:ACCOUNT_ID}
   environment:
     ACCOUNT_ID: ${opt:accountId, env:ACCOUNT_ID}
+    DELETE_STACK_TOPIC: arn:aws:sns:us-east-1:${opt:accountId, env:ACCOUNT_ID}:delete-stack
   iamRoleStatements:
     - Effect: Allow
       Resource: '*'
-      Action: '*'
+      Action:
+        - cloudFormation:DescribeStacks
+        - cloudFormation:DeleteStack
+    - Effect: Allow
+      Resource: arn:aws:sns:us-east-1:${opt:accountId, env:ACCOUNT_ID}:delete-stack
+      Action:
+        - sns:Publish
 
 functions:
   CheckStacks:
