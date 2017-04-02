@@ -6,6 +6,8 @@ provider:
   stage: test
   environment:
     STAGE: ${opt:stage, self:provider.stage}
+    LOG_LEVEL:
+      Fn::FindInMap: [ LogLevel, ${opt:stage, self:provider.stage}, level ]
     DELETE_STACK_TOPIC:
       Fn::Join:
         - ':'
@@ -39,3 +41,15 @@ functions:
 
 resources:
   Description: Automated service for destroying temporary stacks (retains production and automation stacks)
+  
+  Mappings:
+    LogLevel:
+      test:
+        level: TRACE
+      local:
+        level: TRACE
+      automation:
+        level: INFO
+      production:
+        level: INFO
+
