@@ -35,7 +35,7 @@ const emptyBucket = (objects, bucket) => {
     }
   };
   console.log('Deleting objects with params', params);
-  return s3.emptyBucket(params).promise();
+  return s3.deleteObjects(params).promise();
 };
 
 const deleteStack = stack => {
