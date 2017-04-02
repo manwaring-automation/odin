@@ -37,12 +37,12 @@ const stackIsNonProdOrAutomation = stack => {
   return !stage || stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
 };
 
-// Stack hasn't been updated in 24 hours
+// Stack hasn't been updated recently - last updated setting configured in CloudWatch alarm, set in serverless.yml
 const stackIsStale = (stack, config) => {
   const stackLastUpdated = stack.LastUpdatedTime ? stack.LastUpdatedTime : stack.CreationTime;
   const lastUpdated = Math.floor((new Date() - stackLastUpdated) / 36e5);
   console.log(`Stack was last updated ${lastUpdated} hours ago`);
-  return lastUpdated > parseInt(config.staleAfter);
+  return lastUpdated >= parseInt(config.staleAfter);
 };
 
 // Stack status is stable and not in error state
