@@ -7,7 +7,7 @@ provider:
   environment:
     STAGE: ${opt:stage, self:provider.stage}
     LOG_LEVEL:
-      Fn::FindInMap: [ LogLevel, ${opt:stage, self:provider.stage}, level ]
+      Fn::FindInMap: [ LogLevel, '${opt:stage, self:provider.stage}', level ]
     DELETE_STACK_TOPIC:
       Fn::Join:
         - ':'
