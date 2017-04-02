@@ -59,10 +59,10 @@ const publishStacksForDeletion = stacks => {
 const publishStackForDeletion = stack => {
   const serverlessBucketDisplayNameOutput = stack.Outputs.find( output => output.OutputKey === 'ServerlessDeploymentBucketName');
   const params = {
-    Message: {
+    Message: JSON.stringify({
       stack: stack.StackName,
       deploymentBucket: serverlessBucketDisplayNameOutput ? serverlessBucketDisplayNameOutput.OutputValue : ''
-    },
+    }),
     TopicArn: process.env.DELETE_STACK_TOPIC
   };
   console.log('Publishing deletion request for stack with params', params);

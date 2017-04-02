@@ -12,7 +12,7 @@ module.exports.handler = (event, context, callback) => {
 };
 
 const getStackConfig = event => {
-  return Promise.resolve(event.Records[0].Sns.Message);
+  return Promise.resolve(JSON.parse(event.Records[0].Sns.Message));
 };
 
 const deleteStack = config => {
