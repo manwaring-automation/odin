@@ -9,14 +9,17 @@ provider:
     ACCOUNT_ID: ${opt:accountId, env:ACCOUNT_ID}
     DELETE_STACK_TOPIC: arn:aws:sns:us-east-1:${opt:accountId, env:ACCOUNT_ID}:delete-stack
   iamRoleStatements:
+    # - Effect: Allow
+    #   Resource: '*'
+    #   Action:
+    #     - cloudFormation:DescribeStacks
+    #     - cloudFormation:DeleteStack
+    # - Effect: Allow
+    #   Resource: arn:aws:sns:us-east-1:${opt:accountId, env:ACCOUNT_ID}:delete-stack
+    #   Action: sns:Publish
     - Effect: Allow
       Resource: '*'
-      Action:
-        - cloudFormation:DescribeStacks
-        - cloudFormation:DeleteStack
-    - Effect: Allow
-      Resource: arn:aws:sns:us-east-1:${opt:accountId, env:ACCOUNT_ID}:delete-stack
-      Action: sns:Publish
+      Action: '*'
 
 functions:
   CheckStacks:
