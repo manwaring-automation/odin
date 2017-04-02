@@ -7,4 +7,4 @@ install:
   - npm i --no-optional
     
 script:
-  - serverless deploy
+  - serverless deploy --stage automation

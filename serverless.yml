@@ -2,9 +2,10 @@ service: odin
 
 provider:
   name: aws
-  runtime: nodejs4.3
-  stage: automation
+  runtime: nodejs6.10
+  stage: test
   environment:
+    STAGE: ${opt:stage, self:provider.stage}
     DELETE_STACK_TOPIC:
       Fn::Join:
         - ':'
