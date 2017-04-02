@@ -34,7 +34,7 @@ const deleteObjects = (objects, bucket) => {
       Objects: objects.Contents.map( object => { return { Key: object.Key } })
     }
   };
-  console.log('Deleting object with params', params);
+  console.log('Deleting objects with params', params);
   return s3.deleteObjects(params).promise();
 };
 
