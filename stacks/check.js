@@ -2,7 +2,7 @@
 const AWS = require('aws-sdk');
 const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 const sns = new AWS.SNS({ apiVersion: '2010-03-31' });
-const logger = require('log4js').getLogger();
+const logger = require('log4js').getLogger('ODIN');
 logger.setLevel(process.env.LOG_LEVEL);
 
 module.exports.handler = (event, context, callback) => {
