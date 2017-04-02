@@ -12,17 +12,17 @@ module.exports.handler = (event, context, callback) => {
     .catch( err => callback(err));
 };
 
-let listAllStacks = () => {
+const listAllStacks = () => {
   const params = {};
   return cloudFormation.describeStacks(params).promise();
 };
 
-let getStacksToDelete = (response, config) => {
+const getStacksToDelete = (response, config) => {
   console.log('Received list stacks response', response);
   return Promise.resolve( response.Stacks.filter( stack => shouldDeleteStack(stack, config) ));
 };
 
-let shouldDeleteStack = (stack, config) => {
+const shouldDeleteStack = (stack, config) => {
   console.log('Seeing if stack should be deleted', stack);
   return stackIsNonProdOrAutomation(stack)
       && stackIsStale(stack, config)
@@ -30,7 +30,7 @@ let shouldDeleteStack = (stack, config) => {
 };
 
 // Stack doesn't have a stage tag or tag isn't production/automation
-let stackIsNonProdOrAutomation = (stack) => {
+const stackIsNonProdOrAutomation = stack => {
   const stagesToRetain = ['PROD', 'PRODUCTION', 'AUTO', 'AUTOMATION'];
   const stage = stack.Tags.find(tag => tag.Key.toUpperCase() === 'STAGE');
   console.log('Stack stage is', stage);
@@ -38,7 +38,7 @@ let stackIsNonProdOrAutomation = (stack) => {
 };
 
 // Stack hasn't been updated in 24 hours
-let stackIsStale = (stack, config) => {
+const stackIsStale = (stack, config) => {
   const stackLastUpdated = stack.LastUpdatedTime ? stack.LastUpdatedTime : stack.CreationTime;
   const lastUpdated = Math.floor((new Date() - stackLastUpdated) / 36e5);
   console.log(`Stack was last updated ${lastUpdated} hours ago`);
@@ -46,19 +46,23 @@ let stackIsStale = (stack, config) => {
 };
 
 // Stack status is stable and not in error state
-let stackIsInDeletableStatus = (stack) => {
+const stackIsInDeletableStatus = stack => {
   const statusesToDelete = ['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE'];
   console.log('Stack status is', stack.StackStatus);
   return statusesToDelete.indexOf(stack.StackStatus) > -1;
 };
 
-let publishStacksForDeletion = (stacks) => {
+const publishStacksForDeletion = stacks => {
   return Promise.all( stacks.map( stack => publishStackForDeletion(stack) ));
 };
 
-let publishStackForDeletion = (stack) => {
+const publishStackForDeletion = stack => {
+  const serverlessBucketDisplayNameOutput = stack.Outputs.find( output => output.OutputKey === 'ServerlessDeploymentBucketName');
   const params = {
-    Message: stack.StackName,
+    Message: {
+      stack: stack.StackName,
+      deploymentBucket: serverlessBucketDisplayNameOutput ? serverlessBucketDisplayNameOutput.OutputValue : ''
+    },
     TopicArn: process.env.DELETE_STACK_TOPIC
   };
   console.log('Publishing deletion request for stack with params', params);
