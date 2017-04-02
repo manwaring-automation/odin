@@ -4,10 +4,13 @@ provider:
   name: aws
   runtime: nodejs4.3
   stage: automation
-  deploymentBucket: automation-serverlessartifact-${opt:accountId, env:ACCOUNT_ID}
   environment:
-    ACCOUNT_ID: ${opt:accountId, env:ACCOUNT_ID}
-    DELETE_STACK_TOPIC: arn:aws:sns:us-east-1:${opt:accountId, env:ACCOUNT_ID}:delete-stack
+    DELETE_STACK_TOPIC:
+      Fn::Join:
+        - ':'
+        - - arn:aws:sns:us-east-1
+          - Ref: AWS::AccountId
+          - delete-stack
   iamRoleStatements:
     - Effect: Allow
       Resource: '*'
