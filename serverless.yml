@@ -5,7 +5,6 @@ provider:
   runtime: nodejs6.10
   stage: test
   environment:
-    STAGE: ${opt:stage, self:provider.stage}
     LOG_LEVEL:
       Fn::FindInMap: [ LogLevel, '${opt:stage, self:provider.stage}', level ]
     DELETE_STACK_TOPIC:

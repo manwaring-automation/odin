@@ -2,10 +2,13 @@
 const AWS = require('aws-sdk');
 const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
+const logger = require('log4js').getLogger();
+logger.setLevel(process.env.LOG_LEVEL);
 
 module.exports.handler = (event, context, callback) => {
   const config = getStackConfig(event);
-  console.log('Received event to delete stack', config);
+  logger.info('Received event to delete stack', config);
+  logger.info(`Odin has a seat in Valhalla ready for the ${config.stack} stack`);
 
   emptyBuckets(config.bucketsToEmpty)
     .then(results => deleteStack(config.stack))
@@ -27,7 +30,7 @@ const emptyBucket = bucket => {
 
 const listBucketObjects = bucket => {
   const params = { Bucket: bucket };
-  console.log('Listing objects with params', params);
+  logger.trace('Listing objects with params', params);
   return s3.listObjectsV2(params).promise();
 };
 
@@ -38,12 +41,12 @@ const deleteObjects = (objects, bucket) => {
       Objects: objects.Contents.map( object => { return { Key: object.Key } })
     }
   };
-  console.log('Deleting objects with params', params);
+  logger.trace('Deleting objects with params', params);
   return s3.deleteObjects(params).promise();
 };
 
 const deleteStack = stack => {
   const params = { StackName: stack };
-  console.log('Deleting stack with params', params);
+  logger.trace('Deleting stack with params', params);
   return cloudFormation.deleteStack(params).promise();
 };

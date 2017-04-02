@@ -1,0 +1,9 @@
+{
+  "name": "odin",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "log4js": "^1.1.1"
+  }
+}
