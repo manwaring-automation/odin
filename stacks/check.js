@@ -57,14 +57,19 @@ const publishStacksForDeletion = stacks => {
 };
 
 const publishStackForDeletion = stack => {
-  const serverlessBucketDisplayNameOutput = stack.Outputs.find( output => output.OutputKey === 'ServerlessDeploymentBucketName');
   const params = {
     Message: JSON.stringify({
       stack: stack.StackName,
-      deploymentBucket: serverlessBucketDisplayNameOutput ? serverlessBucketDisplayNameOutput.OutputValue : ''
+      bucketsToEmpty: getBucketsToEmpty(stack)
     }),
     TopicArn: process.env.DELETE_STACK_TOPIC
   };
   console.log('Publishing deletion request for stack with params', params);
   return sns.publish(params).promise();
+};
+
+//If have additional buckets that need to be emptied, get and return them here
+const getBucketsToEmpty = stack => {
+  const serverlessBucketDisplayNameOutput = stack.Outputs.find( output => output.OutputKey === 'ServerlessDeploymentBucketName');
+  return serverlessBucketDisplayNameOutput ? [serverlessBucketDisplayNameOutput.OutputValue] : [];
 };

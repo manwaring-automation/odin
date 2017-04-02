@@ -7,9 +7,9 @@ module.exports.handler = (event, context, callback) => {
   const config = getStackConfig(event);
   console.log('Received event to delete stack', config);
 
-  emptyDeploymentBucket(config.deploymentBucket)
+  emptyBuckets(config.bucketsToEmpty)
     .then(results => deleteStack(config.stack))
-    .then( stack => callback(null, `Successfully deleted stack  ${stack}`) )
+    .then( stack => callback(null, `Successfully deleted stack ${stack}`) )
     .catch( err => callback(err) );
 };
 
@@ -17,8 +17,12 @@ const getStackConfig = event => {
   return JSON.parse(event.Records[0].Sns.Message);
 };
 
-const emptyDeploymentBucket = bucket => {
-  return bucket ? listBucketObjects(bucket).then(objects => emptyBucket(objects, bucket)) : Promise.resolve('');
+const emptyBuckets = buckets => {
+  return buckets.length ? Promise.all(buckets.map(bucket => emptyBucket(bucket))) : Promise.resolve('');
+};
+
+const emptyBucket = bucket => {
+  return listBucketObjects(bucket).then(objects => deleteObjects(objects, bucket));
 };
 
 const listBucketObjects = bucket => {
@@ -27,7 +31,7 @@ const listBucketObjects = bucket => {
   return s3.listObjectsV2(params).promise();
 };
 
-const emptyBucket = (objects, bucket) => {
+const deleteObjects = (objects, bucket) => {
   const params = {
     Bucket: bucket,
     Delete: {
