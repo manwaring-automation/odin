@@ -15,11 +15,8 @@ provider:
         - cloudFormation:DescribeStacks
         - cloudFormation:DeleteStack
     - Effect: Allow
-      # Resource: arn:aws:sns:us-east-1:${opt:accountId, env:ACCOUNT_ID}:delete-stack
-      Resource:
-        Ref : SNSTopicDeletestack
-      Action:
-        - sns:Publish
+      Resource: arn:aws:sns:us-east-1:${opt:accountId, env:ACCOUNT_ID}:delete-stack
+      Action: sns:Publish
 
 functions:
   CheckStacks:
