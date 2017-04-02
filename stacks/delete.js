@@ -18,16 +18,16 @@ const getStackConfig = event => {
 };
 
 const emptyDeploymentBucket = bucket => {
-  return bucket ? listObjects(bucket).then(objects => deleteObjects(objects, bucket)) : Promise.resolve('');
+  return bucket ? listBucketObjects(bucket).then(objects => emptyBucket(objects, bucket)) : Promise.resolve('');
 };
 
-const listObjects = bucket => {
+const listBucketObjects = bucket => {
   const params = { Bucket: bucket };
   console.log('Listing objects with params', params);
   return s3.listObjectsV2(params).promise();
 };
 
-const deleteObjects = (objects, bucket) => {
+const emptyBucket = (objects, bucket) => {
   const params = {
     Bucket: bucket,
     Delete: {
@@ -35,7 +35,7 @@ const deleteObjects = (objects, bucket) => {
     }
   };
   console.log('Deleting objects with params', params);
-  return s3.deleteObjects(params).promise();
+  return s3.emptyBucket(params).promise();
 };
 
 const deleteStack = stack => {
