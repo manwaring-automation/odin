@@ -31,7 +31,7 @@ For this specific scenario you can use a tool like the `empty-s3-bucket` service
 An exception to this rule are the deployment buckets created by the [Serverless Framework](https://serverless.com/) - Odin will check for the deployment bucket's name in the CloudFormation stack's output, and that bucket will be emptied before the delete stack command is called.
 
 # Architecture Overview
-![odin - architecture overview](https://cloud.githubusercontent.com/assets/2955468/24622176/074bffb2-1872-11e7-8816-ae9f0f9a28ae.png)
+![odin - architecture overview](https://cloud.githubusercontent.com/assets/2955468/24622720/f24c75a4-1873-11e7-9e09-b83a1425c196.png)
 
 [travis-badge]: https://travis-ci.org/manwaring/odin.svg?branch=master		
 [travis-badge-url]: https://travis-ci.org/manwaring/odin
