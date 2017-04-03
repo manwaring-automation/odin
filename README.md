@@ -6,7 +6,7 @@ Odin, or Wōtan, is a Norse god who directs the valkyries and is the guardian of
 # What it does
 This serverless application periodically checks the status of CloudFormation stacks in your AWS environment and sends the stale ones to Valhalla.
 
-Odin currently determines that a stack is stale and should be removed with three criteria:
+Odin currently determines that a stack is stale and should be removed when it doesn't fit any of the following three criteria:
 
 1. **Tagging:**  If a stack is tagged with the stage 'Production' or 'Automation' (or either's derivatives, like 'Prod' or 'Auto') then it is ineligible for deletion
 1. **Status:**  If a stack's status is in a failure or in-progress state then it is ineligible for deletion
