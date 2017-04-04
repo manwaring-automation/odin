@@ -21,6 +21,12 @@ To deploy Odin to your AWS environment simply use your favorite CI/CD tools (thi
 
 To change the frequency with which Odin runs and the settings used to determine whether a stack is eligible for deletion modify the values in [config.yml](https://github.com/manwaring/odin/blob/master/config.yml) and redeploy the application.
 
+# Local Debugging
+
+The '.vscode' folder contains settings for making local debugging via [VS Code](https://code.visualstudio.com/) a bit easier, especially if you don't have a Node environment already running or you are running a different version of Node.
+
+See [this README.md](https://github.com/pariveda-serverless/support/blob/master/nodejs/4.3.2/local/README.md) for more on how you can debug Odin with this tool.
+
 # Limitations
 Unlike his Norse namesake Odin is unable to practice magic and cannot remove stacks that aren't self-removing.
 
