@@ -8,6 +8,12 @@ logger.setLevel(process.env.LOG_LEVEL);
 module.exports.handler = (event, context, callback) => {
   logger.trace('Received event to check stacks for automatic deletion with configuration', event);
   logger.info('Odin is now checking to see if any stacks are worthy of entering Valhalla');
+
+  const config = event
+  logger.trace('staleAfter:', config.staleAfter);
+  logger.trace('stagesToRetain:', config.stagesToRetain);
+  logger.trace('deleteableStatuses:', config.deleteableStatuses);
+
   listAllStacks()
     .then( stacks => getStacksToDelete(stacks, event))
     .then(publishStacksForDeletion)
