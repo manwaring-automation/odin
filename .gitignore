@@ -42,3 +42,5 @@ jspm_packages
 # IntelliJ users
 .idea
 
+# Don't toy with settings in VS Code
+.vscode/settings.json
