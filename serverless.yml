@@ -1,5 +1,7 @@
 service: odin
 
+custom: ${file(./config.yml)}
+
 provider:
   name: aws
   runtime: nodejs6.10
@@ -12,7 +14,7 @@ provider:
         - ':'
         - - arn:aws:sns:us-east-1
           - Ref: AWS::AccountId
-          - delete-stack
+          - delete-stack-${opt:stage, self:provider.stage}
   iamRoleStatements:
     - Effect: Allow
       Resource: '*'
@@ -22,21 +24,24 @@ functions:
   CheckStacks:
     handler: stacks/check.handler
     events:
-      # 8 AM UTC / 3 AM ET, delete if older than 2 hours
       - schedule:
-          rate: cron(0 8 ? * * *)
+          rate: ${self:custom.dailyRate}
           input:
-            staleAfter: 2
-      # Every 1 hour, delete if older than 12 hours
+            staleAfter: ${self:custom.dailyStaleAfter}
+            stagesToRetain: ${self:custom.stagesToRetain}
+            deleteableStatuses: ${self:custom.deleteableStatuses}
+
       - schedule:
-          rate: cron(0 */1 ? * * *)
+          rate: ${self:custom.hourlyRate}
           input:
-            staleAfter: 12
+            staleAfter: ${self:custom.hourlyStaleAfter}
+            stagesToRetain: ${self:custom.stagesToRetain}
+            deleteableStatuses: ${self:custom.deleteableStatuses}
 
   DeleteStacks:
     handler: stacks/delete.handler
     events:
-      - sns: delete-stack
+      - sns: delete-stack-${opt:stage, self:provider.stage}
 
 resources:
   Description: Automated service for destroying temporary stacks (retains production and automation stacks)

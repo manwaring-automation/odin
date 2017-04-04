@@ -19,7 +19,7 @@ Odin is built with the [Serverless Framework](https://serverless.com/) - see the
 
 To deploy Odin to your AWS environment simply use your favorite CI/CD tools (this project uses [Travis-CI](https://travis-ci.org/manwaring/odin)) or even deploy manually from your desktop using the command `sls deploy`.
 
-Currently only stack age is configurable outside of the node code - steps 1 and 2 are written into the application logic in [stacks/check.js](https://github.com/manwaring/odin/blob/master/stacks/check.js).  To modify the frequency with which Odin checks for stale stacks as well as the length of time used to determine staleness you can update the schedule and input parameters defined for the CheckStacks function in [serverless.yml](https://github.com/manwaring/odin/blob/master/serverless.yml).  To modify the rules used for stage tags and stack status you will need to modify the helper methods in [stacks/check.js](https://github.com/manwaring/odin/blob/master/stacks/check.js).
+To change the frequency with which Odin runs and the settings used to determine whether a stack is eligible for deletion modify the values in [config.yml](https://github.com/manwaring/odin/blob/master/config.yml) and redeploy the application.
 
 # Limitations
 Unlike his Norse namesake Odin is unable to practice magic and cannot remove stacks that aren't self-removing.
