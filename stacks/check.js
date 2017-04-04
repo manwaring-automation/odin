@@ -9,11 +9,6 @@ module.exports.handler = (event, context, callback) => {
   logger.trace('Received event to check stacks for automatic deletion with configuration', event);
   logger.info('Odin is now checking to see if any stacks are worthy of entering Valhalla');
 
-  const config = event
-  logger.trace('staleAfter:', config.staleAfter);
-  logger.trace('stagesToRetain:', config.stagesToRetain);
-  logger.trace('deleteableStatuses:', config.deleteableStatuses);
-
   listAllStacks()
     .then( stacks => getStacksToDelete(stacks, event))
     .then(publishStacksForDeletion)
@@ -33,17 +28,16 @@ const getStacksToDelete = (response, config) => {
 
 const shouldDeleteStack = (stack, config) => {
   logger.trace('Seeing if stack should be deleted', stack);
-  return stackIsNonProdOrAutomation(stack)
+  return stackIsNonProdOrAutomation(stack, config)
       && stackIsStale(stack, config)
-      && stackIsInDeletableStatus(stack);
+      && stackIsInDeletableStatus(stack, config);
 };
 
 // Stack doesn't have a stage tag or tag isn't production/automation
-const stackIsNonProdOrAutomation = stack => {
-  const stagesToRetain = ['PROD', 'PRODUCTION', 'AUTO', 'AUTOMATION'];
+const stackIsNonProdOrAutomation = (stack, config) => {
   const stage = stack.Tags.find(tag => tag.Key.toUpperCase() === 'STAGE');
   logger.trace('Stack stage is', stage);
-  return !stage || stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
+  return !stage || config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
 };
 
 // Stack hasn't been updated recently - last updated setting configured in CloudWatch alarm, set in serverless.yml
@@ -55,10 +49,9 @@ const stackIsStale = (stack, config) => {
 };
 
 // Stack status is stable and not in error state
-const stackIsInDeletableStatus = stack => {
-  const statusesToDelete = ['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE'];
+const stackIsInDeletableStatus = (stack, config) => {
   logger.trace('Stack status is', stack.StackStatus);
-  return statusesToDelete.indexOf(stack.StackStatus) > -1;
+  return config.statusesToDelete.indexOf(stack.StackStatus) > -1;
 };
 
 const publishStacksForDeletion = stacks => {
