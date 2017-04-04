@@ -51,7 +51,7 @@ const stackIsStale = (stack, config) => {
 // Stack status is stable and not in error state
 const stackIsInDeletableStatus = (stack, config) => {
   logger.trace('Stack status is', stack.StackStatus);
-  return config.statusesToDelete.indexOf(stack.StackStatus) > -1;
+  return config.deleteableStatuses.indexOf(stack.StackStatus) > -1;
 };
 
 const publishStacksForDeletion = stacks => {
