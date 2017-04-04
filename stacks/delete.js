@@ -2,13 +2,12 @@
 const AWS = require('aws-sdk');
 const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
-const logger = require('log4js').getLogger('ODIN');
-logger.setLevel(process.env.LOG_LEVEL);
+const log = require('console-log-level')({ level: process.env.LOG_LEVEL });
 
 module.exports.handler = (event, context, callback) => {
   const config = getStackConfig(event);
-  logger.info('Received event to delete stack', config);
-  logger.info(`Odin has a seat in Valhalla ready for the ${config.stack} stack`);
+  log.info('Received event to delete stack', config);
+  log.info(`Odin has a seat in Valhalla ready for the ${config.stack} stack`);
 
   emptyBuckets(config.bucketsToEmpty)
     .then(results => deleteStack(config.stack))
@@ -30,7 +29,7 @@ const emptyBucket = bucket => {
 
 const listBucketObjects = bucket => {
   const params = { Bucket: bucket };
-  logger.trace('Listing objects with params', params);
+  log.trace('Listing objects with params', params);
   return s3.listObjectsV2(params).promise();
 };
 
@@ -41,12 +40,12 @@ const deleteObjects = (objects, bucket) => {
       Objects: objects.Contents.map( object => { return { Key: object.Key } })
     }
   };
-  logger.trace('Deleting objects with params', params);
+  log.trace('Deleting objects with params', params);
   return s3.deleteObjects(params).promise();
 };
 
 const deleteStack = stack => {
   const params = { StackName: stack };
-  logger.trace('Deleting stack with params', params);
+  log.trace('Deleting stack with params', params);
   return cloudFormation.deleteStack(params).promise();
 };
