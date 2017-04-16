@@ -26,9 +26,9 @@ Unlike his Norse namesake Odin is unable to practice magic and cannot remove sta
 
 A common example of this situation is a stack which creates an S3 bucket that is later filled with files.  If the stack doesn't contain the resources necessary to empty and then delete this bucket any stack delete commands (whether triggered by Odin, manually, or any other means) will end with the stack in an error state.  Don't treat your stacks this way - let them enter Valhalla with honor!
 
-For this specific scenario you can use a tool like the `empty-s3-bucket` service found in [Lambda Utilities](https://github.com/manwaring/lambda-utilities) in combination with a custom CloudFormation resource to empty buckets when a stack is deleted.  See the infrastructure section of [Santa Swap UI](https://github.com/santaswap/ui) for a real-world example of how this can be achieved.
+For this specific scenario you can use a tool like the `empty-s3-bucket` service found in [Lambda Utilities](https://github.com/manwaring/lambda-utilities) in combination with a custom CloudFormation resource to empty buckets when a stack is deleted.  See the infrastructure section of [Santa Swap UI](https://github.com/santaswap/ui) for a real-world example of how this can be achieved within a stack.
 
-An exception to this rule are the deployment buckets created by the [Serverless Framework](https://serverless.com/) - Odin will check for the deployment bucket's name in the CloudFormation stack's output, and that bucket will be emptied before the delete stack command is called.
+Another approach is to let Odin empty your S3 buckets for you prior to calling the delete stack command.  This approach requires you to output the bucket name in your CloudFormation stack, and then add the output key name to [config.yml](https://github.com/manwaring/odin/blob/master/config.yml).  By default Odin will empty the deployment buckets created by the [Serverless Framework](https://serverless.com/).
 
 # Architecture Overview
 ![odin - architecture overview](https://cloud.githubusercontent.com/assets/2955468/24622720/f24c75a4-1873-11e7-9e09-b83a1425c196.png)
