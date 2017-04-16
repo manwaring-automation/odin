@@ -9,3 +9,6 @@ hourlyStaleAfter: 12
 # Stages and statuses to retain - consistent regardless of schedule
 stagesToRetain: "['PROD', 'PRODUCTION', 'AUTO', 'AUTOMATION']"
 deleteableStatuses: "['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE']"
+
+# CloudFormation output key of buckets to empty
+bucketsToEmpty: "['ServerlessDeploymentBucketName']"

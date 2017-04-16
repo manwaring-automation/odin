@@ -10,7 +10,7 @@ module.exports.handler = (event, context, callback) => {
 
   listAllStacks()
     .then( stacks => getStacksToDelete(stacks, event))
-    .then(publishStacksForDeletion)
+    .then( stacks => publishStacksForDeletion(stacks, event))
     .then( () => callback(null, 'Finished checking stacks for deletion'))
     .catch( err => callback(err));
 };
@@ -53,15 +53,15 @@ const stackIsInDeletableStatus = (stack, config) => {
   return config.deleteableStatuses.indexOf(stack.StackStatus) > -1;
 };
 
-const publishStacksForDeletion = stacks => {
-  return Promise.all( stacks.map( stack => publishStackForDeletion(stack) ));
+const publishStacksForDeletion = (stacks, config) => {
+  return Promise.all( stacks.map( stack => publishStackForDeletion(stack, config) ));
 };
 
-const publishStackForDeletion = stack => {
+const publishStackForDeletion = (stack, config) => {
   const params = {
     Message: JSON.stringify({
       stack: stack.StackName,
-      bucketsToEmpty: getBucketsToEmpty(stack)
+      bucketsToEmpty: getBucketsToEmpty(stack, config)
     }),
     TopicArn: process.env.DELETE_STACK_TOPIC
   };
@@ -71,7 +71,7 @@ const publishStackForDeletion = stack => {
 };
 
 //If have additional buckets that need to be emptied, get and return them here
-const getBucketsToEmpty = stack => {
-  const serverlessBucketDisplayNameOutput = stack.Outputs.find( output => output.OutputKey === 'ServerlessDeploymentBucketName');
+const getBucketsToEmpty = (stack, config) => {
+  const serverlessBucketDisplayNameOutput = stack.Outputs.find( output => config.bucketsToEmpty.indexOf(output.OutputKey) > -1);
   return serverlessBucketDisplayNameOutput ? [serverlessBucketDisplayNameOutput.OutputValue] : [];
 };
