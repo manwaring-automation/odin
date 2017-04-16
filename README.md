@@ -1,6 +1,5 @@
 [![Build Status][travis-badge]][travis-badge-url]
 # Odin
-
 Odin, or Wōtan, is a Norse god who directs the valkyries and is the guardian of Valhalla.  Half of those who perish in combat are welcomed by him into his majestic halls where they prepare for the final battle against Fenrir during the events of Ragnarök.
 
 # What it does
