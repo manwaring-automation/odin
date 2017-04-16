@@ -29,7 +29,7 @@ For this specific scenario you can use a tool like the `empty-s3-bucket` service
 
 Another approach is to let Odin empty your S3 buckets for you prior to calling the delete stack command.  This approach requires you to output the bucket name in your CloudFormation stack, and then add the output key name to [config.yml](https://github.com/manwaring/odin/blob/master/config.yml).  By default Odin will empty the deployment buckets created by the [Serverless Framework](https://serverless.com/).
 
-# Architecture Overview
+# Architecture overview
 ![odin - architecture overview](https://cloud.githubusercontent.com/assets/2955468/24622720/f24c75a4-1873-11e7-9e09-b83a1425c196.png)
 
 [travis-badge]: https://travis-ci.org/manwaring/odin.svg?branch=master		
