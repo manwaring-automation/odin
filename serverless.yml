@@ -30,6 +30,7 @@ functions:
             staleAfter: ${self:custom.dailyStaleAfter}
             stagesToRetain: ${self:custom.stagesToRetain}
             deleteableStatuses: ${self:custom.deleteableStatuses}
+            bucketsToEmpty: ${self:custom.bucketsToEmpty}
 
       - schedule:
           rate: ${self:custom.hourlyRate}
@@ -37,6 +38,7 @@ functions:
             staleAfter: ${self:custom.hourlyStaleAfter}
             stagesToRetain: ${self:custom.stagesToRetain}
             deleteableStatuses: ${self:custom.deleteableStatuses}
+            bucketsToEmpty: ${self:custom.bucketsToEmpty}
 
   DeleteStacks:
     handler: stacks/delete.handler
