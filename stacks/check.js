@@ -72,6 +72,12 @@ const publishStackForDeletion = (stack, config) => {
 
 //If have additional buckets that need to be emptied, get and return them here
 const getBucketsToEmpty = (stack, config) => {
-  const serverlessBucketDisplayNameOutput = stack.Outputs.find( output => config.bucketsToEmpty.indexOf(output.OutputKey) > -1);
-  return serverlessBucketDisplayNameOutput ? [serverlessBucketDisplayNameOutput.OutputValue] : [];
+  let bucketsToEmpty = [];
+  if (stack.Outputs && stack.Outputs.length > 0) {
+    bucketsToEmpty
+      .push(stack.Outputs
+      .filter( output => config.bucketsToEmpty.indexOf(output.OutputKey) > -1)
+      .map( output => output.OutputValue));
+  }
+  return bucketsToEmpty;
 };
