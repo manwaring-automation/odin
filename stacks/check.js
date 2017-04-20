@@ -74,10 +74,9 @@ const publishStackForDeletion = (stack, config) => {
 const getBucketsToEmpty = (stack, config) => {
   let bucketsToEmpty = [];
   if (stack.Outputs && stack.Outputs.length > 0) {
-    bucketsToEmpty
-      .push(stack.Outputs
+    bucketsToEmpty = stack.Outputs
       .filter( output => config.bucketsToEmpty.indexOf(output.OutputKey) > -1)
-      .map( output => output.OutputValue));
+      .map( output => output.OutputValue);
   }
   return bucketsToEmpty;
 };
