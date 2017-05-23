@@ -2,10 +2,11 @@
 const AWS = require('aws-sdk');
 const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 const sns = new AWS.SNS({ apiVersion: '2010-03-31' });
-const log = require('console-log-level')({ level: process.env.LOG_LEVEL });
+const log = require('winston');
+log.level = process.env.LOG_LEVEL;
 
 module.exports.handler = (event, context, callback) => {
-  log.trace('Received event to check stacks for automatic deletion with configuration', event);
+  log.debug('Received event to check stacks for automatic deletion with configuration', event);
   log.info('Odin is now checking to see if any stacks are worthy of entering Valhalla');
 
   listAllStacks()
@@ -21,12 +22,12 @@ const listAllStacks = () => {
 };
 
 const getStacksToDelete = (response, config) => {
-  log.trace('Received list stacks response', response);
+  log.debug('Received list stacks response', response);
   return Promise.resolve( response.Stacks.filter( stack => shouldDeleteStack(stack, config) ));
 };
 
 const shouldDeleteStack = (stack, config) => {
-  log.trace('Seeing if stack should be deleted', stack);
+  log.debug('Seeing if stack should be deleted', stack);
   return stackIsNonProdOrAutomation(stack, config)
       && stackIsStale(stack, config)
       && stackIsInDeletableStatus(stack, config);
@@ -35,7 +36,7 @@ const shouldDeleteStack = (stack, config) => {
 // Stack doesn't have a stage tag or tag isn't production/automation
 const stackIsNonProdOrAutomation = (stack, config) => {
   const stage = stack.Tags.find(tag => tag.Key.toUpperCase() === 'STAGE');
-  log.trace('Stack stage is', stage);
+  log.debug('Stack stage is', stage);
   return !stage || config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
 };
 
@@ -43,13 +44,13 @@ const stackIsNonProdOrAutomation = (stack, config) => {
 const stackIsStale = (stack, config) => {
   const stackLastUpdated = stack.LastUpdatedTime ? stack.LastUpdatedTime : stack.CreationTime;
   const lastUpdated = Math.floor((new Date() - stackLastUpdated) / 36e5);
-  log.trace(`Stack was last updated ${lastUpdated} hours ago`);
+  log.debug(`Stack was last updated ${lastUpdated} hours ago`);
   return lastUpdated >= parseInt(config.staleAfter);
 };
 
 // Stack status is stable and not in error state
 const stackIsInDeletableStatus = (stack, config) => {
-  log.trace('Stack status is', stack.StackStatus);
+  log.debug('Stack status is', stack.StackStatus);
   return config.deleteableStatuses.indexOf(stack.StackStatus) > -1;
 };
 
@@ -65,7 +66,7 @@ const publishStackForDeletion = (stack, config) => {
     }),
     TopicArn: process.env.DELETE_STACK_TOPIC
   };
-  log.trace('Publishing deletion request for stack with params', params);
+  log.debug('Publishing deletion request for stack with params', params);
   log.info(`The ${stack.StackName} stack is ready for Valhalla - informing the valkyries`);
   return sns.publish(params).promise();
 };

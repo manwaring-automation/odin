@@ -29,7 +29,7 @@ const emptyBucket = bucket => {
 
 const listBucketObjects = bucket => {
   const params = { Bucket: bucket };
-  log.trace('Listing objects with params', params);
+  log.debug('Listing objects with params', params);
   return s3.listObjectsV2(params).promise();
 };
 
@@ -40,12 +40,12 @@ const deleteObjects = (objects, bucket) => {
       Objects: objects.Contents.map( object => { return { Key: object.Key } })
     }
   };
-  log.trace('Deleting objects with params', params);
+  log.debug('Deleting objects with params', params);
   return s3.deleteObjects(params).promise();
 };
 
 const deleteStack = stack => {
   const params = { StackName: stack };
-  log.trace('Deleting stack with params', params);
+  log.debug('Deleting stack with params', params);
   return cloudFormation.deleteStack(params).promise();
 };
