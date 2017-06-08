@@ -2,7 +2,8 @@
 const AWS = require('aws-sdk');
 const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
-const log = require('winston')({ level: process.env.LOG_LEVEL });
+const log = require('winston');
+log.level = process.env.LOG_LEVEL;
 
 module.exports.handler = (event, context, callback) => {
   const config = getStackConfig(event);
