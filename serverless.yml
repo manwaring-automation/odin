@@ -57,4 +57,16 @@ resources:
         level: info
       production:
         level: info
+  
+  Outputs:
 
+    DeleteStackSNS:
+      Description: ARN of the ${opt:stage, self:provider.stage} stage SNS topic for stack deletion
+      Value:
+        Fn::Join:
+          - ':'
+          - - arn:aws:sns:us-east-1
+            - Ref: AWS::AccountId
+            - delete-stack-${opt:stage, self:provider.stage}
+      Export:
+        Name: odin-${opt:stage, self:provider.stage}-delete-stack-sns
