@@ -24,7 +24,8 @@ const getStackConfig = event => {
 
 const getStack = stackName => {
   const params = { StackName: stackName };
-  return cloudFormation.describeStacks(params).promise();
+  return cloudFormation.describeStacks(params).promise()
+          .then(res => res.Stacks[0]);
 };
 
 const getBucketsToEmpty = stack => {
@@ -45,7 +46,7 @@ const emptyBuckets = buckets => {
 };
 
 const emptyBucket = bucket => {
-  long.info('Emptying bucket', bucket);
+  log.info('Emptying bucket', bucket);
   return listBucketObjects(bucket).then(objects => deleteObjects(objects, bucket));
 };
 
