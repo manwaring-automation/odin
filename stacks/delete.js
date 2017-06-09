@@ -10,7 +10,9 @@ module.exports.handler = (event, context, callback) => {
   log.info('Received event to delete stack', config);
   log.info(`Odin has a seat in Valhalla ready for the ${config.stack} stack`);
 
-  emptyBuckets(config.bucketsToEmpty)
+  getStack(config.stack)
+    .then(getBucketsToEmpty)
+    .then(emptyBuckets)
     .then(results => deleteStack(config.stack))
     .then( stack => callback(null, `Successfully deleted stack ${stack}`) )
     .catch( err => callback(err) );
@@ -20,11 +22,30 @@ const getStackConfig = event => {
   return JSON.parse(event.Records[0].Sns.Message);
 };
 
+const getStack = stackName => {
+  const params = { StackName: stackName };
+  return cloudFormation.describeStacks(params).promise();
+};
+
+const getBucketsToEmpty = stack => {
+  log.info('Getting buckets to empty for stack', stack);
+  let bucketsToEmpty = [];
+  const cloudFormationBucketKey = process.env.BUCKETS_TO_EMPTY;
+  if (stack.Outputs && stack.Outputs.length > 0) {
+    bucketsToEmpty = stack.Outputs
+      .filter( output => cloudFormationBucketKey.indexOf(output.OutputKey) > -1 )
+      .map( output => output.OutputValue );
+  }
+  return Promise.resolve(bucketsToEmpty);
+};
+
 const emptyBuckets = buckets => {
+  log.info('Emptying buckets', buckets);
   return buckets.length ? Promise.all(buckets.map(bucket => emptyBucket(bucket))) : Promise.resolve('');
 };
 
 const emptyBucket = bucket => {
+  long.info('Emptying bucket', bucket);
   return listBucketObjects(bucket).then(objects => deleteObjects(objects, bucket));
 };
 

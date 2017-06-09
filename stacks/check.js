@@ -61,8 +61,7 @@ const publishStacksForDeletion = (stacks, config) => {
 const publishStackForDeletion = (stack, config) => {
   const params = {
     Message: JSON.stringify({
-      stack: stack.StackName,
-      bucketsToEmpty: getBucketsToEmpty(stack, config)
+      stack: stack.StackName
     }),
     TopicArn: process.env.DELETE_STACK_TOPIC
   };
@@ -72,12 +71,12 @@ const publishStackForDeletion = (stack, config) => {
 };
 
 //If have additional buckets that need to be emptied, get and return them here
-const getBucketsToEmpty = (stack, config) => {
-  let bucketsToEmpty = [];
-  if (stack.Outputs && stack.Outputs.length > 0) {
-    bucketsToEmpty = stack.Outputs
-      .filter( output => config.bucketsToEmpty.indexOf(output.OutputKey) > -1)
-      .map( output => output.OutputValue);
-  }
-  return bucketsToEmpty;
-};
+// const getBucketsToEmpty = (stack, config) => {
+//   let bucketsToEmpty = [];
+//   if (stack.Outputs && stack.Outputs.length > 0) {
+//     bucketsToEmpty = stack.Outputs
+//       .filter( output => config.bucketsToEmpty.indexOf(output.OutputKey) > -1)
+//       .map( output => output.OutputValue);
+//   }
+//   return bucketsToEmpty;
+// };
