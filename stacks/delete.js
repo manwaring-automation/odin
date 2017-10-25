@@ -7,7 +7,7 @@ log.level = process.env.LOG_LEVEL;
 
 module.exports.handler = (event, context, callback) => {
   const config = getStackConfig(event);
-  log.info('Received event to delete stack', config);
+  log.debug('Received event to delete stack', config);
   log.info(`Odin has a seat in Valhalla ready for the ${config.stack} stack`);
 
   getStack(config.stack)
@@ -29,7 +29,7 @@ const getStack = stackName => {
 };
 
 const getBucketsToEmpty = stack => {
-  log.info('Getting buckets to empty for stack', stack);
+  log.debug('Getting buckets to empty for stack', stack);
   let bucketsToEmpty = [];
   const cloudFormationBucketKey = process.env.BUCKETS_TO_EMPTY;
   if (stack.Outputs && stack.Outputs.length > 0) {
@@ -41,12 +41,12 @@ const getBucketsToEmpty = stack => {
 };
 
 const emptyBuckets = buckets => {
-  log.info('Emptying buckets', buckets);
+  log.debug('Emptying buckets', buckets);
   return buckets.length ? Promise.all(buckets.map(bucket => emptyBucket(bucket))) : Promise.resolve('');
 };
 
 const emptyBucket = bucket => {
-  log.info('Emptying bucket', bucket);
+  log.debug('Emptying bucket', bucket);
   return listBucketObjects(bucket).then(objects => deleteObjects(objects, bucket));
 };
 

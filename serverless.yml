@@ -54,7 +54,7 @@ resources:
       local:
         level: debug
       automation:
-        level: info
+        level: debug
       production:
         level: info
   

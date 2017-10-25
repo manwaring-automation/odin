@@ -36,22 +36,25 @@ const shouldDeleteStack = (stack, config) => {
 // Stack doesn't have a stage tag or tag isn't production/automation
 const stackIsNonProdOrAutomation = (stack, config) => {
   const stage = stack.Tags.find(tag => tag.Key.toUpperCase() === 'STAGE');
-  log.debug('Stack stage is', stage);
-  return !stage || config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
+  const isNonProdOrAutomation = !stage || config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
+  log.debug(`Stack stage is ${stage ? stage.Value : 'undefined'}, which ${isNonProdOrAutomation ? 'isn\'t' : 'is'} production or automation`);
+  return isNonProdOrAutomation;
 };
 
 // Stack hasn't been updated recently - last updated setting configured in CloudWatch alarm, set in serverless.yml
 const stackIsStale = (stack, config) => {
   const stackLastUpdated = stack.LastUpdatedTime ? stack.LastUpdatedTime : stack.CreationTime;
   const lastUpdated = Math.floor((new Date() - stackLastUpdated) / 36e5);
-  log.debug(`Stack was last updated ${lastUpdated} hours ago`);
-  return lastUpdated >= parseInt(config.staleAfter);
+  const isStale = lastUpdated >= parseInt(config.staleAfter);
+  log.debug(`Stack was last updated ${lastUpdated} hours ago and ${isStale ? 'is' : 'isn\'t'} stale`);
+  return isStale;
 };
 
 // Stack status is stable and not in error state
 const stackIsInDeletableStatus = (stack, config) => {
-  log.debug('Stack status is', stack.StackStatus);
-  return config.deleteableStatuses.indexOf(stack.StackStatus) > -1;
+  const isInDeletableStatus = config.deleteableStatuses.indexOf(stack.StackStatus) > -1;
+  log.debug(`Stack status is ${stack.StackStatus} which ${isInDeletableStatus ? 'is' : 'isn\'t'} deletable`);
+  return isInDeletableStatus;
 };
 
 const publishStacksForDeletion = (stacks, config) => {
@@ -69,14 +72,3 @@ const publishStackForDeletion = (stack, config) => {
   log.info(`The ${stack.StackName} stack is ready for Valhalla - informing the valkyries`);
   return sns.publish(params).promise();
 };
-
-//If have additional buckets that need to be emptied, get and return them here
-// const getBucketsToEmpty = (stack, config) => {
-//   let bucketsToEmpty = [];
-//   if (stack.Outputs && stack.Outputs.length > 0) {
-//     bucketsToEmpty = stack.Outputs
-//       .filter( output => config.bucketsToEmpty.indexOf(output.OutputKey) > -1)
-//       .map( output => output.OutputValue);
-//   }
-//   return bucketsToEmpty;
-// };
