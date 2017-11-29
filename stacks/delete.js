@@ -64,7 +64,7 @@ const deleteObjects = (objects, bucket) => {
     }
   };
   log.debug('Deleting objects with params', params);
-  return s3.deleteObjects(params).promise();
+  return objects.length ? s3.deleteObjects(params).promise() : Promise.resolve('');
 };
 
 const deleteStack = stack => {
