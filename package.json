@@ -4,6 +4,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "console-log-level": "^1.4.0"
+    "winston": "^2.3.1"
   }
 }
