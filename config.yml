@@ -7,7 +7,7 @@ hourlyRate: cron(0 */1 ? * * *)
 hourlyStaleAfter: 12
 
 # Stages and statuses to retain - consistent regardless of schedule
-stagesToRetain: "['PROD', 'PRODUCTION', 'AUTO', 'AUTOMATION']"
+stagesToRetain: "['PROD', 'PRODUCTION', 'AUTO', 'AUTOMATION', 'QA', 'DEVELOPMENT', 'DEV']"
 deleteableStatuses: "['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE']"
 
 # CloudFormation output key of buckets to empty

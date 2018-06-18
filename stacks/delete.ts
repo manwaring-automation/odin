@@ -1,11 +1,12 @@
-'use strict';
-const AWS = require('aws-sdk');
-const cloudFormation = new AWS.CloudFormation({ apiVersion: '2010-05-15' });
-const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
-const log = require('winston');
-log.level = process.env.LOG_LEVEL;
+import {  SNSEvent, Callback, Context, Handler } from 'aws-lambda';
+import { CloudFormation, S3 } from 'aws-sdk';
+import * as log from 'winston';
+log.configure({ level: process.env.LOG_LEVEL });
 
-module.exports.handler = (event, context, callback) => {
+const cloudFormation = new CloudFormation({ apiVersion: '2010-05-15' });
+const s3 = new S3({ apiVersion: '2006-03-01' });
+
+export const handler: Handler = (event: SNSEvent, context: Context, callback: Callback) => {
   const config = getStackConfig(event);
   log.debug('Received event to delete stack', config);
   log.info(`Odin has a seat in Valhalla ready for the ${config.stack} stack`);
@@ -18,17 +19,17 @@ module.exports.handler = (event, context, callback) => {
     .catch( err => callback(err) );
 };
 
-const getStackConfig = event => {
+function getStackConfig(event) {
   return JSON.parse(event.Records[0].Sns.Message);
 };
 
-const getStack = stackName => {
+function getStack(stackName): Promise<any> {
   const params = { StackName: stackName };
   return cloudFormation.describeStacks(params).promise()
           .then(res => res.Stacks[0]);
 };
 
-const getBucketsToEmpty = stack => {
+function getBucketsToEmpty(stack): Promise<any> {
   log.debug('Getting buckets to empty for stack', stack);
   let bucketsToEmpty = [];
   const cloudFormationBucketKey = process.env.BUCKETS_TO_EMPTY;
@@ -40,23 +41,23 @@ const getBucketsToEmpty = stack => {
   return Promise.resolve(bucketsToEmpty);
 };
 
-const emptyBuckets = buckets => {
+function emptyBuckets(buckets): Promise<any> {
   log.debug('Emptying buckets', buckets);
   return buckets.length ? Promise.all(buckets.map(bucket => emptyBucket(bucket))) : Promise.resolve('');
 };
 
-const emptyBucket = bucket => {
+function emptyBucket(bucket) {
   log.debug('Emptying bucket', bucket);
   return listBucketObjects(bucket).then(objects => deleteObjects(objects, bucket));
 };
 
-const listBucketObjects = bucket => {
+function listBucketObjects(bucket): Promise<any> {
   const params = { Bucket: bucket };
   log.debug('Listing objects with params', params);
   return s3.listObjectsV2(params).promise();
 };
 
-const deleteObjects = (objects, bucket) => {
+function deleteObjects(objects, bucket): Promise<any> {
   const params = {
     Bucket: bucket,
     Delete: {
@@ -67,7 +68,7 @@ const deleteObjects = (objects, bucket) => {
   return objects.Contents.length ? s3.deleteObjects(params).promise() : Promise.resolve('');
 };
 
-const deleteStack = stack => {
+function deleteStack(stack): Promise<any> {
   const params = { StackName: stack };
   log.debug('Deleting stack with params', params);
   return cloudFormation.deleteStack(params).promise();

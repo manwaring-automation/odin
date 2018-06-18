@@ -1,11 +1,15 @@
-service: odin
+service:
+  name: odin
+
+plugins:
+  - serverless-webpack
 
 custom: ${file(./config.yml)}
 
 provider:
   name: aws
-  runtime: nodejs6.10
-  stage: test
+  runtime: nodejs8.10
+  stage: local
   environment:
     LOG_LEVEL:
       Fn::FindInMap: [ LogLevel, '${opt:stage, self:provider.stage}', level ]
@@ -21,7 +25,8 @@ provider:
       Action: '*'
 
 functions:
-  CheckStacks:
+
+  checkStacks:
     handler: stacks/check.handler
     events:
       - schedule:
@@ -37,7 +42,7 @@ functions:
             stagesToRetain: ${self:custom.stagesToRetain}
             deleteableStatuses: ${self:custom.deleteableStatuses}
 
-  DeleteStacks:
+  deleteStacks:
     handler: stacks/delete.handler
     events:
       - sns: delete-stack-${opt:stage, self:provider.stage}
@@ -45,7 +50,7 @@ functions:
       BUCKETS_TO_EMPTY: ${self:custom.bucketsToEmpty}
 
 resources:
-  Description: Automated service for destroying temporary stacks (retains production and automation stacks)
+  Description: Automated service for destroying temporary stacks (retains production, qa, development, and automation stacks)
   
   Mappings:
     LogLevel:
