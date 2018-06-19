@@ -1,7 +1,7 @@
 import {  CloudWatchLogsEvent, Callback, Context, Handler } from 'aws-lambda';
 import { CloudFormation, SNS } from 'aws-sdk';
 import * as log from 'winston';
-log.configure({ level: process.env.LOG_LEVEL });
+// log.configure({ level: process.env.LOG_LEVEL });
 
 const cloudFormation = new CloudFormation({ apiVersion: '2010-05-15' });
 const sns = new SNS({ apiVersion: '2010-03-31' });
