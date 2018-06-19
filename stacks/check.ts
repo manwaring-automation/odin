@@ -34,11 +34,11 @@ function shouldDeleteStack(stack, config): boolean {
       && stackIsInDeletableStatus(stack, config);
 };
 
-// Stack doesn't have a stage tag or tag isn't production/automation
+// Stack has a stage and tag isn't production/automation
 function stackIsNonProdOrAutomation(stack, config): boolean {
   const stage = stack.Tags.find(tag => tag.Key.toUpperCase() === 'STAGE');
-  const isNonProdOrAutomation = !stage || config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
-  log.debug(`Stack stage is ${stage ? stage.Value : 'undefined'}, which ${isNonProdOrAutomation ? 'isn\'t' : 'is'} production or automation`);
+  const isNonProdOrAutomation = stage && config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
+  log.debug(`Stack stage is ${stage ? stage.Value : 'undefined'}, which ${isNonProdOrAutomation ? 'isn\'t' : 'is'} missing, production, or automation`);
   return isNonProdOrAutomation;
 };
 
