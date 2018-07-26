@@ -51,9 +51,11 @@ function emptyBucket(bucket) {
   return listBucketObjects(bucket).then(objects => deleteObjects(objects, bucket));
 };
 
-function listBucketObjects(bucket): Promise<any> {
+async function listBucketObjects(bucket): Promise<any> {
+  let objects = [];
   const params = { Bucket: bucket };
   log.debug('Listing objects with params', params);
+  do while
   return s3.listObjectsV2(params).promise();
 };
 
