@@ -1,49 +1,10 @@
-import { SNSEvent, Callback, Context, Handler } from 'aws-lambda';
-import { CloudFormation, S3 } from 'aws-sdk';
+import { S3 } from 'aws-sdk';
 import * as log from 'winston';
-log.configure({ level: process.env.LOG_LEVEL });
 
-const cloudFormation = new CloudFormation({ apiVersion: '2010-05-15' });
+log.configure({ level: process.env.LOG_LEVEL });
 const s3 = new S3({ apiVersion: '2006-03-01' });
 
-export const handler: Handler = (event: SNSEvent, context: Context, callback: Callback) => {
-  const config = getStackConfig(event);
-  log.debug('Received event to delete stack', config);
-  log.info(`Odin has a seat in Valhalla ready for the ${config.stack} stack`);
-
-  getStack(config.stack)
-    .then(getBucketsToEmpty)
-    .then(emptyBuckets)
-    .then(results => deleteStack(config.stack))
-    .then(stack => callback(null, `Successfully deleted stack ${stack}`))
-    .catch(err => callback(err));
-};
-
-function getStackConfig(event: SNSEvent): any {
-  return JSON.parse(event.Records[0].Sns.Message);
-}
-
-function getStack(stackName: string): Promise<CloudFormation.Stack> {
-  const params: CloudFormation.DescribeStacksInput = { StackName: stackName };
-  return cloudFormation
-    .describeStacks(params)
-    .promise()
-    .then(res => res.Stacks[0]);
-}
-
-function getBucketsToEmpty(stack: CloudFormation.Stack): Promise<string[]> {
-  log.debug('Getting buckets to empty for stack', stack);
-  let bucketsToEmpty: string[] = [];
-  const cloudFormationBucketKey = process.env.BUCKETS_TO_EMPTY;
-  if (stack.Outputs && stack.Outputs.length > 0) {
-    bucketsToEmpty = stack.Outputs.filter(output => cloudFormationBucketKey.indexOf(output.OutputKey) > -1).map(
-      output => output.OutputValue
-    );
-  }
-  return Promise.resolve(bucketsToEmpty);
-}
-
-function emptyBuckets(bucketNames: string[]): Promise<any> {
+export function emptyBuckets(bucketNames: string[]): Promise<any> {
   log.debug('Emptying buckets', bucketNames);
   return bucketNames.length ? Promise.all(bucketNames.map(bucketName => emptyBucket(bucketName))) : Promise.resolve('');
 }
@@ -111,10 +72,4 @@ function deleteVersions(bucketName: string, versions: S3.ObjectVersion[]) {
   };
   log.debug('Deleting object versions with params', params);
   return versions.length ? s3.deleteObjects(params).promise() : Promise.resolve('');
-}
-
-function deleteStack(stack): Promise<any> {
-  const params = { StackName: stack };
-  log.debug('Deleting stack with params', params);
-  return cloudFormation.deleteStack(params).promise();
 }
