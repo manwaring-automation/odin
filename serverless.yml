@@ -27,7 +27,7 @@ provider:
 functions:
 
   checkStacks:
-    handler: app/check/check.handler
+    handler: app/check.handler
     events:
       - schedule:
           rate: ${self:custom.dailyRate}
@@ -43,7 +43,7 @@ functions:
             deleteableStatuses: ${self:custom.deleteableStatuses}
 
   deleteStacks:
-    handler: app/delete/delete.handler
+    handler: app/delete.handler
     events:
       - sns: delete-stack-${opt:stage, self:provider.stage}
     environment:

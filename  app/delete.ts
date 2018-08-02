@@ -1,10 +1,10 @@
-import { SNSEvent, Callback, Context, Handler } from 'aws-lambda';
+import { SNSEvent, Callback, Context } from 'aws-lambda';
 import * as log from 'winston';
-import { DeleteRequest, emptyBuckets, deleteStack, getBucketsToEmpty } from '../shared';
+import { DeleteRequest, emptyBuckets, deleteStack, getBucketsToEmpty } from './shared';
 
 log.configure({ level: process.env.LOG_LEVEL });
 
-export const handler: Handler = async (event: SNSEvent, context: Context, callback: Callback) => {
+export async function handler(event: SNSEvent, context: Context, callback: Callback) {
   try {
     const config = getStackConfig(event);
     log.debug('Received request to delete stack', config);
@@ -14,7 +14,7 @@ export const handler: Handler = async (event: SNSEvent, context: Context, callba
   } catch (err) {
     return callback(err);
   }
-};
+}
 
 function getStackConfig(event: SNSEvent): DeleteRequest {
   return JSON.parse(event.Records[0].Sns.Message);
