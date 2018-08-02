@@ -4,9 +4,12 @@ import * as log from 'winston';
 log.configure({ level: process.env.LOG_LEVEL });
 const cf = new CloudFormation({ apiVersion: '2010-05-15' });
 
-export function listAllStacks(): Promise<any> {
+export function listAllStacks(): Promise<CloudFormation.Stack[]> {
   const params = {};
-  return cf.describeStacks(params).promise();
+  return cf
+    .describeStacks(params)
+    .promise()
+    .then(response => response.Stacks);
 }
 
 export async function getBucketsToEmpty(stackName: string): Promise<string[]> {

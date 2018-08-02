@@ -6,13 +6,11 @@ log.configure({ level: process.env.LOG_LEVEL });
 
 export const handler: Handler = async (event: SNSEvent, context: Context, callback: Callback) => {
   try {
-    const request = getStackConfig(event);
-    log.debug('Received request to delete stack', request);
-    log.info(`Odin has a seat in Valhalla ready for the ${request.stackName} stack`);
-    const buckets = await getBucketsToEmpty(request.stackName);
-    await emptyBuckets(buckets);
-    await deleteStack(request.stackName);
-    return callback(null, `Successfully deleted the ${request.stackName} stack`);
+    const config = getStackConfig(event);
+    log.debug('Received request to delete stack', config);
+    log.info(`Odin has a seat in Valhalla ready for the ${config.stackName} stack`);
+    await emptyBucketsInStack(config.stackName);
+    return callback(null, `Successfully deleted the ${config.stackName} stack`);
   } catch (err) {
     return callback(err);
   }
@@ -20,4 +18,10 @@ export const handler: Handler = async (event: SNSEvent, context: Context, callba
 
 function getStackConfig(event: SNSEvent): DeleteRequest {
   return JSON.parse(event.Records[0].Sns.Message);
+}
+
+async function emptyBucketsInStack(stackName: string) {
+  const buckets = await getBucketsToEmpty(stackName);
+  await emptyBuckets(buckets);
+  await deleteStack(stackName);
 }
