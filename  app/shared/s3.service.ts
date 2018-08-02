@@ -1,7 +1,6 @@
 import { S3 } from 'aws-sdk';
-import * as log from 'winston';
+import { log } from './logger';
 
-log.configure({ level: process.env.LOG_LEVEL });
 const s3 = new S3({ apiVersion: '2006-03-01' });
 
 export function emptyBuckets(bucketNames: string[]): Promise<any> {
@@ -21,7 +20,7 @@ async function getAllObjects(bucketName: string): Promise<S3.Object[]> {
   let result: S3.ListObjectsV2Output;
   do {
     let params: S3.ListObjectsV2Request = { Bucket: bucketName };
-    if (result.IsTruncated) {
+    if (result && result.IsTruncated) {
       params['ContinuationToken'] = result.NextContinuationToken;
     }
     log.debug('Listing objects with params', params);
@@ -41,7 +40,7 @@ async function getAllObjectVersions(bucketName: string, object: S3.Object): Prom
   let result: S3.ListObjectVersionsOutput;
   do {
     let params: S3.ListObjectVersionsRequest = { Bucket: bucketName, Prefix: object.Key };
-    if (result.IsTruncated) {
+    if (result && result.IsTruncated) {
       params['NextKeyMarker'] = result.NextKeyMarker;
       params['NextVersionIdMarker'] = result.NextVersionIdMarker;
     }

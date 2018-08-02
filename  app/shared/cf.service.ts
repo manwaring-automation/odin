@@ -1,7 +1,6 @@
 import { CloudFormation } from 'aws-sdk';
-import * as log from 'winston';
+import { log } from './logger';
 
-log.configure({ level: process.env.LOG_LEVEL });
 const cf = new CloudFormation({ apiVersion: '2010-05-15' });
 
 export function listAllStacks(): Promise<CloudFormation.Stack[]> {

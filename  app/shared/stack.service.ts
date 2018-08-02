@@ -1,9 +1,8 @@
 import { CloudFormation, SNS } from 'aws-sdk';
-import * as log from 'winston';
+import { log } from './logger';
 import { listAllStacks } from './cf.service';
 import { DeleteRequest } from './deleteRequest';
 
-log.configure({ level: process.env.LOG_LEVEL });
 const sns = new SNS({ apiVersion: '2010-03-31' });
 
 export async function publishStacksToDelete(config) {
