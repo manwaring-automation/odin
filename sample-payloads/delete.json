@@ -10,9 +10,7 @@
         "Signature": "EXAMPLE",
         "SigningCertUrl": "EXAMPLE",
         "MessageId": "95df01b4-ee98-5cb9-9903-4c221d41eb5e",
-        "Message": {
-          "stackName": "my-stack-local"
-        },
+        "Message": "{\"stackName\": \"my-stack-local\"}",
         "MessageAttributes": {
           "Test": {
             "Type": "String",

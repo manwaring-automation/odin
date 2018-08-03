@@ -18,9 +18,7 @@ If a stack doesn't match one of the above criteria then it is removed.
 
 Odin is built with the [Serverless Framework](https://serverless.com/) - see their documentation for more about the tool and how to use it.
 
-To deploy Odin to your AWS environment simply use your favorite CI/CD tools (this project uses [Travis-CI](https://travis-ci.org/manwaring/odin)) or even deploy manually from your desktop using the command `sls deploy`.
-
-To change the frequency with which Odin runs and the settings used to determine whether a stack is eligible for deletion modify the values in [config.yml](https://github.com/manwaring/odin/blob/master/config.yml) and redeploy the application.
+To change the frequency with which Odin runs and the settings used to determine whether a stack is eligible for deletion modify the values in [odin.yml](https://github.com/manwaring/odin/blob/master/odin.yml) and redeploy the application.
 
 # Limitations
 
@@ -30,7 +28,7 @@ A common example of this situation is a stack which creates an S3 bucket that is
 
 For this specific scenario you can use a tool like the `empty-s3-bucket` service found in [Lambda Utilities](https://github.com/manwaring/lambda-utilities) in combination with a custom CloudFormation resource to empty buckets when a stack is deleted. See the infrastructure section of [Santa Swap UI](https://github.com/santaswap/ui) for a real-world example of how this can be achieved within a stack.
 
-Another approach is to let Odin empty your S3 buckets for you prior to calling the delete stack command. This approach requires you to output the bucket name in your CloudFormation stack, and then add the output key name to [config.yml](https://github.com/manwaring/odin/blob/master/config.yml). By default Odin will empty the deployment buckets created by the [Serverless Framework](https://serverless.com/).
+Another approach is to let Odin empty your S3 buckets for you prior to calling the delete stack command. This approach requires you to output the bucket name in your CloudFormation stack, and then add the output key name to [odin.yml](https://github.com/manwaring/odin/blob/master/odin.yml). By default Odin will empty the deployment buckets created by the [Serverless Framework](https://serverless.com/).
 
 # Architecture overview
 
