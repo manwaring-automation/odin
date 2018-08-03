@@ -20,7 +20,7 @@ async function getAllObjects(bucketName: string): Promise<S3.Object[]> {
   let result: S3.ListObjectsV2Output;
   do {
     let params: S3.ListObjectsV2Request = { Bucket: bucketName };
-    if (result.IsTruncated) {
+    if (result && result.IsTruncated) {
       params['ContinuationToken'] = result.NextContinuationToken;
     }
     log.debug('Listing objects with params', params);
@@ -40,7 +40,7 @@ async function getAllObjectVersions(bucketName: string, object: S3.Object): Prom
   let result: S3.ListObjectVersionsOutput;
   do {
     let params: S3.ListObjectVersionsRequest = { Bucket: bucketName, Prefix: object.Key };
-    if (result.IsTruncated) {
+    if (result && result.IsTruncated) {
       params['NextKeyMarker'] = result.NextKeyMarker;
       params['NextVersionIdMarker'] = result.NextVersionIdMarker;
     }
@@ -65,7 +65,7 @@ function deleteVersions(bucketName: string, versions: S3.ObjectVersion[]) {
     Bucket: bucketName,
     Delete: {
       Objects: versions.map(version => {
-        return { Key: version.Key, Version: version.VersionId };
+        return { Key: version.Key, VersionId: version.VersionId };
       })
     }
   };

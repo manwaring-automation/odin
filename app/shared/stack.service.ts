@@ -37,10 +37,10 @@ function shouldDeleteStack(stack: CloudFormation.Stack, config): boolean {
   return stackIsDeletableStage(stack, config) && stackIsStale(stack, config) && stackIsInDeletableStatus(stack, config);
 }
 
-// Stack has a stage and tag isn't production/automation
+// Stack has no stage or stage isn't in list of stages to retain
 function stackIsDeletableStage(stack, config): boolean {
   const stage = stack.Tags.find(tag => tag.Key.toUpperCase() === 'STAGE');
-  const isDeletable = stage && config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
+  const isDeletable = !stage || config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
   log.debug(`Stack stage is ${stage ? stage.Value : 'undefined'}, which ${isDeletable ? 'is' : "isn't"} deletable`);
   return isDeletable;
 }
