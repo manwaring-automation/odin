@@ -2,9 +2,10 @@ service:
   name: odin
 
 plugins:
+  - serverless-plugin-iopipe
   - serverless-webpack
-
-custom: ${file(./config.yml)}
+  - serverless-cloudformation-resource-counter
+  - serverless-stack-output
 
 provider:
   name: aws
@@ -24,10 +25,19 @@ provider:
       Resource: '*'
       Action: '*'
 
+custom:
+  odin: ${file(./odin.yml)}
+  config: ${file(./infrastructure/configurations.yml)}
+  # iopipeToken is used to forward monitoring information to IO Pipe
+  iopipeToken: ${self:custom.config.iopipeToken}
+  # output is used by the serverless-stack-output plugin
+  output: { file: ./infrastructure/stack-outputs.yml }
+  properties: ${file(./infrastructure/properties.yml)}
+
 functions:
 
   checkStacks:
-    handler: stacks/check.handler
+    handler: app/check.handler
     events:
       - schedule:
           rate: ${self:custom.dailyRate}
@@ -43,7 +53,7 @@ functions:
             deleteableStatuses: ${self:custom.deleteableStatuses}
 
   deleteStacks:
-    handler: stacks/delete.handler
+    handler: app/delete.handler
     events:
       - sns: delete-stack-${opt:stage, self:provider.stage}
     environment:
@@ -51,17 +61,6 @@ functions:
 
 resources:
   Description: Automated service for destroying temporary stacks (retains production, qa, development, and automation stacks)
-  
-  Mappings:
-    LogLevel:
-      test:
-        level: debug
-      local:
-        level: debug
-      automation:
-        level: debug
-      production:
-        level: info
   
   Outputs:
 

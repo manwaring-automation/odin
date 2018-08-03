@@ -2,13 +2,13 @@
 dailyRate: cron(0 8 ? * * *)
 dailyStaleAfter: 2
 
-# Every 1 hour, delete if older than 12 hours
+# Every 1 hour, delete if older than 8 hours
 hourlyRate: cron(0 */1 ? * * *)
-hourlyStaleAfter: 12
+hourlyStaleAfter: 8
 
 # Stages and statuses to retain - consistent regardless of schedule
-stagesToRetain: "['PROD', 'PRODUCTION', 'AUTO', 'AUTOMATION', 'QA', 'DEVELOPMENT', 'DEV']"
+stagesToRetain: "['PROD', 'PRODUCTION', 'QA', 'DEVELOPMENT', 'DEV', 'AUTO', 'AUTOMATION', 'INFRA', 'INFRASTRUCTURE', 'COMMON']"
 deleteableStatuses: "['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE']"
 
 # CloudFormation output key of buckets to empty
-bucketsToEmpty: "['ServerlessDeploymentBucketName', 'PipelineArtifactStore']"
+bucketsToEmpty: "['ServerlessDeploymentBucketName', 'DocumentBucket']"
