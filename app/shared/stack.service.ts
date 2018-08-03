@@ -1,9 +1,8 @@
 import { CloudFormation, SNS } from 'aws-sdk';
-import * as log from 'winston';
+import { log } from './logger';
 import { listAllStacks } from './cf.service';
 import { DeleteRequest } from './deleteRequest';
 
-log.configure({ level: process.env.LOG_LEVEL });
 const sns = new SNS({ apiVersion: '2010-03-31' });
 
 export async function publishStacksToDelete(config) {
@@ -33,21 +32,17 @@ async function getStacksToDelete(config): Promise<CloudFormation.Stack[]> {
   return Promise.resolve(allStacks.filter(stack => shouldDeleteStack(stack, config)));
 }
 
-function shouldDeleteStack(stack, config): boolean {
-  log.debug('Seeing if stack should be deleted', stack);
+function shouldDeleteStack(stack: CloudFormation.Stack, config): boolean {
+  log.info(`Odin is inspecting the ${stack.StackName} stack to see if it should be deleted`);
   return stackIsDeletableStage(stack, config) && stackIsStale(stack, config) && stackIsInDeletableStatus(stack, config);
 }
 
 // Stack has a stage and tag isn't production/automation
 function stackIsDeletableStage(stack, config): boolean {
   const stage = stack.Tags.find(tag => tag.Key.toUpperCase() === 'STAGE');
-  const isNonProdOrAutomation = stage && config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
-  log.debug(
-    `Stack stage is ${stage ? stage.Value : 'undefined'}, which ${
-      isNonProdOrAutomation ? "isn't" : 'is'
-    } missing, production, or automation`
-  );
-  return isNonProdOrAutomation;
+  const isDeletable = stage && config.stagesToRetain.indexOf(stage.Value.toUpperCase()) < 0;
+  log.debug(`Stack stage is ${stage ? stage.Value : 'undefined'}, which ${isDeletable ? 'is' : "isn't"} deletable`);
+  return isDeletable;
 }
 
 // Stack hasn't been updated recently - last updated setting configured in CloudWatch alarm, set in serverless.yml

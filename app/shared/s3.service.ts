@@ -1,7 +1,6 @@
 import { S3 } from 'aws-sdk';
-import * as log from 'winston';
+import { log } from './logger';
 
-log.configure({ level: process.env.LOG_LEVEL });
 const s3 = new S3({ apiVersion: '2006-03-01' });
 
 export function emptyBuckets(bucketNames: string[]): Promise<any> {
