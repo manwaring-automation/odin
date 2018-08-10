@@ -1,5 +1,4 @@
 import { CloudFormation } from 'aws-sdk';
-import { log } from './logger';
 
 const cf = new CloudFormation({ apiVersion: '2010-05-15' });
 
@@ -18,12 +17,12 @@ export async function getBucketsToEmpty(stackName: string): Promise<string[]> {
 
 export function deleteStack(stack): Promise<any> {
   const params = { StackName: stack };
-  log.debug('Deleting stack with params', params);
+  console.debug('Deleting stack with params', params);
   return cf.deleteStack(params).promise();
 }
 
 function getBuckets(stack: CloudFormation.Stack): Promise<string[]> {
-  log.debug('Getting buckets to empty for stack', stack);
+  console.debug('Getting buckets to empty for stack', stack);
   let bucketsToEmpty: string[] = [];
   const cloudFormationBucketKey = process.env.BUCKETS_TO_EMPTY;
   if (stack.Outputs && stack.Outputs.length > 0) {
