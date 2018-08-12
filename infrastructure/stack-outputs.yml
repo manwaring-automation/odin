@@ -1,4 +1,4 @@
-CheckStacksLambdaFunctionQualifiedArn: 'arn:aws:lambda:us-east-1:271471762493:function:odin-pmanwaring-checkStacks:5'
-DeleteStackSNS: 'arn:aws:sns:us-east-1:271471762493:delete-stack-pmanwaring'
-DeleteStacksLambdaFunctionQualifiedArn: 'arn:aws:lambda:us-east-1:271471762493:function:odin-pmanwaring-deleteStacks:5'
-ServerlessDeploymentBucketName: odin-pmanwaring-serverlessdeploymentbucket-c8s7axpk5eg6
+CheckStacksLambdaFunctionQualifiedArn: 'arn:aws:lambda:us-east-1:109092357768:function:odin-phillip-checkStacks:1'
+DeleteStackSNS: 'arn:aws:sns:us-east-1:109092357768:delete-stack-phillip'
+DeleteStacksLambdaFunctionQualifiedArn: 'arn:aws:lambda:us-east-1:109092357768:function:odin-phillip-deleteStacks:1'
+ServerlessDeploymentBucketName: odin-phillip-serverlessdeploymentbucket-1ot7q3qmx7t72

@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "prestack:deploy": "clear; npm run action:announce -s -- 'deployment'",
     "stack:deploy": "start=$(date +%s); sls deploy && npm run action:summarize -s -- 'deployment' $start",
+    "stack:remove": "start=$(date +%s); sls remove && npm run action:summarize -s -- 'removal' $start",
+    "prestack:deploy": "clear; npm run action:announce -s -- 'deployment'",
+    "prestack:remove": "clear; npm run action:announce -s -- 'removal'",
+    "poststack:remove": "rimraf infrastructure/stack-outputs.yml",
     "action:announce": "clear; APP_NAME=$npm_package_name node -e 'require(\"./infrastructure/helper.js\").announce()'",
     "action:summarize": "APP_NAME=$npm_package_name node -e 'require(\"./infrastructure/helper.js\").summarize()'"
   },
@@ -24,6 +27,7 @@
     "chalk-cli": "^4.0.0",
     "git-rev-sync": "^1.12.0",
     "pretty-ms": "^3.2.0",
+    "rimraf": "^2.6.2",
     "serverless": "^1.29.2",
     "serverless-cloudformation-resource-counter": "^0.1.1",
     "serverless-plugin-iopipe": "^1.6.1",
