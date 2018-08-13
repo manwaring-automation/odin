@@ -10,10 +10,11 @@ plugins:
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: local
+  region: ${self:custom.config.region}
+  stage: ${self:custom.config.stage}
+  profile: ${self:custom.config.profile}
   environment:
-    LOG_LEVEL:
-      Fn::FindInMap: [ LogLevel, '${opt:stage, self:provider.stage}', level ]
+    LOG_LEVEL: info
     DELETE_STACK_TOPIC:
       Fn::Join:
         - ':'
@@ -35,35 +36,33 @@ custom:
   properties: ${file(./infrastructure/properties.yml)}
 
 functions:
-
   checkStacks:
     handler: app/check.handler
     events:
       - schedule:
-          rate: ${self:custom.dailyRate}
+          rate: ${self:custom.odin.dailyRate}
           input:
-            staleAfter: ${self:custom.dailyStaleAfter}
-            stagesToRetain: ${self:custom.stagesToRetain}
-            deleteableStatuses: ${self:custom.deleteableStatuses}
+            staleAfter: ${self:custom.odin.dailyStaleAfter}
+            stagesToRetain: ${self:custom.odin.stagesToRetain}
+            deleteableStatuses: ${self:custom.odin.deleteableStatuses}
       - schedule:
-          rate: ${self:custom.hourlyRate}
+          rate: ${self:custom.odin.hourlyRate}
           input:
-            staleAfter: ${self:custom.hourlyStaleAfter}
-            stagesToRetain: ${self:custom.stagesToRetain}
-            deleteableStatuses: ${self:custom.deleteableStatuses}
+            staleAfter: ${self:custom.odin.hourlyStaleAfter}
+            stagesToRetain: ${self:custom.odin.stagesToRetain}
+            deleteableStatuses: ${self:custom.odin.deleteableStatuses}
 
   deleteStacks:
     handler: app/delete.handler
     events:
       - sns: delete-stack-${opt:stage, self:provider.stage}
     environment:
-      BUCKETS_TO_EMPTY: ${self:custom.bucketsToEmpty}
+      BUCKETS_TO_EMPTY: ${self:custom.odin.bucketsToEmpty}
 
 resources:
   Description: Automated service for destroying temporary stacks (retains production, qa, development, and automation stacks)
-  
-  Outputs:
 
+  Outputs:
     DeleteStackSNS:
       Description: ARN of the ${opt:stage, self:provider.stage} stage SNS topic for stack deletion
       Value:

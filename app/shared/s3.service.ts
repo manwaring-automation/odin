@@ -1,15 +1,15 @@
 import { S3 } from 'aws-sdk';
-import { log } from './logger';
+// import { log } from './logger';
 
 const s3 = new S3({ apiVersion: '2006-03-01' });
 
 export function emptyBuckets(bucketNames: string[]): Promise<any> {
-  log.debug('Emptying buckets', bucketNames);
+  console.debug('Emptying buckets', bucketNames);
   return bucketNames.length ? Promise.all(bucketNames.map(bucketName => emptyBucket(bucketName))) : Promise.resolve('');
 }
 
 function emptyBucket(bucketName: string) {
-  log.debug('Emptying bucket', bucketName);
+  console.debug('Emptying bucket', bucketName);
   return getAllObjects(bucketName)
     .then(objects => getAllVersions(bucketName, objects))
     .then(versions => deleteAllVersions(bucketName, versions));
@@ -23,7 +23,7 @@ async function getAllObjects(bucketName: string): Promise<S3.Object[]> {
     if (result && result.IsTruncated) {
       params['ContinuationToken'] = result.NextContinuationToken;
     }
-    log.debug('Listing objects with params', params);
+    console.debug('Listing objects with params', params);
     result = await s3.listObjectsV2(params).promise();
     objects = [...objects, ...result.Contents];
   } while (result.IsTruncated);
@@ -32,7 +32,7 @@ async function getAllObjects(bucketName: string): Promise<S3.Object[]> {
 
 async function getAllVersions(bucketName: string, objects: S3.Object[]): Promise<S3.ObjectVersion[]> {
   const [...versions] = await Promise.all(objects.map(object => getAllObjectVersions(bucketName, object)));
-  return versions.reduce((a, b) => [...a, ...b]);
+  return versions.reduce((a, b) => [...a, ...b], []);
 }
 
 async function getAllObjectVersions(bucketName: string, object: S3.Object): Promise<S3.ObjectVersion[]> {
@@ -44,7 +44,7 @@ async function getAllObjectVersions(bucketName: string, object: S3.Object): Prom
       params['NextKeyMarker'] = result.NextKeyMarker;
       params['NextVersionIdMarker'] = result.NextVersionIdMarker;
     }
-    log.debug('Listing object versions with params', params);
+    console.debug('Listing object versions with params', params);
     result = await s3.listObjectVersions(params).promise();
     objects = [...objects, ...result.Versions];
   } while (result.IsTruncated);
@@ -69,6 +69,6 @@ function deleteVersions(bucketName: string, versions: S3.ObjectVersion[]) {
       })
     }
   };
-  log.debug('Deleting object versions with params', params);
+  console.debug('Deleting object versions with params', params);
   return versions.length ? s3.deleteObjects(params).promise() : Promise.resolve('');
 }

@@ -1,11 +1,11 @@
-import { CloudWatchLogsEvent, Callback, Context } from 'aws-lambda';
+import { wrapper, WrapperSignature } from '@manwaring/lambda-wrapper';
 import { publishStacksToDelete } from './shared';
 
-export async function handler(event: CloudWatchLogsEvent, context: Context, callback: Callback) {
+export const handler = wrapper(async ({ event, success, error }: WrapperSignature) => {
   try {
     await publishStacksToDelete(event);
-    return callback(null, 'Finished checking stacks for deletion');
+    return success('Finished checking stacks for deletion');
   } catch (err) {
-    return callback(err);
+    return error(err);
   }
-}
+});
