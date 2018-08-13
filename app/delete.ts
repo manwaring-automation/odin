@@ -4,7 +4,6 @@ import { DeleteRequest, emptyBuckets, deleteStack, getBucketsToEmpty } from './s
 export const handler = snsWrapper(async ({ message, success, error }: SnsSignature) => {
   try {
     // See what IOPipe supports for console methods
-    console.trace('This is a trace statement');
     console.debug('This is a debug statement');
     console.info('This is an info statement');
     console.log('This is a log statement');

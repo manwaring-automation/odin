@@ -11,4 +11,4 @@ stagesToRetain: "['PROD', 'PRODUCTION', 'QA', 'DEVELOPMENT', 'DEV', 'AUTO', 'AUT
 deleteableStatuses: "['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE']"
 
 # CloudFormation output key of buckets to empty
-bucketsToEmpty: "['ServerlessDeploymentBucketName', 'DocumentBucket']"
+bucketsToEmpty: "['ServerlessDeploymentBucketName', 'DocumentBucket', 'S3BucketSite']"

@@ -32,7 +32,7 @@ async function getAllObjects(bucketName: string): Promise<S3.Object[]> {
 
 async function getAllVersions(bucketName: string, objects: S3.Object[]): Promise<S3.ObjectVersion[]> {
   const [...versions] = await Promise.all(objects.map(object => getAllObjectVersions(bucketName, object)));
-  return versions.reduce((a, b) => [...a, ...b]);
+  return versions.reduce((a, b) => [...a, ...b], []);
 }
 
 async function getAllObjectVersions(bucketName: string, object: S3.Object): Promise<S3.ObjectVersion[]> {
