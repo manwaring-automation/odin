@@ -1,3 +1,15 @@
+<p align="center">
+  <img height="150" src="https://avatars0.githubusercontent.com/u/36457275?s=400&u=16d355f384ed7f8e0655b7ed1d70ff2e411690d8&v=4e">
+</p>
+
+<!-- [![Build status][build-badge]][build-badge-url] -->
+
+[![Known Vulnerabilities][vulnerability-badge]][vulnerability-badge-url]
+[![Dependency Status][dependency-badge]][dependency-badge-url]
+[![devDependency Status][dev-dependency-badge]][dev-dependency-badge-url]
+[![License][license-badge]][license-badge-url]
+[![Code style][formatter-badge]][formatter-badge-url]
+
 # Odin
 
 Odin, or Wōtan, is a Norse god who directs the valkyries and is the guardian of Valhalla. Half of those who perish in combat are welcomed by him into his majestic halls where they prepare for the final battle against Fenrir during the events of Ragnarök.
@@ -33,3 +45,17 @@ Another approach is to let Odin empty your S3 buckets for you prior to calling t
 # Architecture overview
 
 ![odin - architecture overview](https://cloud.githubusercontent.com/assets/2955468/24622720/f24c75a4-1873-11e7-9e09-b83a1425c196.png)
+
+<!-- [build-badge]: https://circleci.com/gh/manwaring/lambda-wrapper.svg?style=shield&circle-token=29c46c698a84144d4ea9d21552f1927c87afd68e
+[build-badge-url]: https://circleci.com/gh/manwaring/lambda-wrapper -->
+
+[dependency-badge]: https://david-dm.org/manwaring/odin.svg
+[dependency-badge-url]: https://david-dm.org/manwaring/odin
+[dev-dependency-badge]: https://david-dm.org/manwaring/odin/dev-status.svg
+[dev-dependency-badge-url]: https://david-dm.org/manwaring/odin?type=dev
+[formatter-badge]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
+[formatter-badge-url]: #badge
+[license-badge]: https://img.shields.io/github/license/manwaring/odin.svg
+[license-badge-url]: https://github.com/manwaring/odin
+[vulnerability-badge]: https://snyk.io/test/github/manwaring/odin/badge.svg?targetFile=package.json
+[vulnerability-badge-url]: https://snyk.io/test/github/manwaring/odin?targetFile=package.json
