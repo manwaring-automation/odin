@@ -101,6 +101,7 @@ workflows:
           <<: *filter-feature-branches
       - deploy-branch:
           <<: *filter-feature-branches
+          context: manwaring
           requires:
             - install
 
@@ -110,6 +111,6 @@ workflows:
           <<: *filter-master
       - deploy-automation:
           <<: *filter-master
-          # context: manwaring
+          context: manwaring
           requires:
             - install
