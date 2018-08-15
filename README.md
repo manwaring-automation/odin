@@ -2,8 +2,7 @@
   <img height="150" src="https://avatars0.githubusercontent.com/u/36457275?s=400&u=16d355f384ed7f8e0655b7ed1d70ff2e411690d8&v=4e">
 </p>
 
-<!-- [![Build status][build-badge]][build-badge-url] -->
-
+[![Build status][build-badge]][build-badge-url]
 [![Known Vulnerabilities][vulnerability-badge]][vulnerability-badge-url]
 [![Dependency Status][dependency-badge]][dependency-badge-url]
 [![devDependency Status][dev-dependency-badge]][dev-dependency-badge-url]
@@ -46,9 +45,8 @@ Another approach is to let Odin empty your S3 buckets for you prior to calling t
 
 ![odin - architecture overview](https://cloud.githubusercontent.com/assets/2955468/24622720/f24c75a4-1873-11e7-9e09-b83a1425c196.png)
 
-<!-- [build-badge]: https://circleci.com/gh/manwaring/lambda-wrapper.svg?style=shield&circle-token=29c46c698a84144d4ea9d21552f1927c87afd68e
-[build-badge-url]: https://circleci.com/gh/manwaring/lambda-wrapper -->
-
+[build-badge]: https://circleci.com/gh/manwaring/odin.svg?style=shield&circle-token=9013ebb3f280856ee64dcaa261e6b3b46c7b7b77
+[build-badge-url]: https://circleci.com/gh/manwaring/odin
 [dependency-badge]: https://david-dm.org/manwaring/odin.svg
 [dependency-badge-url]: https://david-dm.org/manwaring/odin
 [dev-dependency-badge]: https://david-dm.org/manwaring/odin/dev-status.svg
