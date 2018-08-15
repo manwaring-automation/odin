@@ -57,6 +57,7 @@ functions:
     events:
       - sns: delete-stack-${opt:stage, self:provider.stage}
     environment:
+      EMPTY_ALL_BUCKETS: ${self:custom.odin.emptyAllBuckets}
       BUCKETS_TO_EMPTY: ${self:custom.odin.bucketsToEmpty}
 
 resources:

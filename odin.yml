@@ -10,5 +10,13 @@ hourlyStaleAfter: 8
 stagesToRetain: "['PROD', 'PRODUCTION', 'QA', 'DEVELOPMENT', 'DEV', 'AUTO', 'AUTOMATION', 'INFRA', 'INFRASTRUCTURE', 'COMMON']"
 deleteableStatuses: "['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE']"
 
-# CloudFormation output key of buckets to empty
+# A CloudFormation stack won't delete successfully if there are non-empty
+# buckets associated with it.  Use this property to indicate whether or
+# not you want Odin to empty all buckets in the stack (default behavior).
+# If you only want odin to empty specific buckets then set this property
+# to false and update the bucketsToEmpty property below with the output keys
+# the stack will set for all buckets you want Odin to empty
+emptyAllBuckets: true
+
+# CloudFormation output key of buckets to empty if don't want to empty all buckets by default
 bucketsToEmpty: "['ServerlessDeploymentBucketName', 'DocumentBucket', 'S3BucketSite']"

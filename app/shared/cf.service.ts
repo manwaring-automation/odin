@@ -10,18 +10,26 @@ export function listAllStacks(): Promise<CloudFormation.Stack[]> {
     .then(response => response.Stacks);
 }
 
-export async function getBucketsToEmpty(stackName: string): Promise<string[]> {
-  const stack = await getStack(stackName);
-  return await getBuckets(stack);
-}
-
 export function deleteStack(stack): Promise<any> {
   const params = { StackName: stack };
   console.debug('Deleting stack with params', params);
   return cf.deleteStack(params).promise();
 }
 
-function getBuckets(stack: CloudFormation.Stack): Promise<string[]> {
+export async function getBucketsToEmpty(stackName: string): Promise<string[]> {
+  return process.env.EMPTY_ALL_BUCKETS ? getAllBuckets(stackName) : getSpecifiedBuckets(stackName);
+}
+
+async function getAllBuckets(stackName: string): Promise<string[]> {
+  const resources = await getStackResources(stackName);
+  console.debug(resources);
+  return resources
+    .filter(resource => resource.ResourceType === 'AWS::S3::Bucket')
+    .map(resource => resource.PhysicalResourceId);
+}
+
+async function getSpecifiedBuckets(stackName: string): Promise<string[]> {
+  const stack: CloudFormation.Stack = await getStack(stackName);
   console.debug('Getting buckets to empty for stack', stack);
   let bucketsToEmpty: string[] = [];
   const cloudFormationBucketKey = process.env.BUCKETS_TO_EMPTY;
@@ -30,13 +38,21 @@ function getBuckets(stack: CloudFormation.Stack): Promise<string[]> {
       output => output.OutputValue
     );
   }
-  return Promise.resolve(bucketsToEmpty);
+  return bucketsToEmpty;
 }
 
-function getStack(stackName: string): Promise<CloudFormation.Stack> {
-  const params: CloudFormation.DescribeStacksInput = { StackName: stackName };
+function getStack(StackName: string): Promise<CloudFormation.Stack> {
+  const params: CloudFormation.DescribeStacksInput = { StackName };
   return cf
     .describeStacks(params)
     .promise()
     .then(res => res.Stacks[0]);
+}
+
+function getStackResources(StackName: string): Promise<CloudFormation.StackResourceSummaries> {
+  const params: CloudFormation.ListStackResourcesInput = { StackName };
+  return cf
+    .listStackResources(params)
+    .promise()
+    .then(res => res.StackResourceSummaries);
 }

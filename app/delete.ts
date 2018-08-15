@@ -3,13 +3,6 @@ import { DeleteRequest, emptyBuckets, deleteStack, getBucketsToEmpty } from './s
 
 export const handler = snsWrapper(async ({ message, success, error }: SnsSignature) => {
   try {
-    // See what IOPipe supports for console methods
-    console.debug('This is a debug statement');
-    console.info('This is an info statement');
-    console.log('This is a log statement');
-    console.warn('This is a warn statement');
-    console.error('This is an error statement');
-
     const config: DeleteRequest = message;
     console.debug('Received request to delete stack', config);
     console.info(`Odin has a seat in Valhalla ready for the ${config.stackName} stack`);
