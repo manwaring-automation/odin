@@ -1,0 +1,115 @@
+# CI/CD configuration file for Quick Quotes applications and services
+
+# Note: YAML anchors allow an object to be re-used, reducing duplication. The ampersand
+# declares an alias for an object, then later the `<<: *alias` syntax dereferences it.
+#
+# See http://blog.daemonl.com/2016/02/yaml.html and
+# https://medium.com/@kinghuang/docker-compose-anchors-aliases-extensions-a1e4105d70bd
+# for more information about how to use anchors.
+#
+# To validate changes use an online parser, eg. http://yaml-online-parser.appspot.com/
+anchors:
+  container-config: &container-config
+    docker:
+      - image: circleci/node:8.11.3
+        environment:
+          TERM: dumb
+
+  load-cache: &load-cache
+    restore_cache:
+      key: dependency-cache-{{ checksum "package.json" }}
+
+  configure-aws-access: &configure-aws-access
+    run:
+      name: Configure AWS access
+      command: |
+        mkdir -p ~/.aws
+
+        cat > ~/.aws/credentials << EOL
+        [manwaring]
+        aws_access_key_id = ${!KEY}
+        aws_secret_access_key = ${!SECRET}
+        EOL
+
+  filter-feature-branches: &filter-feature-branches
+    filters:
+      branches:
+        ignore: master
+
+  filter-master: &filter-master
+    filters:
+      branches:
+        only: master
+
+  branch-config: &branch-config
+    environment:
+      - KEY: AWS_ACCESS_KEY_ID
+      - SECRET: AWS_SECRET_ACCESS_KEY
+
+  automation-config: &prod-config
+    environment:
+      - KEY: AWS_ACCESS_KEY_ID
+      - SECRET: AWS_SECRET_ACCESS_KEY
+      - STAGE: automation
+
+  deploy: &deploy
+    <<: *container-config
+    steps:
+      - checkout
+      - *load-cache
+      - *configure-aws-access
+      - run:
+          name: Deploy stack
+          command: |
+            [[ ! -z "$STAGE" ]] || STAGE=$CIRCLE_BRANCH
+            STAGE=$STAGE PROFILE=manwaring npm run stack:deploy -s
+      - persist_to_workspace:
+          root: .
+          paths:
+            - infrastructure
+
+## Circle CI configuration, see https://circleci.com/docs/2.0/configuration-reference/
+version: 2
+jobs:
+  install:
+    <<: *container-config
+    steps:
+      - checkout
+      - *load-cache
+      - run:
+          name: Install dependencies
+          command: npm i -s
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+  deploy-branch:
+    <<: *deploy
+    <<: *branch-config
+
+  deploy-automation:
+    <<: *deploy
+    <<: *automation-config
+
+workflows:
+  version: 2
+
+  feature-branch:
+    jobs:
+      - install:
+          <<: *filter-feature-branches
+      - deploy-branch:
+          <<: *filter-feature-branches
+          requires:
+            - install
+
+  master-branch:
+    jobs:
+      - install:
+          <<: *filter-master
+      - deploy-automation:
+          <<: *filter-master
+          # context: manwaring
+          requires:
+            - install
