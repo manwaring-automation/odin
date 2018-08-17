@@ -62,7 +62,7 @@ anchors:
           name: Deploy stack
           command: |
             [[ ! -z "$STAGE" ]] || STAGE=$CIRCLE_BRANCH
-            STAGE=$STAGE PROFILE=manwaring npm run stack:deploy -s
+            STAGE=$STAGE PROFILE=manwaring npm run stack:deploy
       - persist_to_workspace:
           root: .
           paths:
@@ -78,7 +78,7 @@ jobs:
       - *load-cache
       - run:
           name: Install dependencies
-          command: npm i -s
+          command: npm i
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
