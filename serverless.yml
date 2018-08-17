@@ -1,5 +1,7 @@
 service:
   name: odin
+app: phillip
+tenant: manwaring
 
 plugins:
   - serverless-plugin-iopipe
