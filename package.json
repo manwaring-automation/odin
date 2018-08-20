@@ -9,7 +9,8 @@
     "prestack:remove": "clear; npm run action:announce -s -- 'removal'",
     "poststack:remove": "rimraf infrastructure/stack-outputs.yml",
     "action:announce": "clear; APP_NAME=$npm_package_name node -e 'require(\"./infrastructure/helper.js\").announce()'",
-    "action:summarize": "APP_NAME=$npm_package_name node -e 'require(\"./infrastructure/helper.js\").summarize()'"
+    "action:summarize": "APP_NAME=$npm_package_name node -e 'require(\"./infrastructure/helper.js\").summarize()'",
+    "js:clean": ""
   },
   "dependencies": {
     "@iopipe/iopipe": "^1.8.0",
