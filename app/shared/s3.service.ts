@@ -1,5 +1,4 @@
 import { S3 } from 'aws-sdk';
-// import { log } from './logger';
 
 const s3 = new S3({ apiVersion: '2006-03-01' });
 
