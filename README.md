@@ -5,6 +5,7 @@
 </p>
 
 [![Build status][build-badge]][build-badge-url]
+[![Test coverage][coverage-badge]][coverage-badge-url]
 [![Known Vulnerabilities][vulnerability-badge]][vulnerability-badge-url]
 [![Dependency Status][dependency-badge]][dependency-badge-url]
 [![devDependency Status][dev-dependency-badge]][dev-dependency-badge-url]
@@ -59,6 +60,8 @@ Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old 
 
 [build-badge]: https://circleci.com/gh/manwaring/odin.svg?style=shield&circle-token=9013ebb3f280856ee64dcaa261e6b3b46c7b7b77
 [build-badge-url]: https://circleci.com/gh/manwaring/odin
+[coverage-badge]: https://codecov.io/gh/manwaring/odin/branch/master/graph/badge.svg
+[coverage-badge-url]: https://codecov.io/gh/manwaring/odin
 [dependency-badge]: https://david-dm.org/manwaring/odin.svg
 [dependency-badge-url]: https://david-dm.org/manwaring/odin
 [dev-dependency-badge]: https://david-dm.org/manwaring/odin/dev-status.svg

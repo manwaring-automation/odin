@@ -10,7 +10,12 @@
     "poststack:remove": "rimraf infrastructure/stack-outputs.yml",
     "action:announce": "clear; APP_NAME=$npm_package_name node -e 'require(\"./infrastructure/helper.js\").announce()'",
     "action:summarize": "APP_NAME=$npm_package_name node -e 'require(\"./infrastructure/helper.js\").summarize()'",
-    "js:clean": ""
+    "test": "nyc node_modules/cucumber/bin/cucumber-js app/*.feature",
+    "pretest": "tsc -p ./tsconfig.json",
+    "posttest": "npm run reportcoverage && npm run clean",
+    "reportcoverage": "nyc report --reporter=json --reporter=lcov",
+    "clean": "rimraf app/*.js app/**/*.js app/*.d.ts app/**/*.d.ts",
+    "codecov": "codecov -f coverage/*.json"
   },
   "dependencies": {
     "@iopipe/iopipe": "^1.8.0",
