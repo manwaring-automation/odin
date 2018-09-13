@@ -5,6 +5,7 @@ tenant: manwaring
 
 plugins:
   - serverless-plugin-iopipe
+  - serverless-plugin-iam-checker
   - serverless-webpack
   - serverless-cloudformation-resource-counter
   - serverless-stack-output
@@ -31,6 +32,7 @@ provider:
 custom:
   odin: ${file(./odin.yml)}
   config: ${file(./infrastructure/configurations.yml)}
+  iamChecker: ${self:custom.config.iamChecker}
   # iopipeToken is used to forward monitoring information to IO Pipe
   iopipeToken: ${self:custom.config.iopipeToken}
   # output is used by the serverless-stack-output plugin
