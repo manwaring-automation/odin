@@ -1,9 +1,13 @@
 defaultProfile: personal
 iamChecker:
   actions:
-    allowStarOnly: true
+    allowWildcardOnly: true
+    allowWildcards: true
+    allowedPatterns: []
   resources:
-    allowStarOnly: true
+    allowWildcardOnly: true
+    allowedPatterns: []
+    allowedReferences: []
 iopipeToken: ${env:IOPIPE_TOKEN, file(infrastructure/credentials.local.yml):IOPIPE_TOKEN}
 logLevel: ${self:custom.properties.logLevel.${self:custom.config.stage}, self:custom.properties.logLevel.default}
 profile: ${file(infrastructure/helper.js):profile}
