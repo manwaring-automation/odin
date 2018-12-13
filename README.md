@@ -33,12 +33,6 @@ Odin is built with the [Serverless Framework](https://serverless.com/) - see the
 
 To change the frequency with which Odin runs and the settings used to determine whether a stack is eligible for deletion modify the values in [odin.yml](https://github.com/manwaring/odin/blob/master/odin.yml) and redeploy the application.
 
-# Local Debugging
-
-The '.vscode' folder contains settings for making local debugging via [VS Code](https://code.visualstudio.com/) a bit easier, especially if you don't have a Node environment already running or you are running a different version of Node.
-
-See [this README.md](https://github.com/pariveda-serverless/support/blob/master/nodejs/4.3.2/local/README.md) for more on how you can debug Odin with this tool.
-
 # Limitations
 
 Unlike his Norse namesake Odin is unable to practice magic and cannot remove stacks that aren't self-removing.
