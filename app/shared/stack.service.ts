@@ -34,7 +34,12 @@ async function getStacksToDelete(config): Promise<CloudFormation.Stack[]> {
 
 function shouldDeleteStack(stack: CloudFormation.Stack, config): boolean {
   console.info(`Odin is inspecting the ${stack.StackName} stack to see if it should be deleted`);
-  return stackIsDeletableStage(stack, config) && stackIsStale(stack, config) && stackIsInDeletableStatus(stack, config);
+  return (
+    stackIsDeletableStage(stack, config) &&
+    stackIsStale(stack, config) &&
+    stackIsInDeletableStatus(stack, config) &&
+    stackIsDeletableName(stack, config)
+  );
 }
 
 // Stack has no stage or stage isn't in list of stages to retain
@@ -59,4 +64,11 @@ function stackIsInDeletableStatus(stack, config): boolean {
   const isInDeletableStatus = config.deleteableStatuses.indexOf(stack.StackStatus) > -1;
   console.debug(`Stack status is ${stack.StackStatus} which ${isInDeletableStatus ? 'is' : "isn't"} deletable`);
   return isInDeletableStatus;
+}
+
+// Stack name isn't in list of names to retain
+function stackIsDeletableName(stack, config): boolean {
+  const isDeletable = config.namesToRetain.indexOf(stack.StackName) < 0;
+  console.debug(`Stack name is ${stack.StackName} which ${isDeletable ? 'is' : "isn't"} deletable`);
+  return isDeletable;
 }

@@ -47,12 +47,14 @@ functions:
             staleAfter: ${self:custom.odin.dailyStaleAfter}
             stagesToRetain: ${self:custom.odin.stagesToRetain}
             deleteableStatuses: ${self:custom.odin.deleteableStatuses}
+            namesToRetain: ${self:custom.odin.namesToRetain}
       - schedule:
           rate: ${self:custom.odin.hourlyRate}
           input:
             staleAfter: ${self:custom.odin.hourlyStaleAfter}
             stagesToRetain: ${self:custom.odin.stagesToRetain}
             deleteableStatuses: ${self:custom.odin.deleteableStatuses}
+            namesToRetain: ${self:custom.odin.namesToRetain}
 
   deleteStacks:
     handler: app/delete.handler
