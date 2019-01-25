@@ -13,7 +13,7 @@ provider:
   stage: local
   environment:
     REVISION: ${file(infrastructure/helper.js):revision}
-    STAGE: ${self:provider.stage}
+    STAGE: ${opt:stage, self:provider.stage}
     DELETE_STACK_TOPIC:
       Fn::Join:
         - ':'
@@ -29,7 +29,7 @@ provider:
 custom:
   epsagon:
     token: ${env:EPSAGON_TOKEN}
-    appName: ${self:service.name}-manwaring-${self:provider.stage}
+    appName: ${self:service.name}-manwaring-${opt:stage, self:provider.stage}
   odin: ${file(./odin.yml)}
   # output is used by the serverless-stack-output plugin
   output: { file: ./infrastructure/stack-outputs.yml }
