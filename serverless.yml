@@ -67,13 +67,19 @@ resources:
   Outputs:
     DailySchedule:
       Description: Schedule for daily jobs and maximum stack age in hours before deletion
-      Value: ${self:custom.odin.dailyRate} and ${self:custom.odin.dailyStaleAfter}
+      Value: ${self:custom.odin.dailyRate}, max ${self:custom.odin.dailyStaleAfter} hours
     HourlySchedule:
       Description: Schedule for hourly jobs and maximum stack age in hours before deletion
-      Value: ${self:custom.odin.hourlyRate} and ${self:custom.odin.hourlyStaleAfter}
-    StacksToRetain:
-      Description: Attributes of stacks that won't be deleted
-      Value: 'Names: !${self:custom.odin.namesToRetain} Stages: !${self:custom.odin.stagesToRetain} Statuses: ${self:custom.odin.deleteableStatuses}'
+      Value: ${self:custom.odin.hourlyRate}, max ${self:custom.odin.hourlyStaleAfter} hours
+    StackNamesToRetain:
+      Description: Names of stacks that will be retained
+      Value: In ${self:custom.odin.namesToRetain}
+    StagesToRetain:
+      Description: Stages of stacks that will be retained
+      Value: In ${self:custom.odin.stagesToRetain}
+    StatusesToRetain:
+      Description: Statuses of stacks that will be retained
+      Value: Not in ${self:custom.odin.deleteableStatuses}
 
     DeleteStackSNS:
       Description: ARN of the ${opt:stage, self:provider.stage} stage SNS topic for stack deletion
