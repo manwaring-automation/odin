@@ -1,10 +1,8 @@
 service:
   name: odin
-app: automation
-tenant: manwaring
 
 plugins:
-  - serverless-plugin-iopipe
+  - serverless-plugin-epsagon
   - serverless-webpack
   - serverless-cloudformation-resource-counter
   - serverless-stack-output
@@ -12,15 +10,15 @@ plugins:
 provider:
   name: aws
   runtime: nodejs8.10
-  region: ${self:custom.config.region}
-  stage: ${self:custom.config.stage}
-  profile: ${self:custom.config.profile}
+  stage: local
   environment:
-    LOG_LEVEL: info
+    REVISION: ${file(infrastructure/helper.js):revision}
+    STAGE: ${self:provider.stage}
     DELETE_STACK_TOPIC:
       Fn::Join:
         - ':'
-        - - arn:aws:sns:us-east-1
+        - - arn:aws:sns
+          - Ref: AWS::Region
           - Ref: AWS::AccountId
           - delete-stack-${opt:stage, self:provider.stage}
   iamRoleStatements:
@@ -29,13 +27,12 @@ provider:
       Action: '*'
 
 custom:
+  epsagon:
+    token: ${env:EPSAGON_TOKEN}
+    appName: ${self:service.name}-${self:provider.stage}
   odin: ${file(./odin.yml)}
-  config: ${file(./infrastructure/configurations.yml)}
-  # iopipeToken is used to forward monitoring information to IO Pipe
-  iopipeToken: ${self:custom.config.iopipeToken}
   # output is used by the serverless-stack-output plugin
   output: { file: ./infrastructure/stack-outputs.yml }
-  properties: ${file(./infrastructure/properties.yml)}
 
 functions:
   checkStacks:
@@ -68,6 +65,16 @@ resources:
   Description: Automated service for destroying temporary stacks (retains production, qa, development, and automation stacks)
 
   Outputs:
+    DailySchedule:
+      Description: Schedule for daily jobs and maximum stack age in hours before deletion
+      Value: ${self:custom.odin.dailyRate} and ${self:custom.odin.dailyStaleAfter}
+    HourlySchedule:
+      Description: Schedule for hourly jobs and maximum stack age in hours before deletion
+      Value: ${self:custom.odin.hourlyRate} and ${self:custom.odin.hourlyStaleAfter}
+    StacksToRetain:
+      Description: Attributes of stacks that won't be deleted
+      Value: 'Names: !${self:custom.odin.namesToRetain} Stages: !${self:custom.odin.stagesToRetain} Statuses: ${self:custom.odin.deleteableStatuses}'
+
     DeleteStackSNS:
       Description: ARN of the ${opt:stage, self:provider.stage} stage SNS topic for stack deletion
       Value:

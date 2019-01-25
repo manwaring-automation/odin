@@ -3,50 +3,29 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "stack:deploy": "start=$(date +%s); sls deploy && npm run action:summarize -s -- 'deployment' $start",
-    "stack:remove": "start=$(date +%s); sls remove && npm run action:summarize -s -- 'removal' $start",
-    "prestack:deploy": "clear; npm run action:announce -s -- 'deployment'",
-    "prestack:remove": "clear; npm run action:announce -s -- 'removal'",
-    "poststack:remove": "rimraf infrastructure/stack-outputs.yml",
-    "action:announce": "clear; APP_NAME=$npm_package_name node -e 'require(\"./infrastructure/helper.js\").announce()'",
-    "action:summarize": "APP_NAME=$npm_package_name node -e 'require(\"./infrastructure/helper.js\").summarize()'",
-    "js:clean": ""
+    "deploy": "sls deploy",
+    "remove": "sls remove",
+    "postremove": "rimraf infrastructure/stack-outputs.yml"
   },
   "dependencies": {
-    "@iopipe/iopipe": "^1.8.0",
-    "@iopipe/logger": "^1.0.0",
     "@manwaring/lambda-wrapper": "0.1.16",
-    "source-map-support": "^0.5.6",
-    "winston": "^3.0.0"
+    "epsagon": "^1.7.13",
+    "source-map-support": "^0.5.6"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.6",
     "@types/aws-sdk": "^2.7.0",
     "@types/node": "^8.10.17",
     "aws-sdk": "^2.259.1",
-    "chalk": "^2.4.1",
-    "chalk-cli": "^4.0.0",
     "git-rev-sync": "^1.12.0",
-    "pretty-ms": "^3.2.0",
     "rimraf": "^2.6.2",
     "serverless": "^1.35.0",
     "serverless-cloudformation-resource-counter": "^0.1.1",
     "serverless-plugin-iopipe": "^1.6.2",
     "serverless-stack-output": "^0.2.3",
     "serverless-webpack": "^5.1.1",
-    "single-line-log": "^1.1.2",
     "ts-loader": "^4.2.0",
     "typescript": "^2.8.1",
     "webpack": "^4.5.0"
-  },
-  "iopipe": {
-    "plugins": [
-      [
-        "@iopipe/logger",
-        {
-          "enabled": true
-        }
-      ]
-    ]
   }
 }
