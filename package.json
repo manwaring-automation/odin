@@ -8,7 +8,7 @@
     "postremove": "rimraf infrastructure/stack-outputs.yml"
   },
   "dependencies": {
-    "@manwaring/lambda-wrapper": "^0.2.1",
+    "@manwaring/lambda-wrapper": "^0.2.2",
     "epsagon": "^1.7.13",
     "source-map-support": "^0.5.6"
   },
