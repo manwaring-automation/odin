@@ -29,7 +29,7 @@ provider:
 custom:
   epsagon:
     token: ${env:EPSAGON_TOKEN}
-    appName: ${self:service.name}-manwaring-${opt:stage, self:provider.stage}
+    appName: ${self:service.name}-${opt:stage, self:provider.stage}
   odin: ${file(./odin.yml)}
   # output is used by the serverless-stack-output plugin
   output: { file: ./infrastructure/stack-outputs.yml }
