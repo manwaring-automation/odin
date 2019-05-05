@@ -5,12 +5,15 @@
   "scripts": {
     "deploy": "sls deploy",
     "remove": "sls remove",
-    "postremove": "rimraf infrastructure/stack-outputs.yml"
+    "postremove": "rimraf infrastructure/stack-outputs.yml",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@manwaring/lambda-wrapper": "^0.2.2",
     "epsagon": "^1.7.13",
-    "source-map-support": "^0.5.6"
+    "source-map-support": "^0.5.6",
+    "snyk": "^1.161.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.6",
@@ -27,5 +30,6 @@
     "ts-loader": "^4.2.0",
     "typescript": "^2.8.1",
     "webpack": "^4.5.0"
-  }
+  },
+  "snyk": true
 }
