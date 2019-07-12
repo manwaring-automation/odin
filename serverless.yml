@@ -2,7 +2,7 @@ service:
   name: odin
 
 plugins:
-  - serverless-plugin-epsagon
+  - serverless-plugin-iopipe
   - serverless-webpack
   - serverless-cloudformation-resource-counter
   - serverless-stack-output

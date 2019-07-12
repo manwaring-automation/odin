@@ -8,24 +8,24 @@
     "postremove": "rimraf infrastructure/stack-outputs.yml"
   },
   "dependencies": {
+    "@iopipe/iopipe": "^1.15.0",
     "@manwaring/lambda-wrapper": "^0.2.2",
-    "epsagon": "^1.7.13",
-    "source-map-support": "^0.5.6"
+    "source-map-support": "^0.5.12"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.6",
+    "@types/aws-lambda": "^8.10.25",
     "@types/aws-sdk": "^2.7.0",
-    "@types/node": "^8.10.17",
-    "aws-sdk": "^2.259.1",
+    "@types/node": "^8.10.48",
+    "aws-sdk": "^2.452.0",
     "git-rev-sync": "^1.12.0",
-    "rimraf": "^2.6.2",
-    "serverless": "^1.35.0",
+    "rimraf": "^2.6.3",
+    "serverless": "^1.47.0",
     "serverless-cloudformation-resource-counter": "^0.1.1",
-    "serverless-plugin-epsagon": "^1.4.10",
+    "serverless-plugin-iopipe": "^1.6.2",
     "serverless-stack-output": "^0.2.3",
-    "serverless-webpack": "^5.1.1",
-    "ts-loader": "^4.2.0",
+    "serverless-webpack": "^5.3.0",
+    "ts-loader": "^4.5.0",
     "typescript": "^2.8.1",
-    "webpack": "^4.5.0"
+    "webpack": "^4.35.3"
   }
 }
