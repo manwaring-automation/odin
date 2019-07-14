@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@iopipe/iopipe": "^1.15.0",
-    "@manwaring/lambda-wrapper": "^0.2.2",
+    "@manwaring/lambda-wrapper": "^0.3.7",
     "source-map-support": "^0.5.12"
   },
   "devDependencies": {
