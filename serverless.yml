@@ -12,6 +12,7 @@ provider:
   runtime: nodejs8.10
   stage: local
   environment:
+    IOPIPE_TOKEN: ${env:IOPIPE_TOKEN}
     REVISION: ${file(infrastructure/helper.js):revision}
     STAGE: ${opt:stage, self:provider.stage}
     DELETE_STACK_TOPIC:
@@ -27,9 +28,6 @@ provider:
       Action: '*'
 
 custom:
-  epsagon:
-    token: ${env:EPSAGON_TOKEN}
-    appName: ${self:service.name}-${opt:stage, self:provider.stage}
   odin: ${file(./odin.yml)}
   # output is used by the serverless-stack-output plugin
   output: { file: ./infrastructure/stack-outputs.yml }
