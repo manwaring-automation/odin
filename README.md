@@ -61,5 +61,5 @@ Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old 
 [formatter-badge-url]: #badge
 [license-badge]: https://img.shields.io/github/license/manwaring/odin.svg
 [license-badge-url]: https://github.com/manwaring/odin
-[vulnerability-badge]: https://snyk.io/test/github/manwaring/odin/badge.svg?targetFile=package.json
-[vulnerability-badge-url]: https://snyk.io/test/github/manwaring/odin?targetFile=package.json
+[vulnerability-badge]: https://api.dependabot.com/badges/status?host=github&repo=manwaring/odin
+[vulnerability-badge-url]: https://dependabot.com/
