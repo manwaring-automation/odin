@@ -5,7 +5,6 @@ plugins:
   - serverless-plugin-iopipe
   - serverless-webpack
   - serverless-cloudformation-resource-counter
-  - serverless-stack-output
 
 provider:
   name: aws
@@ -29,8 +28,6 @@ provider:
 
 custom:
   odin: ${file(./odin.yml)}
-  # output is used by the serverless-stack-output plugin
-  output: { file: ./infrastructure/stack-outputs.yml }
 
 functions:
   checkStacks:

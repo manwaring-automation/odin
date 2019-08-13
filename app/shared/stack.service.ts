@@ -1,5 +1,4 @@
 import { CloudFormation, SNS } from 'aws-sdk';
-// import { log } from './logger';
 import { listAllStacks } from './cf.service';
 import { DeleteRequest } from './deleteRequest';
 

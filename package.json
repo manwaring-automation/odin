@@ -19,7 +19,7 @@
     "aws-sdk": "^2.493.0",
     "git-rev-sync": "^1.12.0",
     "rimraf": "^2.6.3",
-    "serverless": "^1.47.0",
+    "serverless": "^1.49.0",
     "serverless-cloudformation-resource-counter": "^0.3.0",
     "serverless-plugin-iopipe": "^1.6.2",
     "serverless-stack-output": "^0.2.3",

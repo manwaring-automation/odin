@@ -85,6 +85,20 @@ jobs:
           paths:
             - node_modules
 
+  test:
+    <<: *container-config
+    steps:
+      - checkout
+      - *load-cache
+      - run:
+          name: Test
+          command: npm test
+      - store_artifacts:
+          path: coverage
+      - run:
+          name: Send coverage to Codecov
+          command: npm run codecov
+
   deploy-branch:
     <<: *deploy
     <<: *branch-config
@@ -96,20 +110,17 @@ jobs:
 workflows:
   version: 2
 
-  feature-branch:
+  build_test_deploy:
     jobs:
-      - install:
-          <<: *filter-feature-branches
+      - install
+      # - test:
+      #     requires:
+      #       - install
       - deploy-branch:
           <<: *filter-feature-branches
           context: manwaring-aws
           requires:
             - install
-
-  master-branch:
-    jobs:
-      - install:
-          <<: *filter-master
       - deploy-automation:
           <<: *filter-master
           context: manwaring-aws
