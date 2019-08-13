@@ -52,7 +52,7 @@ Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old 
 [coverage]: https://flat.badgen.net/codecov/c/github/manwaring/odin/?icon=codecov
 [dependencies]: https://flat.badgen.net/david/dep/manwaring/odin
 [dev-dependencies]: https://flat.badgen.net/david/dev/manwaring/odin/?label=dev+dependencies
-[license]: https://flat.badgen.net/github/license/manwaring/serverless-starter
+[license]: https://flat.badgen.net/github/license/manwaring/odin
 [dependabot]: https://flat.badgen.net/dependabot/manwaring/odin/?icon=dependabot&label=dependabot
 
 <!-- badge urls -->
@@ -62,4 +62,4 @@ Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old 
 [dependencies-url]: https://david-dm.org/manwaring/odin
 [dev-dependencies-url]: https://david-dm.org/manwaring/odin?type=dev
 [license-url]: https://github.com/manwaring/odin
-[dependabot-url]: https://flat.badgen.net/dependabot/manwaring/serverless-starter
+[dependabot-url]: https://flat.badgen.net/dependabot/manwaring/odin
