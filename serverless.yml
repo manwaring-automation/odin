@@ -1,7 +1,5 @@
 service:
   name: odin
-app: automation
-tenant: manwaring
 
 plugins:
   - serverless-plugin-iopipe
