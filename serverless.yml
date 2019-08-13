@@ -6,7 +6,6 @@ plugins:
   - serverless-plugin-iam-checker
   - serverless-webpack
   - serverless-cloudformation-resource-counter
-  - serverless-stack-output
 
 provider:
   name: aws
@@ -33,8 +32,6 @@ custom:
   iamChecker: ${self:custom.config.iamChecker}
   # iopipeToken is used to forward monitoring information to IO Pipe
   iopipeToken: ${self:custom.config.iopipeToken}
-  # output is used by the serverless-stack-output plugin
-  output: { file: ./infrastructure/stack-outputs.yml }
   properties: ${file(./infrastructure/properties.yml)}
 
 functions:

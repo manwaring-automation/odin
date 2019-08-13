@@ -4,13 +4,7 @@
   
 </p>
 
-[![Build status][build-badge]][build-badge-url]
-[![Test coverage][coverage-badge]][coverage-badge-url]
-[![Known Vulnerabilities][vulnerability-badge]][vulnerability-badge-url]
-[![Dependency Status][dependency-badge]][dependency-badge-url]
-[![devDependency Status][dev-dependency-badge]][dev-dependency-badge-url]
-[![License][license-badge]][license-badge-url]
-[![Code style][formatter-badge]][formatter-badge-url]
+[![build]][build-url] [![coverage]][coverage-url] [![dependabot]][dependabot-url] [![dependencies]][dependencies-url] [![dev-dependencies]][dev-dependencies-url] [![license]][license-url]
 
 # Odin
 
@@ -22,7 +16,7 @@ This serverless application periodically checks the status of CloudFormation sta
 
 Odin currently determines that a stack is stale and should be removed when it doesn't fit any of the following three criteria:
 
-1.  **Tagging:** If a stack is tagged with the stage 'Production' or 'Automation' (or either's derivatives, like 'Prod' or 'Auto') then it is ineligible for deletion
+1.  **Tagging:** If a stack is tagged with the stage 'Production' or 'Automation' (or derivatives like 'Prod' or 'Auto') then it is ineligible for deletion
 1.  **Status:** If a stack's status is in a failure or in-progress state then it is ineligible for deletion
 1.  **Age:** If a stack has been updated recently then it is ineligible for deletion
 
@@ -33,12 +27,6 @@ If a stack doesn't match one of the above criteria then it is removed.
 Odin is built with the [Serverless Framework](https://serverless.com/) - see their documentation for more about the tool and how to use it.
 
 To change the frequency with which Odin runs and the settings used to determine whether a stack is eligible for deletion modify the values in [odin.yml](https://github.com/manwaring/odin/blob/master/odin.yml) and redeploy the application.
-
-# Local Debugging
-
-The '.vscode' folder contains settings for making local debugging via [VS Code](https://code.visualstudio.com/) a bit easier, especially if you don't have a Node environment already running or you are running a different version of Node.
-
-See [this README.md](https://github.com/pariveda-serverless/support/blob/master/nodejs/4.3.2/local/README.md) for more on how you can debug Odin with this tool.
 
 # Limitations
 
@@ -58,17 +46,20 @@ Another approach is to let Odin empty your S3 buckets for you prior to calling t
 
 Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old German, Hindoo and Egyptian Mythology. London, Asher and Co. This illustration is from plate XXXV. Digitized version of the book by the Internet Archive, https://archive.org/details/manualofmytholog00murruoft Published earlier in Reusch, Rudolf Friedrich. 1865. Die nordischen Göttersagen.
 
-[build-badge]: https://circleci.com/gh/manwaring/odin.svg?style=shield&circle-token=9013ebb3f280856ee64dcaa261e6b3b46c7b7b77
-[build-badge-url]: https://circleci.com/gh/manwaring/odin
-[coverage-badge]: https://codecov.io/gh/manwaring/odin/branch/master/graph/badge.svg
-[coverage-badge-url]: https://codecov.io/gh/manwaring/odin
-[dependency-badge]: https://david-dm.org/manwaring/odin.svg
-[dependency-badge-url]: https://david-dm.org/manwaring/odin
-[dev-dependency-badge]: https://david-dm.org/manwaring/odin/dev-status.svg
-[dev-dependency-badge-url]: https://david-dm.org/manwaring/odin?type=dev
-[formatter-badge]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square
-[formatter-badge-url]: #badge
-[license-badge]: https://img.shields.io/github/license/manwaring/odin.svg
-[license-badge-url]: https://github.com/manwaring/odin
-[vulnerability-badge]: https://snyk.io/test/github/manwaring/odin/badge.svg?targetFile=package.json
-[vulnerability-badge-url]: https://snyk.io/test/github/manwaring/odin?targetFile=package.json
+<!-- badge icons -->
+
+[build]: https://circleci.com/gh/manwaring/odin.svg?style=shield&circle-token=9013ebb3f280856ee64dcaa261e6b3b46c7b7b77
+[coverage]: https://flat.badgen.net/codecov/c/github/manwaring/odin/?icon=codecov
+[dependencies]: https://flat.badgen.net/david/dep/manwaring/odin
+[dev-dependencies]: https://flat.badgen.net/david/dev/manwaring/odin/?label=dev+dependencies
+[license]: https://flat.badgen.net/github/license/manwaring/serverless-starter
+[dependabot]: https://flat.badgen.net/dependabot/manwaring/odin/?icon=dependabot&label=dependabot
+
+<!-- badge urls -->
+
+[build-url]: https://circleci.com/gh/manwaring/odin
+[coverage-url]: https://codecov.io/gh/manwaring/odin
+[dependencies-url]: https://david-dm.org/manwaring/odin
+[dev-dependencies-url]: https://david-dm.org/manwaring/odin?type=dev
+[license-url]: https://github.com/manwaring/odin
+[dependabot-url]: https://flat.badgen.net/dependabot/manwaring/serverless-starter
