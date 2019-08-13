@@ -24,7 +24,6 @@ anchors:
       name: Configure AWS access
       command: |
         mkdir -p ~/.aws
-
         cat > ~/.aws/credentials << EOL
         [manwaring]
         aws_access_key_id = ${!KEY}
@@ -61,8 +60,10 @@ anchors:
       - run:
           name: Deploy stack
           command: |
-            [[ ! -z "$STAGE" ]] || STAGE=$CIRCLE_BRANCH
-            STAGE=$STAGE PROFILE=manwaring npm run stack:deploy
+
+            [[ ! -z "$STAGE" ]] || STAGE=${CIRCLE_BRANCH%%/*}
+            echo Deploying Odin for stage $STAGE
+            npm run deploy -- --stage $STAGE
       - persist_to_workspace:
           root: .
           paths:

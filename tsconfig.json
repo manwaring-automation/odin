@@ -2,8 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "lib": ["esnext"],
-    "moduleResolution": "node",
-    "inlineSourceMap": true
+    "moduleResolution": "node"
   },
   "exclude": ["node_modules"]
 }
