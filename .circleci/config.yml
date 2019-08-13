@@ -113,16 +113,16 @@ workflows:
   build_test_deploy:
     jobs:
       - install
-      - test:
-          requires:
-            - install
+      # - test:
+      #     requires:
+      #       - install
       - deploy-branch:
           <<: *filter-feature-branches
           context: manwaring-aws
           requires:
-            - test
+            - install
       - deploy-automation:
           <<: *filter-master
           context: manwaring-aws
           requires:
-            - test
+            - install
