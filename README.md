@@ -48,7 +48,7 @@ Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old 
 
 <!-- badge icons -->
 
-[build]: https://circleci.com/gh/manwaring/odin.svg?style=shield&circle-token=9013ebb3f280856ee64dcaa261e6b3b46c7b7b77
+[build]: https://flat.badgen.net/circleci/github/manwaring/odin/master/?icon=circleci
 [coverage]: https://flat.badgen.net/codecov/c/github/manwaring/odin/?icon=codecov
 [dependencies]: https://flat.badgen.net/david/dep/manwaring/odin
 [dev-dependencies]: https://flat.badgen.net/david/dev/manwaring/odin/?label=dev+dependencies
