@@ -3,7 +3,6 @@ service:
 
 plugins:
   - serverless-plugin-iopipe
-  - serverless-plugin-iam-checker
   - serverless-webpack
   - serverless-cloudformation-resource-counter
 
