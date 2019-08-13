@@ -19,4 +19,4 @@ deleteableStatuses: "['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE',
 emptyAllBuckets: true
 
 # CloudFormation output key of buckets to empty if don't want to empty all buckets by default
-bucketsToEmpty: "['ServerlessDeploymentBucketName', 'DocumentBucket', 'S3BucketSite']"
+bucketsToEmpty: "['ServerlessDeploymentBucketName', 'DocumentBucket', 'S3BucketSite', 'ApiDocumentationBucket']"
