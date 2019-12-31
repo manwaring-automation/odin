@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": ["esnext"],
-    "moduleResolution": "node"
+    "lib": ["es2017"],
+    "removeComments": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "target": "es2017",
+    "experimentalDecorators": true
   },
-  "exclude": ["node_modules"]
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules", ".serverless", "_lumigo", ".webpack", ".vscode", "**/*.test.ts", "**/*.e2e.ts"]
 }

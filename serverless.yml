@@ -2,25 +2,27 @@ service:
   name: odin
 
 plugins:
-  - serverless-plugin-iopipe
   - serverless-webpack
   - serverless-cloudformation-resource-counter
+  - serverless-prune-plugin
+  - serverless-lumigo
 
 provider:
   name: aws
-  runtime: nodejs8.10
-  stage: local
+  runtime: nodejs12.x
+  stage: ${self:custom.stage}
   environment:
-    IOPIPE_TOKEN: ${env:IOPIPE_TOKEN}
     REVISION: ${file(infrastructure/helper.js):revision}
-    STAGE: ${opt:stage, self:provider.stage}
-    DELETE_STACK_TOPIC:
-      Fn::Join:
-        - ':'
-        - - arn:aws:sns
-          - Ref: AWS::Region
-          - Ref: AWS::AccountId
-          - delete-stack-${opt:stage, self:provider.stage}
+    STAGE: ${self:custom.stage}
+    NODE_ENV: PRODUCTION
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    LAMBDA_WRAPPER_LOG: true
+    DELETE_STACK_TOPIC: !Join
+      - ':'
+      - - arn:aws:sns
+        - !Ref AWS::Region
+        - !Ref AWS::AccountId
+        - delete-stack-${opt:stage, self:provider.stage}
   iamRoleStatements:
     - Effect: Allow
       Resource: '*'
@@ -28,9 +30,35 @@ provider:
 
 custom:
   odin: ${file(./odin.yml)}
+  stage: ${opt:stage, env:STAGE, 'local'}
+  # https://github.com/lumigo-io/serverless-lumigo-plugin
+  lumigo:
+    token: ${env:LUMIGO_TOKEN}
+    nodePackageManager: npm
+  # https://github.com/claygregory/serverless-prune-plugin
+  prune:
+    automatic: true
+    number: 3
+  # https://github.com/drexler/serverless-cloudformation-resource-counter
+  warningThreshold: 100
+  # https://github.com/serverless-heaven/serverless-webpack
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules:
+      forceExclude:
+        - aws-sdk
+
+package:
+  exclude:
+    - .git
+    - .env
+    - package-lock.json
+    - package.json
+    - README.md
+  excludeDevDependencies: true
 
 functions:
-  checkStacks:
+  check-stacks:
     handler: app/check.handler
     events:
       - schedule:
@@ -48,7 +76,7 @@ functions:
             deleteableStatuses: ${self:custom.odin.deleteableStatuses}
             namesToRetain: ${self:custom.odin.namesToRetain}
 
-  deleteStacks:
+  delete-stacks:
     handler: app/delete.handler
     events:
       - sns: delete-stack-${opt:stage, self:provider.stage}

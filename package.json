@@ -8,24 +8,26 @@
     "postremove": "rimraf infrastructure/stack-outputs.yml"
   },
   "dependencies": {
-    "@iopipe/iopipe": "^1.15.0",
-    "@manwaring/lambda-wrapper": "^0.3.7",
-    "source-map-support": "^0.5.12"
+    "@manwaring/lambda-wrapper": "^1.2.2",
+    "source-map-support": "^0.5.16"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.28",
+    "@types/aws-lambda": "^8.10.39",
     "@types/aws-sdk": "^2.7.0",
-    "@types/node": "^12.6.2",
-    "aws-sdk": "^2.493.0",
-    "git-rev-sync": "^1.12.0",
-    "rimraf": "^2.6.3",
-    "serverless": "^1.49.0",
-    "serverless-cloudformation-resource-counter": "^0.3.0",
-    "serverless-plugin-iopipe": "^1.6.2",
+    "@types/node": "^13.1.2",
+    "aws-sdk": "^2.596.0",
+    "fork-ts-checker-webpack-plugin": "^3.1.1",
+    "git-rev-sync": "^2.0.0",
+    "rimraf": "^3.0.0",
+    "serverless": "^1.60.4",
+    "serverless-cloudformation-resource-counter": "^1.0.2",
+    "serverless-lumigo": "^1.6.1",
+    "serverless-prune-plugin": "^1.4.1",
     "serverless-stack-output": "^0.2.3",
     "serverless-webpack": "^5.3.1",
-    "ts-loader": "^6.0.4",
-    "typescript": "^3.5.3",
-    "webpack": "^4.35.3"
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.5",
+    "webpack-node-externals": "^1.7.2"
   }
 }
