@@ -1,7 +1,7 @@
-import { snsWrapper, SnsSignature } from '@manwaring/lambda-wrapper';
+import { sns, SnsSignature } from '@manwaring/lambda-wrapper';
 import { DeleteRequest, emptyBuckets, deleteStack, getBucketsToEmpty } from './shared';
 
-export const handler = snsWrapper(async ({ message, success, error }: SnsSignature) => {
+export const handler = sns(async ({ message, success, error }: SnsSignature) => {
   try {
     const config: DeleteRequest = message;
     console.debug('Received request to delete stack', config);
