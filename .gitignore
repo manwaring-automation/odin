@@ -46,3 +46,7 @@ credentials.local.yml
 infrastructure/stack-outputs.yml
 
 iopipe_handlers
+
+_lumigo
+
+.env

@@ -12,8 +12,6 @@ anchors:
   container-config: &container-config
     docker:
       - image: circleci/node
-        environment:
-          TERM: dumb
 
   load-cache: &load-cache
     restore_cache:
