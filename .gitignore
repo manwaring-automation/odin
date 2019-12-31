@@ -41,8 +41,6 @@ jspm_packages
 
 credentials.local.yml
 
-.npmrc
-
 infrastructure/stack-outputs.yml
 
 iopipe_handlers
