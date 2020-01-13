@@ -82,9 +82,9 @@ hourly:
   rate: cron(0 */1 ? * * *) # every hour
   staleAfter: 8 # delete if older than 8 hours
 
-# Odin won't delete a stack with the following names or stages - this behavior is consistent for both schedules
-namesToRetain: "[\/ControlTower\/,'AWSControlTowerBP-BASELINE-CLOUDTRAIL-MASTER']" # Supports partial matches - casing matters
-stagesToRetain: "['PROD', 'PRODUCTION', 'QA', 'DEVELOPMENT', 'DEV', 'AUTO', 'AUTOMATION', 'INFRA', 'INFRASTRUCTURE', 'COMMON']"
+# Odin won't delete a stack with the following names or stages (case insensitive) - this behavior is consistent for both schedules
+namesToRetain: "['CONTROLTOWER']" # Supports partial matches
+stagesToRetain: "['PROD', 'PRODUCTION', 'QA', 'DEVELOPMENT', 'DEV', 'AUTO', 'AUTOMATION', 'INFRA', 'INFRASTRUCTURE', 'COMMON']" # Supports full matches only
 
 # Odin will only delete a stack if it's status is one of the following - this behavior is consistent for both schedules
 deleteableStatuses: "['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE']"

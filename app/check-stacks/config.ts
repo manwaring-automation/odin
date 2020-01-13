@@ -1,8 +1,8 @@
 export interface Config {
-  staleAfter: string;
+  staleAfter: number;
   stagesToRetain: string[];
   deleteableStatuses: string[];
-  namesToRetain: (string | RegExp)[];
+  namesToRetain: string[];
   emptyAllBuckets: boolean;
   bucketsToEmpty: string[];
 }

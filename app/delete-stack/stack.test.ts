@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-import { defaultConfig, listStackResourcesResponse, listObjectsV2Output } from './sample-data';
+import { defaultDailyConfig, listStackResourcesResponse, listObjectsV2Output } from './sample-data';
 import { DeleteRequest } from './delete-request';
 
 const mockListObjectsV2 = jest.fn().mockImplementation(() => ({ promise: () => Promise.resolve(listObjectsV2Output) }));
@@ -22,7 +22,7 @@ describe('Delete stack', () => {
 
   it('Deletes the stack', async () => {
     const { CloudFormationStack } = require('./stack');
-    const request: DeleteRequest = { stackName: '', config: defaultConfig };
+    const request: DeleteRequest = { stackName: '', config: defaultDailyConfig };
     const stack = new CloudFormationStack(request);
     await stack.delete();
     // expect();

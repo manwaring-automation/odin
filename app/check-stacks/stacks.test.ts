@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-import { defaultConfig, describeStacksOutput } from './sample-data';
+import { defaultDailyConfig, describeStacksOutput } from './sample-data';
 
 const mockDescribeStacks = jest
   .fn()
@@ -18,7 +18,7 @@ describe('Check stacks', () => {
 
   it('Gets stacks to delete', async () => {
     const { CloudFormationStacks } = require('./stacks');
-    const stacks = new CloudFormationStacks(defaultConfig);
+    const stacks = new CloudFormationStacks(defaultDailyConfig);
     await stacks.getStacksToDelete();
     // expect();
   });

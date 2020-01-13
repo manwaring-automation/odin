@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-import { defaultConfig } from './sample-data';
+import { defaultDailyConfig } from './sample-data';
 
 const mockPublish = jest.fn().mockImplementation(() => ({ promise: () => Promise.resolve() }));
 jest.mock('aws-sdk', () => ({ SNS: jest.fn(() => ({ publish: mockPublish })) }));
@@ -12,7 +12,7 @@ describe('Check stacks publish delete request', () => {
 
   it('Publishes the delete request', async () => {
     const { PublishDeleteRequest } = require('./publish-delete-request');
-    const request = new PublishDeleteRequest('stackName', defaultConfig);
+    const request = new PublishDeleteRequest('stackName', defaultDailyConfig);
     await request.publish();
     // expect();
   });

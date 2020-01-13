@@ -22,7 +22,7 @@ export class CloudFormationStack {
   private isStale(): boolean {
     const lastUpdated: any = this.stack.LastUpdatedTime || this.stack.CreationTime;
     const timeSinceLastUpdate = Math.floor((<any>new Date() - lastUpdated) / 36e5);
-    const canDelete = timeSinceLastUpdate >= parseInt(this.config.staleAfter);
+    const canDelete = timeSinceLastUpdate >= this.config.staleAfter;
     console.debug(
       `${this.name} was last updated at ${lastUpdated} (${timeSinceLastUpdate} hours ago) ${this.getDeletableLog(
         canDelete
@@ -39,7 +39,7 @@ export class CloudFormationStack {
   }
 
   private nameIsDeletable(): boolean {
-    const canDelete = !this.config.namesToRetain.some(name => this.name.match(name));
+    const canDelete = !this.config.namesToRetain.some(name => this.name.toUpperCase().match(name.toUpperCase()));
     console.debug(
       `${this.name} ${canDelete ? 'has' : "doesn't have"} a reserved name ${this.getDeletableLog(canDelete)}`
     );

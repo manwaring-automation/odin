@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "license": "MIT",
   "scripts": {
+    "package": "dotenv -- sls package",
     "deploy": "dotenv -- sls deploy",
     "remove": "dotenv -- sls remove",
     "postremove": "rimraf infrastructure/stack-outputs.yml",

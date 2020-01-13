@@ -54,6 +54,7 @@ package:
     - package-lock.json
     - package.json
     - README.md
+    - app/**/*/sample-data/**/*
   excludeDevDependencies: true
 
 functions:
@@ -61,23 +62,11 @@ functions:
     handler: app/check-stacks/check.handler
     events:
       - schedule:
-          rate: ${self:custom.odin.daily.rate}
-          input:
-            staleAfter: ${self:custom.odin.daily.staleAfter}
-            stagesToRetain: ${self:custom.odin.stagesToRetain}
-            deleteableStatuses: ${self:custom.odin.deleteableStatuses}
-            namesToRetain: ${self:custom.odin.namesToRetain}
-            emptyAllBuckets: ${self:custom.odin.emptyAllBuckets}
-            bucketsToEmpty: ${self:custom.odin.bucketsToEmpty}
+          rate: ${self:custom.odin.schedule.daily.rate}
+          input: '${file(./odin-config-loader.js):daily}'
       - schedule:
-          rate: ${self:custom.odin.hourly.rate}
-          input:
-            staleAfter: ${self:custom.odin.hourly.staleAfter}
-            stagesToRetain: ${self:custom.odin.stagesToRetain}
-            deleteableStatuses: ${self:custom.odin.deleteableStatuses}
-            namesToRetain: ${self:custom.odin.namesToRetain}
-            emptyAllBuckets: ${self:custom.odin.emptyAllBuckets}
-            bucketsToEmpty: ${self:custom.odin.bucketsToEmpty}
+          rate: ${self:custom.odin.schedule.hourly.rate}
+          input: '${file(./odin-config-loader.js):hourly}'
 
   delete-stack:
     handler: app/delete-stack/delete.handler
@@ -88,22 +77,6 @@ resources:
   Description: Automated service for destroying temporary stacks (retains production, qa, development, and automation stacks)
 
   Outputs:
-    DailySchedule:
-      Description: Schedule for daily jobs and maximum stack age in hours before deletion
-      Value: ${self:custom.odin.daily.rate}, max ${self:custom.odin.daily.staleAfter} hours
-    HourlySchedule:
-      Description: Schedule for hourly jobs and maximum stack age in hours before deletion
-      Value: ${self:custom.odin.hourly.rate}, max ${self:custom.odin.hourly.staleAfter} hours
-    StackNamesToRetain:
-      Description: Names of stacks that will be retained
-      Value: In ${self:custom.odin.namesToRetain}
-    StagesToRetain:
-      Description: Stages of stacks that will be retained
-      Value: In ${self:custom.odin.stagesToRetain}
-    StatusesToRetain:
-      Description: Statuses of stacks that will be retained
-      Value: Not in ${self:custom.odin.deleteableStatuses}
-
     DeleteStackSNS:
       Description: ARN of the ${opt:stage, self:provider.stage} stage SNS topic for stack deletion
       Value:
