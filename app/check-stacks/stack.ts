@@ -8,7 +8,7 @@ export class CloudFormationStack {
     this.name = stack.StackName;
   }
 
-  async shouldDelete(): Promise<boolean> {
+  shouldDelete(): boolean {
     return this.stageIsDeletable() && this.isStale() && this.statusIsDeletable() && this.nameIsDeletable();
   }
 
@@ -41,7 +41,7 @@ export class CloudFormationStack {
   private nameIsDeletable(): boolean {
     const canDelete = !this.config.namesToRetain.some(name => this.name.toUpperCase().match(name.toUpperCase()));
     console.debug(
-      `${this.name} ${canDelete ? 'has' : "doesn't have"} a reserved name ${this.getDeletableLog(canDelete)}`
+      `${this.name} ${canDelete ? "doesn't have" : 'has'} a reserved name ${this.getDeletableLog(canDelete)}`
     );
     return canDelete;
   }

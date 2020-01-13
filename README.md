@@ -71,39 +71,75 @@ To help with this, by default Odin will empty all S3 buckets in a stack prior to
 # Default Odin configurations
 
 ```yml
-# This schedule initiates Odin once a day in the early morning (US ET) to
-# clean up ephemeral stages
-daily:
-  rate: cron(0 8 ? * * *) # 8 AM UTC / 3 AM ET
-  staleAfter: 2 # delete if older than 2 hours
+schedule:
+  # This schedule initiates Odin once a day in the early morning (US ET)
+  # to clean up ephemeral stages
+  daily:
+    rate: cron(0 8 ? * * *) # 8 AM UTC / 3 AM ET
 
-# This schedule initiates Odin every hour to clean up ephemeral stages
-hourly:
-  rate: cron(0 */1 ? * * *) # every hour
-  staleAfter: 8 # delete if older than 8 hours
+  # This schedule initiates Odin every hour to clean up ephemeral stages
+  hourly:
+    rate: cron(0 */1 ? * * *) # every hour
 
-# Odin won't delete a stack with the following names or stages (case insensitive) - this behavior is consistent for both schedules
-namesToRetain: "['CONTROLTOWER']" # Supports partial matches
-stagesToRetain: "['PROD', 'PRODUCTION', 'QA', 'DEVELOPMENT', 'DEV', 'AUTO', 'AUTOMATION', 'INFRA', 'INFRASTRUCTURE', 'COMMON']" # Supports full matches only
+dynamicRules:
+  daily:
+    staleAfter: 2 # delete if older than 2 hours
+  hourly:
+    staleAfter: 8 # delete if older than 8 hours
 
-# Odin will only delete a stack if it's status is one of the following - this behavior is consistent for both schedules
-deleteableStatuses: "['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE']"
+staticRules:
+  # Odin won't delete a stack with the following names or stages (case
+  # insensitive) - this behavior is consistent for both schedules
+  # Supports partial matches
+  namesToRetain:
+    - ControlTower
+    - LumigoIntegrationV2
+  # Supports full matches only
+  stagesToRetain:
+    ['PROD', 'PRODUCTION', 'QA', 'DEVELOPMENT', 'DEV', 'AUTO', 'AUTOMATION', 'INFRA', 'INFRASTRUCTURE', 'COMMON']
 
-# A CloudFormation stack won't delete successfully if there are non-empty
-# buckets associated with it.  Use this property to indicate whether or
-# not you want Odin to empty all buckets in the stack (default behavior).
-# If you only want odin to empty specific buckets then set this property
-# to false and update the bucketsToEmpty property below with the logical
-# resource names of the buckets you want Odin to empty.  This behavior is
-# consistent for both schedules
-emptyAllBuckets: true
+  # Odin will only delete a stack if it's status is one of the following - this behavior is consistent for both schedules
+  deleteableStatuses: ['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE']
 
-# The CloudFormation logical resource names of buckets to empty (if you don't want to empty all buckets by default)
-# This behavior is consistent for both schedules
-bucketsToEmpty: "['ServerlessDeploymentBucket', 'DocumentBucket', 'S3BucketSite', 'ApiDocumentationBucket']"
+  # A CloudFormation stack won't delete successfully if there are non-empty
+  # buckets associated with it.  Use this property to indicate whether or
+  # not you want Odin to empty all buckets in the stack (default behavior).
+  # If you only want odin to empty specific buckets then set this property
+  # to false and update the bucketsToEmpty property below with the logical
+  # resource names of the buckets you want Odin to empty.  This behavior is
+  # consistent for both schedules
+  emptyAllBuckets: true
+
+  # The CloudFormation logical resource names of buckets to empty (if you don't want to empty all buckets by default)
+  # This behavior is consistent for both schedules
+  bucketsToEmpty: ['ServerlessDeploymentBucket', 'DocumentBucket', 'S3BucketSite', 'ApiDocumentationBucket']
 ```
 
 Config specifications can be found (and modified) in [odin.yml](odin.yml)
+
+## Sample check stacks payload
+
+```json
+{
+  "namesToRetain": ["ControlTower", "LumigoIntegrationV2"],
+  "stagesToRetain": [
+    "PROD",
+    "PRODUCTION",
+    "QA",
+    "DEVELOPMENT",
+    "DEV",
+    "AUTO",
+    "AUTOMATION",
+    "INFRA",
+    "INFRASTRUCTURE",
+    "COMMON"
+  ],
+  "deleteableStatuses": ["CREATE_COMPLETE", "ROLLBACK_COMPLETE", "UPDATE_COMPLETE", "UPDATE_ROLLBACK_COMPLETE"],
+  "emptyAllBuckets": true,
+  "bucketsToEmpty": ["ServerlessDeploymentBucket", "DocumentBucket", "S3BucketSite", "ApiDocumentationBucket"],
+  "staleAfter": 2
+}
+```
 
 ## Odin image source
 
