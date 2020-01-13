@@ -1,35 +1,62 @@
 {
   "name": "odin",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
   "scripts": {
     "deploy": "dotenv -- sls deploy",
     "remove": "dotenv -- sls remove",
-    "postremove": "rimraf infrastructure/stack-outputs.yml"
+    "postremove": "rimraf infrastructure/stack-outputs.yml",
+    "test": "jest --coverage",
+    "watch-tests": "jest --watch",
+    "codecov": "codecov -f coverage/*.json"
   },
   "dependencies": {
-    "@manwaring/lambda-wrapper": "^1.2.2",
+    "@manwaring/lambda-wrapper": "^3.0.0",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.0",
+    "@babel/preset-env": "^7.8.0",
+    "@babel/preset-typescript": "^7.8.0",
+    "@serverless/event-mocks": "^1.1.1",
     "@types/aws-lambda": "^8.10.39",
     "@types/aws-sdk": "^2.7.0",
-    "@types/node": "^13.1.2",
-    "aws-sdk": "^2.596.0",
+    "@types/chance": "^1.0.8",
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.6",
+    "aws-sdk": "^2.601.0",
+    "chance": "^1.1.4",
+    "codecov": "^3.6.1",
     "dotenv-cli": "^3.1.0",
     "eslint": "^6.8.0",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
     "git-rev-sync": "^2.0.0",
+    "husky": "^2.7.0",
+    "jest": "^24.9.0",
+    "js-yaml": "^3.13.1",
     "rimraf": "^3.0.0",
-    "serverless": "^1.60.4",
+    "serverless": "^1.60.5",
     "serverless-cloudformation-resource-counter": "^1.0.2",
     "serverless-lumigo": "^1.6.1",
     "serverless-prune-plugin": "^1.4.1",
     "serverless-stack-output": "^0.2.3",
     "serverless-webpack": "^5.3.1",
+    "ts-jest": "^24.3.0",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.4",
     "webpack": "^4.41.5",
     "webpack-node-externals": "^1.7.2"
-  }
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
+  "author": "Made with ♥ by Phillip Manwaring"
 }

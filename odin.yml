@@ -1,23 +1,30 @@
-# 8 AM UTC / 3 AM ET, delete if older than 2 hours
-dailyRate: cron(0 8 ? * * *)
-dailyStaleAfter: 2
+# This schedule initiates Odin once a day in the early morning (US ET) to
+# clean up ephemeral stages
+daily:
+  rate: cron(0 8 ? * * *) # 8 AM UTC / 3 AM ET
+  staleAfter: 2 # delete if older than 2 hours
 
-# Every 1 hour, delete if older than 8 hours
-hourlyRate: cron(0 */1 ? * * *)
-hourlyStaleAfter: 8
+# This schedule initiates Odin every hour to clean up ephemeral stages
+hourly:
+  rate: cron(0 */1 ? * * *) # every hour
+  staleAfter: 8 # delete if older than 8 hours
 
-# Stages and statuses to retain - consistent regardless of schedule
-namesToRetain: "['AWSControlTowerBP-BASELINE-CLOUDTRAIL-MASTER']"
+# Odin won't delete a stack with the following names or stages - this behavior is consistent for both schedules
+namesToRetain: "[/ControlTower/,'AWSControlTowerBP-BASELINE-CLOUDTRAIL-MASTER']" # Supports partial matches - casing matters
 stagesToRetain: "['PROD', 'PRODUCTION', 'QA', 'DEVELOPMENT', 'DEV', 'AUTO', 'AUTOMATION', 'INFRA', 'INFRASTRUCTURE', 'COMMON']"
+
+# Odin will only delete a stack if it's status is one of the following - this behavior is consistent for both schedules
 deleteableStatuses: "['CREATE_COMPLETE', 'ROLLBACK_COMPLETE', 'UPDATE_COMPLETE', 'UPDATE_ROLLBACK_COMPLETE']"
 
 # A CloudFormation stack won't delete successfully if there are non-empty
 # buckets associated with it.  Use this property to indicate whether or
 # not you want Odin to empty all buckets in the stack (default behavior).
 # If you only want odin to empty specific buckets then set this property
-# to false and update the bucketsToEmpty property below with the output keys
-# the stack will set for all buckets you want Odin to empty
+# to false and update the bucketsToEmpty property below with the logical
+# resource names of the buckets you want Odin to empty.  This behavior is
+# consistent for both schedules
 emptyAllBuckets: true
 
-# CloudFormation output key of buckets to empty if don't want to empty all buckets by default
-bucketsToEmpty: "['ServerlessDeploymentBucketName', 'DocumentBucket', 'S3BucketSite', 'ApiDocumentationBucket']"
+# The CloudFormation logical resource names of buckets to empty (if you don't want to empty all buckets by default)
+# This behavior is consistent for both schedules
+bucketsToEmpty: "['ServerlessDeploymentBucket', 'DocumentBucket', 'S3BucketSite', 'ApiDocumentationBucket']"
