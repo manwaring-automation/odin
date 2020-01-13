@@ -123,11 +123,13 @@ workflows:
       - install
       - test:
           requires: [install]
-      - deploy-branch:
+      - deploy:
+          name: deploy-branch
           <<: *only-branches
           context: manwaring-aws
           requires: [test]
-      - deploy-automation:
+      - deploy:
+          name: deploy-master
           <<: *only-master
           context: manwaring-aws
           requires: [test]

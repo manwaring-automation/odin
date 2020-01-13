@@ -76,7 +76,7 @@ export const retainName: CloudFormation.Stack = {
   StackStatusReason: null,
   CreationTime: new Date('December 17, 2019 03:24:00'),
   Capabilities: [],
-  StackName: 'ThisIsFromControlTower',
+  StackName: 'AWSControlTowerBP-BASELINE-CLOUDTRAIL-MASTER',
   StackStatus: 'CREATE_COMPLETE',
   DisableRollback: false
 };
