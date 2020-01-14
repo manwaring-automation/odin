@@ -66,7 +66,7 @@ To help with this, by default Odin will empty all S3 buckets in a stack prior to
 
 # Architecture overview
 
-![odin - architecture overview](https://cloud.githubusercontent.com/assets/2955468/24622720/f24c75a4-1873-11e7-9e09-b83a1425c196.png)
+![architecture overview](diagrams/odin-architecture.png)
 
 # Default Odin configurations
 

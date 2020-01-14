@@ -18,7 +18,19 @@ export const listStackResourcesResponse = {
 };
 
 export const listObjectsV2Output: S3.ListObjectsV2Output = {
-  Contents: [],
+  Contents: [
+    {
+      Key: 'index.html',
+      ETag: '"0622528de826c0df5db1258a23b80be5"',
+      LastModified: new Date('December 17, 2019 03:24:00'),
+      Owner: {
+        DisplayName: 'my-username',
+        ID: '7009a8971cd660687538875e7c86c5b672fe116bd438f46db45460ddcd036c32'
+      },
+      Size: 38,
+      StorageClass: 'STANDARD'
+    }
+  ],
   IsTruncated: false
 };
 

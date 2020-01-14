@@ -18,7 +18,7 @@ jest.mock('aws-sdk', () => {
 
 describe('Delete stack bucket', () => {
   beforeEach(() => {
-    jest.resetModules();
+    // jest.resetModules();
     console.debug = jest.fn();
   });
 
