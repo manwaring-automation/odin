@@ -141,6 +141,24 @@ Config specifications can be found (and modified) in [odin.yml](odin.yml)
 }
 ```
 
+## Project stats
+
+Generated using `npm run project-stats`:
+
+```bash
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+TypeScript                      19             67              5            563
+YAML                             5             28             30            220
+Markdown                         1             44              0            138
+JSON                             2              0              0             79
+JavaScript                       4              5              1             69
+-------------------------------------------------------------------------------
+SUM:                            31            144             36           1069
+-------------------------------------------------------------------------------
+```
+
 ## Odin image source
 
 Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old German, Hindoo and Egyptian Mythology. London, Asher and Co. This illustration is from plate XXXV. Digitized version of the book by the Internet Archive, https://archive.org/details/manualofmytholog00murruoft Published earlier in Reusch, Rudolf Friedrich. 1865. Die nordischen Göttersagen.

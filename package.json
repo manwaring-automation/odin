@@ -9,7 +9,8 @@
     "postremove": "rimraf infrastructure/stack-outputs.yml",
     "test": "jest --coverage",
     "watch-tests": "jest --watch",
-    "codecov": "codecov -f coverage/*.json"
+    "codecov": "codecov -f coverage/*.json",
+    "project-stats": "cloc . --quiet --exclude-dir=node_modules,.serverless,diagrams,coverage,package-lock.json,.gitignore,LICENSE,.env"
   },
   "dependencies": {
     "@manwaring/lambda-wrapper": "^3.0.0",
@@ -29,6 +30,7 @@
     "@types/node": "^13.1.6",
     "aws-sdk": "^2.601.0",
     "chance": "^1.1.4",
+    "cloc": "^2.5.1",
     "codecov": "^3.6.1",
     "dotenv-cli": "^3.1.0",
     "eslint": "^6.8.0",
@@ -56,7 +58,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test"
+      "pre-commit": "npm test && npm run project-stats"
     }
   },
   "author": "Made with ♥ by Phillip Manwaring"
