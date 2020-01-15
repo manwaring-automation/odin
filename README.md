@@ -13,7 +13,7 @@
   <a href="https://david-dm.org/manwaring/odin">
     <img src="https://flat.badgen.net/david/dep/manwaring/odin"></a>
   <a href="https://david-dm.org/manwaring/odin?type=dev">
-    <img src="https://flat.badgen.net/david/dev/manwaring/odin/"></a>
+    <img src="https://flat.badgen.net/david/dev/manwaring/odin/?label=dev+dependencies"></a>
   <a href="https://github.com/manwaring/odin/blob/master/LICENSE">
     <img src="https://flat.badgen.net/github/license/manwaring/odin"></a>
 </p>
