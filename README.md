@@ -3,7 +3,22 @@
   <img height="180" src="https://user-images.githubusercontent.com/2955468/44294549-01c7c280-a267-11e8-9fbf-4c3788eb4635.jpg">
 </p>
 
-[![build]][build-url] [![coverage]][coverage-url] [![dependabot]][dependabot-url] [![dependencies]][dependencies-url] [![dev-dependencies]][dev-dependencies-url] [![license]][license-url] [![serverless]][serverless-url]
+<p align="center">
+  <a href="https://circleci.com/gh/manwaring/odin">
+    <img src="https://flat.badgen.net/circleci/github/manwaring/odin/master/?icon=circleci"></a>
+  <a href="https://codecov.io/gh/manwaring/odin">
+    <img src="https://flat.badgen.net/codecov/c/github/manwaring/odin/?icon=codecov"></a>
+  <a href="https://flat.badgen.net/dependabot/manwaring/odin">
+    <img src="https://flat.badgen.net/dependabot/manwaring/odin/?icon=dependabot&label=dependabot"></a>
+  <a href="https://david-dm.org/manwaring/odin">
+    <img src="https://flat.badgen.net/david/dep/manwaring/odin"></a>
+  <a href="https://david-dm.org/manwaring/odin?type=dev">
+    <img src="https://flat.badgen.net/david/dev/manwaring/odin/"></a>
+  <a href="https://github.com/manwaring/odin/blob/master/LICENSE">
+    <img src="https://flat.badgen.net/github/license/manwaring/odin"></a>
+</p>
+
+<!-- [![build]][build-url] [![coverage]][coverage-url] [![dependabot]][dependabot-url] [![dependencies]][dependencies-url] [![dev-dependencies]][dev-dependencies-url] [![license]][license-url] -->
 
 # Odin
 
@@ -215,11 +230,11 @@ Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
 TypeScript                      19             67              5            563
 YAML                             5             29             26            237
-Markdown                         1             56              0            192
+Markdown                         1             59              0            206
 JSON                             2              0              0             79
 JavaScript                       4              5              1             69
 -------------------------------------------------------------------------------
-SUM:                            31            157             32           1140
+SUM:                            31            160             32           1154
 -------------------------------------------------------------------------------
 ```
 
@@ -235,7 +250,8 @@ Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old 
 [dev-dependencies]: https://flat.badgen.net/david/dev/manwaring/odin/?label=dev+dependencies
 [license]: https://flat.badgen.net/github/license/manwaring/odin
 [dependabot]: https://flat.badgen.net/dependabot/manwaring/odin/?icon=dependabot&label=dependabot
-[serverless]: https://flat.badgen.net/badge/serverless/serverless/?icon=bitcoin-lightning&label&color=black
+
+<!-- [serverless]: https://flat.badgen.net/badge/serverless/sls/?icon=bitcoin-lightning&label&color=black -->
 
 <!-- badge urls -->
 
@@ -245,4 +261,5 @@ Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old 
 [dev-dependencies-url]: https://david-dm.org/manwaring/odin?type=dev
 [license-url]: https://github.com/manwaring/odin
 [dependabot-url]: https://flat.badgen.net/dependabot/manwaring/odin
-[serverless-url]: https://serverless.com
+
+<!-- [serverless-url]: https://serverless.com -->
