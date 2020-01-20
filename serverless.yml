@@ -59,7 +59,7 @@ package:
 
 functions:
   check-stacks:
-    handler: app/check-stacks/check.handler
+    handler: src/check-stacks/check.handler
     events:
       - schedule:
           rate: ${self:custom.odin.schedule.daily.rate}
@@ -69,7 +69,7 @@ functions:
           input: '${file(./odin-config-loader.js):hourly}'
 
   delete-stack:
-    handler: app/delete-stack/delete.handler
+    handler: src/delete-stack/delete.handler
     events:
       - sns: delete-stack-${opt:stage, self:provider.stage}
 
