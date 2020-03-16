@@ -4,7 +4,7 @@ service:
 plugins:
   - serverless-webpack
   - serverless-cloudformation-resource-counter
-  - serverless-prune-plugin
+  - serverless-prune-versions
   - serverless-lumigo
 
 provider:
@@ -34,7 +34,7 @@ custom:
   lumigo:
     token: ${env:LUMIGO_TOKEN}
     nodePackageManager: npm
-  # https://github.com/claygregory/serverless-prune-plugin
+  # https://github.com/manwaring/serverless-prune-versions
   prune:
     automatic: true
     number: 3
