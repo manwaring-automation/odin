@@ -1,6 +1,6 @@
 <p align="center">
-  <img height="180" src="https://avatars0.githubusercontent.com/u/36457275?s=400&u=16d355f384ed7f8e0655b7ed1d70ff2e411690d8&v=4e">
-  <img height="180" src="https://user-images.githubusercontent.com/2955468/44294549-01c7c280-a267-11e8-9fbf-4c3788eb4635.jpg">
+  <img height="140" src="https://avatars0.githubusercontent.com/u/36457275?s=400&u=16d355f384ed7f8e0655b7ed1d70ff2e411690d8&v=4e">
+  <img height="140" src="https://user-images.githubusercontent.com/2955468/44294549-01c7c280-a267-11e8-9fbf-4c3788eb4635.jpg">
 </p>
 
 <p align="center">
@@ -17,8 +17,6 @@
   <a href="https://github.com/manwaring/odin/blob/master/LICENSE">
     <img src="https://flat.badgen.net/github/license/manwaring/odin"></a>
 </p>
-
-<!-- [![build]][build-url] [![coverage]][coverage-url] [![dependabot]][dependabot-url] [![dependencies]][dependencies-url] [![dev-dependencies]][dev-dependencies-url] [![license]][license-url] -->
 
 # Odin
 
@@ -241,25 +239,3 @@ SUM:                            31            160             32           1154
 # Odin image source
 
 Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old German, Hindoo and Egyptian Mythology. London, Asher and Co. This illustration is from plate XXXV. Digitized version of the book by the Internet Archive, https://archive.org/details/manualofmytholog00murruoft Published earlier in Reusch, Rudolf Friedrich. 1865. Die nordischen Göttersagen.
-
-<!-- badge icons -->
-
-[build]: https://flat.badgen.net/circleci/github/manwaring/odin/master/?icon=circleci
-[coverage]: https://flat.badgen.net/codecov/c/github/manwaring/odin/?icon=codecov
-[dependencies]: https://flat.badgen.net/david/dep/manwaring/odin
-[dev-dependencies]: https://flat.badgen.net/david/dev/manwaring/odin/?label=dev+dependencies
-[license]: https://flat.badgen.net/github/license/manwaring/odin
-[dependabot]: https://flat.badgen.net/dependabot/manwaring/odin/?icon=dependabot&label=dependabot
-
-<!-- [serverless]: https://flat.badgen.net/badge/serverless/sls/?icon=bitcoin-lightning&label&color=black -->
-
-<!-- badge urls -->
-
-[build-url]: https://circleci.com/gh/manwaring/odin
-[coverage-url]: https://codecov.io/gh/manwaring/odin
-[dependencies-url]: https://david-dm.org/manwaring/odin
-[dev-dependencies-url]: https://david-dm.org/manwaring/odin?type=dev
-[license-url]: https://github.com/manwaring/odin
-[dependabot-url]: https://flat.badgen.net/dependabot/manwaring/odin
-
-<!-- [serverless-url]: https://serverless.com -->
