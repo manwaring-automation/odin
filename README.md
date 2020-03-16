@@ -128,6 +128,7 @@ staticRules:
     - PROD
     - PRODUCTION
     - QA
+    - STAGING
     - DEVELOPMENT
     - DEV
     - AUTO
