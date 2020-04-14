@@ -9,22 +9,11 @@
 anchors:
   container-config: &container-config
     docker:
-      - image: circleci/node:12.14.1
+      - image: circleci/node:12.16.2
 
   load-cache: &load-cache
     restore_cache:
       key: dependency-cache-{{ checksum "package-lock.json" }}
-
-  configure-aws-access: &configure-aws-access
-    run:
-      name: Configure AWS access
-      command: |
-        mkdir -p ~/.aws
-        cat > ~/.aws/credentials \<< EOL
-        [manwaring]
-        aws_access_key_id = $AWS_ACCESS_KEY
-        aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
-        EOL
 
   only-branches: &only-branches
     filters:
@@ -35,35 +24,6 @@ anchors:
     filters:
       branches:
         only: master
-
-  branch-config: &branch-config
-    environment:
-      - KEY: AWS_ACCESS_KEY_ID
-      - SECRET: AWS_SECRET_ACCESS_KEY
-
-  automation-config: &automation-config
-    environment:
-      - KEY: AWS_ACCESS_KEY_ID
-      - SECRET: AWS_SECRET_ACCESS_KEY
-      - STAGE: automation
-
-  deploy: &deploy
-    <<: *container-config
-    steps:
-      - checkout
-      - *load-cache
-      - *configure-aws-access
-      - run:
-          name: Deploy stack
-          command: |
-
-            [[ ! -z "$STAGE" ]] || STAGE=${CIRCLE_BRANCH%%/*}
-            echo Deploying Odin for stage $STAGE
-            npm run deploy -- --stage $STAGE
-      - persist_to_workspace:
-          root: .
-          paths:
-            - infrastructure
 
 ## Circle CI configuration, see https://circleci.com/docs/2.0/configuration-reference/
 version: 2.1
@@ -106,7 +66,6 @@ jobs:
     steps:
       - checkout
       - *load-cache
-      - *configure-aws-access
       - run:
           name: Deploy
           command: |
@@ -127,6 +86,12 @@ workflows:
           name: deploy-branch
           <<: *only-branches
           context: manwaring-aws
+          requires: [test]
+      - deploy:
+          name: deploy-coaches-sandbox
+          <<: *only-master
+          stage: automation
+          context: aws-coaches-sandbox
           requires: [test]
       - deploy:
           name: deploy-master
