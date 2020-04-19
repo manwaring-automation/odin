@@ -102,7 +102,7 @@ workflows:
 
       # manwaring automation
       - deploy:
-          name: deploy-master
+          name: deploy-manwaring
           <<: *only-master
           stage: automation
           context: aws-manwaring
