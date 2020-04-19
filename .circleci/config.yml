@@ -82,20 +82,28 @@ workflows:
       - install
       - test:
           requires: [install]
+
+      # on branches, create branch-specific stage
       - deploy:
           name: deploy-branch
           <<: *only-branches
-          context: manwaring-aws
+          context: aws-manwaring
           requires: [test]
+
+      # on master deploy to fixed automation stages
+
+      # coaches-sandbox automation
       - deploy:
           name: deploy-coaches-sandbox
           <<: *only-master
           stage: automation
           context: aws-coaches-sandbox
           requires: [test]
+
+      # manwaring automation
       - deploy:
           name: deploy-master
           <<: *only-master
           stage: automation
-          context: manwaring-aws
+          context: aws-manwaring
           requires: [test]
