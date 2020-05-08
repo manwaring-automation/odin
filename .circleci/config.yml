@@ -92,6 +92,14 @@ workflows:
 
       # on master deploy to fixed automation stages
 
+      # manwaring automation
+      - deploy:
+          name: deploy-manwaring
+          <<: *only-master
+          stage: automation
+          context: aws-manwaring
+          requires: [test]
+
       # coaches-sandbox automation
       - deploy:
           name: deploy-coaches-sandbox
@@ -100,10 +108,10 @@ workflows:
           context: aws-coaches-sandbox
           requires: [test]
 
-      # manwaring automation
+      # coaches-production automation
       - deploy:
-          name: deploy-manwaring
+          name: deploy-coaches-prod
           <<: *only-master
           stage: automation
-          context: aws-manwaring
-          requires: [test]
+          context: aws-coaches-prod
+          requires: [deploy-coaches-sandbox]
