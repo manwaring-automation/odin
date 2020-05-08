@@ -5,7 +5,6 @@ plugins:
   - serverless-webpack
   - serverless-cloudformation-resource-counter
   - serverless-prune-versions
-  - serverless-lumigo
 
 provider:
   name: aws
@@ -30,10 +29,6 @@ provider:
 custom:
   odin: ${file(./odin.yml)}
   stage: ${opt:stage, env:STAGE, 'local'}
-  # https://github.com/lumigo-io/serverless-lumigo-plugin
-  lumigo:
-    token: ${env:LUMIGO_TOKEN}
-    nodePackageManager: npm
   # https://github.com/manwaring/serverless-prune-versions
   prune:
     automatic: true
