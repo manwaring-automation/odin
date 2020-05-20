@@ -6,7 +6,7 @@
 <p align="center">
   <a href="https://circleci.com/gh/manwaring-automation/odin">
     <img src="https://flat.badgen.net/circleci/github/manwaring-automation/odin/master/?icon=circleci"></a>
-  <a href="https://codecov.io/gh/manwaring/odin">
+  <a href="https://codecov.io/gh/manwaring-automation/odin">
     <img src="https://flat.badgen.net/codecov/c/github/manwaring-automation/odin/?icon=codecov"></a>
   <a href="https://flat.badgen.net/dependabot/manwaring-automation/odin">
     <img src="https://flat.badgen.net/dependabot/manwaring-automation/odin/?icon=dependabot&label=dependabot"></a>
