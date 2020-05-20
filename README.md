@@ -4,18 +4,18 @@
 </p>
 
 <p align="center">
-  <a href="https://circleci.com/gh/manwaring/odin">
-    <img src="https://flat.badgen.net/circleci/github/manwaring/odin/master/?icon=circleci"></a>
+  <a href="https://circleci.com/gh/manwaring-automation/odin">
+    <img src="https://flat.badgen.net/circleci/github/manwaring-automation/odin/master/?icon=circleci"></a>
   <a href="https://codecov.io/gh/manwaring/odin">
-    <img src="https://flat.badgen.net/codecov/c/github/manwaring/odin/?icon=codecov"></a>
-  <a href="https://flat.badgen.net/dependabot/manwaring/odin">
-    <img src="https://flat.badgen.net/dependabot/manwaring/odin/?icon=dependabot&label=dependabot"></a>
-  <a href="https://david-dm.org/manwaring/odin">
-    <img src="https://flat.badgen.net/david/dep/manwaring/odin"></a>
-  <a href="https://david-dm.org/manwaring/odin?type=dev">
-    <img src="https://flat.badgen.net/david/dev/manwaring/odin/?label=dev+dependencies"></a>
-  <a href="https://github.com/manwaring/odin/blob/master/LICENSE">
-    <img src="https://flat.badgen.net/github/license/manwaring/odin"></a>
+    <img src="https://flat.badgen.net/codecov/c/github/manwaring-automation/odin/?icon=codecov"></a>
+  <a href="https://flat.badgen.net/dependabot/manwaring-automation/odin">
+    <img src="https://flat.badgen.net/dependabot/manwaring-automation/odin/?icon=dependabot&label=dependabot"></a>
+  <a href="https://david-dm.org/manwaring-automation/odin">
+    <img src="https://flat.badgen.net/david/dep/manwaring-automation/odin"></a>
+  <a href="https://david-dm.org/manwaring-automation/odin?type=dev">
+    <img src="https://flat.badgen.net/david/dev/manwaring-automation/odin/?label=dev+dependencies"></a>
+  <a href="https://github.com/manwaring-automation/odin/blob/master/LICENSE">
+    <img src="https://flat.badgen.net/github/license/manwaring-automation/odin"></a>
 </p>
 
 # Odin
