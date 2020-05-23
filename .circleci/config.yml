@@ -36,7 +36,6 @@ workflows:
       # all
       - node/test:
           version: 'lts'
-          context: coaches-ci
 
       # branch
       - deploy:
