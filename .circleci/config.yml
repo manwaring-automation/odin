@@ -1,63 +1,13 @@
-# Note: YAML anchors allow an object to be re-used, reducing duplication. The ampersand
-# declares an alias for an object, then later the `<<: *alias` syntax dereferences it.
-#
-# See http://blog.daemonl.com/2016/02/yaml.html and
-# https://medium.com/@kinghuang/docker-compose-anchors-aliases-extensions-a1e4105d70bd
-# for more information about how to use anchors.
-#
-# To validate changes use an online parser, eg. http://yaml-online-parser.appspot.com/
-anchors:
-  container-config: &container-config
-    docker:
-      - image: circleci/node:12.16.2
-
-  load-cache: &load-cache
-    restore_cache:
-      key: dependency-cache-{{ checksum "package-lock.json" }}
-
-  only-branches: &only-branches
-    filters:
-      branches:
-        ignore: master
-
-  only-master: &only-master
-    filters:
-      branches:
-        only: master
-
-## Circle CI configuration, see https://circleci.com/docs/2.0/configuration-reference/
 version: 2.1
+
+orbs:
+  node: circleci/node@2.1.0
+
 jobs:
-  install:
-    <<: *container-config
-    steps:
-      - checkout
-      - *load-cache
-      - run:
-          name: Install dependencies
-          command: npm ci
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - node_modules
-
-  test:
-    <<: *container-config
-    steps:
-      - checkout
-      - *load-cache
-      - run:
-          name: Test
-          command: npm test
-      - store_artifacts:
-          path: coverage
-      - run:
-          name: Send coverage to Codecov
-          command: npm run codecov
-
   deploy:
-    description: Deploy to the specified stage
-    <<: *container-config
+    executor:
+      name: node/default
+      tag: 'lts'
     parameters:
       stage:
         description: Stage to deploy to
@@ -65,53 +15,60 @@ jobs:
         default: ''
     steps:
       - checkout
-      - *load-cache
+      - node/install-packages
       - run:
-          name: Deploy
+          name: Deploy service
           command: |
             STAGE=<< parameters.stage >>
             [[ ! -z "$STAGE" ]] || STAGE=${CIRCLE_BRANCH%%/*}
-            echo Deploying to stage $STAGE
+            echo Deploying service to stage $STAGE
             npm run deploy -- --stage $STAGE
+      # save the .serverless folder to enable looking up & calling the endpoint
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .serverless
 
 workflows:
   version: 2
-
-  build-test-deploy:
+  test-and-deploy:
     jobs:
-      - install
-      - test:
-          requires: [install]
+      # all
+      - node/test:
+          version: 'lts'
+          context: coaches-ci
 
-      # on branches, create branch-specific stage
+      # branch
       - deploy:
           name: deploy-branch
-          <<: *only-branches
           context: aws-manwaring
-          requires: [test]
+          requires: [node/test]
+          filters: &only-branches
+            branches:
+              ignore: main
 
-      # on master deploy to fixed automation stages
-
-      # manwaring automation
+      # main - manwaring
       - deploy:
           name: deploy-manwaring
-          <<: *only-master
           stage: automation
           context: aws-manwaring
-          requires: [test]
+          requires: [node/test]
+          filters: &only-main
+            branches:
+              only: main
 
-      # coaches-sandbox automation
+      # main - coaches-sandbox automation
       - deploy:
           name: deploy-coaches-sandbox
-          <<: *only-master
           stage: automation
           context: aws-coaches-sandbox
-          requires: [test]
+          requires: [node/test]
+          filters: *only-main
 
-      # coaches-production automation
+      # main - coaches-prod automation
       - deploy:
           name: deploy-coaches-prod
-          <<: *only-master
           stage: automation
           context: aws-coaches-prod
           requires: [deploy-coaches-sandbox]
+          filters: *only-main
