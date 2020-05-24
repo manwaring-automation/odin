@@ -46,15 +46,23 @@ workflows:
             branches:
               ignore: main
 
+      # main - sandbox
+      - deploy:
+          name: deploy-sandbox
+          stage: automation
+          context: aws-sandbox
+          requires: [node/test]
+          filters: &only-main
+            branches:
+              only: main
+
       # main - manwaring
       - deploy:
           name: deploy-manwaring
           stage: automation
           context: aws-manwaring
-          requires: [node/test]
-          filters: &only-main
-            branches:
-              only: main
+          requires: [deploy-sandbox]
+          filters: *only-main
 
       # main - coaches-sandbox automation
       - deploy:

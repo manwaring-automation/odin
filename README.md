@@ -1,6 +1,6 @@
 <p align="center">
-  <img height="150" src="https://d1wzvcwrgjaybe.cloudfront.net/repos/manwaring-automation/odin/readme-category-icon.png">
-  <img height="150" src="https://d1wzvcwrgjaybe.cloudfront.net/repos/manwaring-automation/odin/readme-repo-icon.png">
+  <img height="150" src="https://d1wzvcwrgjaybe.cloudfront.net/repos/automation/odin/readme-category-icon.png">
+  <img height="150" src="https://d1wzvcwrgjaybe.cloudfront.net/repos/automation/odin/readme-repo-icon.png">
 </p>
 
 <p align="center">
@@ -8,7 +8,7 @@
     <img src="https://flat.badgen.net/circleci/github/manwaring-automation/odin/master/?icon=circleci"></a>
   <a href="https://codecov.io/gh/manwaring-automation/odin">
     <img src="https://flat.badgen.net/codecov/c/github/manwaring-automation/odin/?icon=codecov"></a>
-  <a href="https://flat.badgen.net/dependabot/manwaring-automation/odin">
+  <a href="https://app.dependabot.com/accounts/manwaring-automation/repos/81763321">
     <img src="https://flat.badgen.net/dependabot/manwaring-automation/odin/?icon=dependabot&label=dependabot"></a>
   <a href="https://david-dm.org/manwaring-automation/odin">
     <img src="https://flat.badgen.net/david/dep/manwaring-automation/odin"></a>

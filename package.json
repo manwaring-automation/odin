@@ -30,7 +30,7 @@
     "@types/jest": "^25.2.3",
     "@types/node": "^14.0.5",
     "aws-sdk": "^2.683.0",
-    "chance": "^1.1.5",
+    "chance": "^1.1.6",
     "cloc": "^2.5.1",
     "codecov": "^3.7.0",
     "dotenv-cli": "^3.1.0",
@@ -47,7 +47,7 @@
     "serverless-stack-output": "^0.2.3",
     "serverless-webpack": "^5.3.2",
     "ts-jest": "^26.0.0",
-    "ts-loader": "^7.0.4",
+    "ts-loader": "^7.0.5",
     "typescript": "^3.9.3",
     "webpack": "^4.43.0",
     "webpack-node-externals": "^1.7.2"
