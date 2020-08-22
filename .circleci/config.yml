@@ -35,7 +35,7 @@ workflows:
       # branch
       - deploy:
           name: deploy-branch
-          context: aws-manwaring
+          context: aws-sandbox
           requires: [node/test]
           filters: &only-branches
             branches:
