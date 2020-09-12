@@ -16,6 +16,7 @@
     <img src="https://flat.badgen.net/david/dev/manwaring-automation/odin/?label=dev+dependencies"></a>
   <a href="https://github.com/manwaring-automation/odin/blob/master/LICENSE">
     <img src="https://flat.badgen.net/github/license/manwaring-automation/odin"></a>
+  <img height="0" width="0" src="https://b7z7o7y5fi.execute-api.us-east-1.amazonaws.com/v1/readme/visits/github/manwaring-automation/odin?style=flat-square">
 </p>
 
 # Odin
@@ -26,7 +27,7 @@ This serverless application periodically checks the status of CloudFormation sta
 
 # What it does
 
-Odin determines that a stack should be removed when it's current state matches the following three criteria:
+Because Odin's removal of stacks is destructive the default action it takes is leaving a stack as-is - Odin will only delete a stack when it's current state matches all of the following three criteria:
 
 1.  **Tagging:** If a stack is _not_ tagged with any of the stages specified as permanent in [odin.yml](odin.yml) then it is _eligible for removal_
 1.  **Status:** If a stack's status is _not_ one of those specified as off-limits in [odin.yml](odin.yml) then it is _eligible for removal_
@@ -42,34 +43,28 @@ To change the frequency with which Odin runs and the settings used to determine 
 
 Odin is built with the [Serverless Framework](https://serverless.com/framework/docs/) - see their documentation for more about the tool and how to use it.
 
-## Lumigo setup & configuration
+## Thundra setup & configuration
 
-Odin uses [Lumigo](https://lumigo.io/) as a serverless monitoring and logging solution. To package and deploy the application with the Lumigo integration you'll need to setup an account and provide a Lumigo access token either as an environment variable or in a local `.env` file:
+Odin uses [Thundra](https://thundra.io/) as a serverless monitoring and logging solution. To package and deploy the application with the Thundra integration you'll need to setup an account and provide a Thundra access token either as an environment variable or in a local `.env` file:
 
 ```
-LUMIGO_TOKEN=<token>
+THUNDRA_TOKEN=<token>
 ```
 
-There are instructions for [setting up your Lumigo account](https://docs.lumigo.io/docs) and [configuring the Lumigo serverless plugin](https://github.com/lumigo-io/serverless-lumigo-plugin).
+There are instructions for [setting up your Thundra account](https://docs.thundra.io) and [configuring the Thundra serverless plugin](https://github.com/thundra-io/serverless-plugin-thundra).
 
-If you don't want to include the integration you can comment out the Lumigo plugin in `serverless.yml`, and optionally comment out the Lumigo-specific configurations:
+If you don't want to include the integration you can comment out the Thundra plugin in `serverless.yml`, and optionally comment out the Thundra-specific configurations:
 
 ```yml
 plugins:
   - serverless-webpack
   - serverless-cloudformation-resource-counter
-  - serverless-plugin-iam-checker
-  - serverless-plugin-test-helper
-  - serverless-prune-plugin
-  # - serverless-lumigo
+  - serverless-prune-versions
+  # - serverless-plugin-thundra
 
-# (commenting out the custom config is optional)
-custom:
-  ...
-  # https://github.com/lumigo-io/serverless-lumigo-plugin
-  # lumigo:
-  # token: ${env:LUMIGO_TOKEN}
-  # nodePackageManager: npm
+provider:
+  environment:
+    # thundra_apiKey: ${opt:thundra, env:THUNDRA_TOKEN}
 ```
 
 ## Local development
@@ -240,6 +235,3 @@ SUM:                            31            160             32           1154
 # Odin image source
 
 Murray, Alexander (1874). Manual of Mythology : Greek and Roman, Norse, and Old German, Hindoo and Egyptian Mythology. London, Asher and Co. This illustration is from plate XXXV. Digitized version of the book by the Internet Archive, https://archive.org/details/manualofmytholog00murruoft Published earlier in Reusch, Rudolf Friedrich. 1865. Die nordischen Göttersagen.
-
-<img height="0" src="https://b7z7o7y5fi.execute-api.us-east-1.amazonaws.com/v1/readme/visits/github/manwaring-automation/odin?style=flat-square">
-

@@ -5,6 +5,7 @@ plugins:
   - serverless-webpack
   - serverless-cloudformation-resource-counter
   - serverless-prune-versions
+  - serverless-plugin-thundra
 
 provider:
   name: aws
@@ -15,6 +16,7 @@ provider:
     NODE_ENV: PRODUCTION
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     LAMBDA_WRAPPER_LOG: true
+    thundra_apiKey: ${opt:thundra, env:THUNDRA_TOKEN}
     DELETE_STACK_TOPIC: !Join
       - ':'
       - - arn:aws:sns
@@ -37,20 +39,8 @@ custom:
   warningThreshold: 100
   # https://github.com/serverless-heaven/serverless-webpack
   webpack:
-    webpackConfig: ./webpack.config.js
-    includeModules:
-      forceExclude:
-        - aws-sdk
-
-package:
-  exclude:
-    - .git
-    - .env
-    - package-lock.json
-    - package.json
-    - README.md
-    - app/**/*/sample-data/**/*
-  excludeDevDependencies: true
+    includeModules: true
+    excludeFiles: src/**/*.test.[t|j]s
 
 functions:
   check-stacks:
