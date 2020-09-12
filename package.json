@@ -43,6 +43,7 @@
     "rimraf": "^3.0.2",
     "serverless": "^2.0.0",
     "serverless-cloudformation-resource-counter": "^1.0.3",
+    "serverless-plugin-thundra": "^2.5.4",
     "serverless-prune-versions": "^1.0.2",
     "serverless-stack-output": "^0.2.3",
     "serverless-webpack": "^5.3.4",
