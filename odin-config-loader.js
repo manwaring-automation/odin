@@ -1,7 +1,7 @@
 const { readFileSync } = require('fs');
-const { safeLoad } = require('js-yaml');
+const { load } = require('js-yaml');
 
-const odinConfig = safeLoad(readFileSync('odin.yml', 'utf8'));
+const odinConfig = load(readFileSync('odin.yml', 'utf8'));
 
 const daily = () => {
   const rules = { ...odinConfig.staticRules, ...odinConfig.dynamicRules.daily };
