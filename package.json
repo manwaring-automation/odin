@@ -42,7 +42,7 @@
     "jest": "^27.0.1",
     "js-yaml": "^4.1.0",
     "rimraf": "^3.0.2",
-    "serverless": "^2.43.1",
+    "serverless": "^3.25.1",
     "serverless-cloudformation-resource-counter": "^1.1.1",
     "serverless-plugin-thundra": "^2.5.8",
     "serverless-prune-versions": "^1.0.4",
